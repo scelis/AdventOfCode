@@ -1,6 +1,6 @@
 import Foundation
 
-public struct Coordinate2D<T: SignedNumeric & Comparable & Hashable>: Hashable {
+public struct Coordinate2D<T: SignedNumeric & Comparable & Hashable & BinaryInteger>: Hashable {
     public var x: T
     public var y: T
 
@@ -20,6 +20,14 @@ public struct Coordinate2D<T: SignedNumeric & Comparable & Hashable>: Hashable {
 
     public func manhattanDistance(from: Coordinate2D) -> T {
         return abs(x - from.x) + abs(y - from.y)
+    }
+
+    public func isBetween(a: Coordinate2D, b: Coordinate2D) -> Bool {
+        let x1 = (a.x <= self.x && self.x <= b.x)
+        let x2 = (a.x >= self.x && self.x >= b.x)
+        let y1 = (a.y <= self.y && self.y <= b.y)
+        let y2 = (a.y >= self.y && self.y >= b.y)
+        return (x1 || x2) && (y1 || y2)
     }
 }
 
