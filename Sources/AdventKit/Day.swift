@@ -1,7 +1,15 @@
 import Foundation
 
 open class Day {
-    open var inputURL: URL? { nil }
+    private var inputURL: URL? {
+        let className = String(cString: class_getName(type(of: self)))
+        let groups = try! className.firstMatchingGroups(withPattern: "AOC_(\\d+)_(\\d+)")
+        var dir = URL(fileURLWithPath: "\(#file)").deletingLastPathComponent().deletingLastPathComponent()
+        dir.appendPathComponent(groups![0]!)
+        dir.appendPathComponent("Day\(groups![1]!)")
+        dir.appendPathComponent("input.txt")
+        return dir
+    }
 
     public lazy var inputString: String = {
         guard
