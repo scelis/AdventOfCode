@@ -7,13 +7,15 @@ let package = Package(
     platforms: [.macOS("10.15")],
     products: [
         .library(name: "AdventKit", targets: ["AdventKit"]),
+        .library(name: "IntcodeComputer", targets: ["IntcodeComputer"]),
     ],
     dependencies: [
     ],
     targets: [
         .target(name: "AdventKit", dependencies: []),
+        .target(name: "IntcodeComputer", dependencies: ["AdventKit"], path: "Sources/2019/IntcodeComputer"),
         .target(name: "AOC-2019-01", dependencies: ["AdventKit"], path: "Sources/2019/Day01", resources: [.copy("input.txt")]),
-        .target(name: "AOC-2019-02", dependencies: ["AdventKit"], path: "Sources/2019/Day02", resources: [.copy("input.txt")]),
+        .target(name: "AOC-2019-02", dependencies: ["AdventKit", "IntcodeComputer"], path: "Sources/2019/Day02", resources: [.copy("input.txt")]),
         .target(name: "AOC-2019-03", dependencies: ["AdventKit"], path: "Sources/2019/Day03", resources: [.copy("input.txt")]),
         .target(name: "AOC-2019-04", dependencies: ["AdventKit"], path: "Sources/2019/Day04", resources: [.copy("input.txt")]),
         .target(name: "AOC-2019-05", dependencies: ["AdventKit"], path: "Sources/2019/Day05", resources: [.copy("input.txt")]),
