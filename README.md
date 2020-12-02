@@ -1,3 +1,3 @@
 # Advent of Code
 
-A description of this package.
+My solutions for [Advent of Code](https://adventofcode.com).
