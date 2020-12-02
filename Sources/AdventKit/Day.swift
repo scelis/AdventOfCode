@@ -45,13 +45,8 @@ open class Day {
         return ""
     }
 
-    open func bothParts() -> (String, String) {
-        return (part1(), part2())
-    }
-
     public func run() {
-        let answers = bothParts()
-        print("Part 1: \(answers.0)")
-        print("Part 2: \(answers.1)")
+        print("Part 1: \(part1())")
+        print("Part 2: \(part2())")
     }
 }
