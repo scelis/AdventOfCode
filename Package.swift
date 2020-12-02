@@ -18,7 +18,7 @@ let package = Package(
         .target(name: "AOC-2019-02", dependencies: ["AdventKit", "IntcodeComputer"], path: "Sources/2019/Day02", resources: [.copy("input.txt")]),
         .target(name: "AOC-2019-03", dependencies: ["AdventKit"], path: "Sources/2019/Day03", resources: [.copy("input.txt")]),
         .target(name: "AOC-2019-04", dependencies: ["AdventKit"], path: "Sources/2019/Day04", resources: [.copy("input.txt")]),
-        .target(name: "AOC-2019-05", dependencies: ["AdventKit"], path: "Sources/2019/Day05", resources: [.copy("input.txt")]),
+        .target(name: "AOC-2019-05", dependencies: ["AdventKit", "IntcodeComputer"], path: "Sources/2019/Day05", resources: [.copy("input.txt")]),
         .target(name: "AOC-2019-06", dependencies: ["AdventKit"], path: "Sources/2019/Day06", resources: [.copy("input.txt")]),
         .target(name: "AOC-2019-07", dependencies: ["AdventKit"], path: "Sources/2019/Day07", resources: [.copy("input.txt")]),
         .target(name: "AOC-2019-08", dependencies: ["AdventKit"], path: "Sources/2019/Day08", resources: [.copy("input.txt")]),
