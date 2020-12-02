@@ -11,4 +11,4 @@ class Day20: Day {
     }
 }
 
-Day29().run()
+Day20().run()
