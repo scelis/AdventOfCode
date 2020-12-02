@@ -3,10 +3,10 @@ import Foundation
 open class Day {
     private var inputURL: URL? {
         let className = String(cString: class_getName(type(of: self)))
-        let groups = try! className.firstMatchingGroups(withPattern: "AOC_(\\d+)_(\\d+)")
+        let groups = try! className.firstMatch(withPattern: #"AOC_(\d+)_(\d+)"#)
         var dir = URL(fileURLWithPath: "\(#file)").deletingLastPathComponent().deletingLastPathComponent()
-        dir.appendPathComponent(groups![0]!)
-        dir.appendPathComponent("Day\(groups![1]!)")
+        dir.appendPathComponent(groups[1])
+        dir.appendPathComponent("Day\(groups[2])")
         dir.appendPathComponent("input.txt")
         return dir
     }
@@ -45,8 +45,13 @@ open class Day {
         return ""
     }
 
+    open func bothParts() -> (String, String) {
+        return (part1(), part2())
+    }
+
     public func run() {
-        print("Part 1: \(part1())")
-        print("Part 2: \(part2())")
+        let answers = bothParts()
+        print("Part 1: \(answers.0)")
+        print("Part 2: \(answers.1)")
     }
 }

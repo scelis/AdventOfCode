@@ -1,12 +1,28 @@
 import Foundation
 
 extension String {
-    public var nsRange: NSRange {
-        return NSMakeRange(0, (self as NSString).length)
+    public subscript (i: Int) -> String {
+        return self[i ..< i + 1]
     }
 
-    public func substring(with range: NSRange) -> String {
-        return (self as NSString).substring(with: range)
+    public func substring(fromIndex: Int) -> String {
+        return self[min(fromIndex, count) ..< count]
+    }
+
+    public func substring(toIndex: Int) -> String {
+        return self[0 ..< max(0, toIndex)]
+    }
+
+    public subscript (r: Range<Int>) -> String {
+        let range = Range(
+            uncheckedBounds: (
+                lower: max(0, min(count, r.lowerBound)),
+                upper: min(count, max(0, r.upperBound))
+            )
+        )
+        let start = index(startIndex, offsetBy: range.lowerBound)
+        let end = index(start, offsetBy: range.upperBound - range.lowerBound)
+        return String(self[start ..< end])
     }
 
     public func enumerateLines(using block: (String) -> ()) {
@@ -17,78 +33,5 @@ extension String {
                 block(line)
             }
         }
-    }
-
-    public func enumerateMatches(
-        withPattern pattern: String,
-        patternOptions: NSRegularExpression.Options = [],
-        matchingOptions: NSRegularExpression.MatchingOptions = [],
-        using block: (String, [String?]) -> ()) throws
-    {
-        let regex = try NSRegularExpression(pattern: pattern, options: patternOptions)
-        return try enumerateMatches(
-            withRegularExpression: regex,
-            options: matchingOptions,
-            using: block
-        )
-    }
-
-    public func enumerateMatches(
-        withRegularExpression regex: NSRegularExpression,
-        options: NSRegularExpression.MatchingOptions = [],
-        using block: (String, [String?]) -> ()) throws
-    {
-        let numGroups = regex.numberOfCaptureGroups
-        regex.enumerateMatches(in: self, options: options, range: nsRange, using: { result, _, _ in
-            if let result = result {
-                let match = substring(with: result.range)
-                var groups = [String?]()
-                for i in 0..<numGroups {
-                    let groupRange = result.range(at: i + 1)
-                    if groupRange.location == NSNotFound {
-                        groups.append(nil)
-                    } else {
-                        groups.append(substring(with: groupRange))
-                    }
-                }
-                block(match, groups)
-            }
-        })
-    }
-
-    public func firstMatchingGroups(
-        withPattern pattern: String,
-        patternOptions: NSRegularExpression.Options = [],
-        matchingOptions: NSRegularExpression.MatchingOptions = []) throws
-        -> [String?]?
-    {
-        var ret: [String?]?
-        try enumerateMatches(
-            withPattern: pattern,
-            patternOptions: patternOptions,
-            matchingOptions: matchingOptions,
-            using: { _, groups in
-                ret = groups
-                return
-            }
-        )
-        return ret
-    }
-
-    public func firstMatchingGroups(
-        withRegularExpression regex: NSRegularExpression,
-        options: NSRegularExpression.MatchingOptions = []) throws
-        -> [String?]?
-    {
-        var ret: [String?]?
-        try enumerateMatches(
-            withRegularExpression: regex,
-            options: options,
-            using: { _, groups in
-                ret = groups
-                return
-            }
-        )
-        return ret
     }
 }
