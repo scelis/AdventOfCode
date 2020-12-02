@@ -3,7 +3,7 @@
 import PackageDescription
 
 let package = Package(
-    name: "AdventOfCode",
+    name: "Advent of Code",
     platforms: [.macOS("10.15")],
     products: [
         .library(name: "AdventKit", targets: ["AdventKit"]),
