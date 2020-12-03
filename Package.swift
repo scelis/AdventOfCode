@@ -10,9 +10,10 @@ let package = Package(
         .library(name: "IntcodeComputer", targets: ["IntcodeComputer"]),
     ],
     dependencies: [
+        .package(name: "swift-algorithms", url: "https://github.com/apple/swift-algorithms.git", from: "0.0.2"),
     ],
     targets: [
-        .target(name: "AdventKit", dependencies: []),
+        .target(name: "AdventKit", dependencies: [.product(name: "Algorithms", package: "swift-algorithms")]),
         .target(name: "IntcodeComputer", dependencies: ["AdventKit"], path: "Sources/2019/IntcodeComputer"),
         .target(name: "AOC-2019-01", dependencies: ["AdventKit"], path: "Sources/2019/Day01", resources: [.copy("input.txt")]),
         .target(name: "AOC-2019-02", dependencies: ["AdventKit", "IntcodeComputer"], path: "Sources/2019/Day02", resources: [.copy("input.txt")]),
