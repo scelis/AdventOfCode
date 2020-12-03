@@ -24,13 +24,11 @@ class Day02: Day {
     override func part2() -> String {
         var numValid = 0
         try! inputString.enumerateMatches(withPattern: pattern) { match in
-            let firstIndex = Int(match[1])! - 1
-            let secondIndex = Int(match[2])! - 1
+            let i = Int(match[1])! - 1
+            let j = Int(match[2])! - 1
             let character = match[3]
             let password = match[4]
-            let firstMatch = password[firstIndex] == character
-            let secondMatch = password[secondIndex] == character
-            if (firstMatch && !secondMatch) || (secondMatch && !firstMatch) {
+            if (password[i] == character) ^^ (password[j] == character) {
                 numValid += 1
             }
         }
