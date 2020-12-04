@@ -18,7 +18,7 @@ class Day13: Day {
         computer.run()
 
         var output: [Coordinate2D<Int>: Tile] = [:]
-        for instruction in computer.outputBuffer.chunked(into: 3) {
+        for instruction in computer.outputBuffer.chunks(ofCount: 3) {
             let coordinate = Coordinate2D(x: instruction[0], y: instruction[1])
             output[coordinate] = Tile(rawValue: instruction[2])
         }
@@ -38,7 +38,7 @@ class Day13: Day {
         var paddlePosition: Coordinate2D<Int>?
         var blockPositions: Set<Coordinate2D<Int>> = []
         while true {
-            for instruction in computer.outputBuffer.chunked(into: 3) {
+            for instruction in computer.outputBuffer.chunks(ofCount: 3) {
                 let coordinate = Coordinate2D(x: instruction[0], y: instruction[1])
                 if coordinate == Coordinate2D(x: -1, y: 0) {
                     score = instruction[2]
