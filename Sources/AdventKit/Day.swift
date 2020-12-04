@@ -35,8 +35,7 @@ open class Day {
         return inputString
             .components(separatedBy: .newlines)
             .compactMap({ line in
-                let line = line.trimmingCharacters(in: .whitespaces)
-                return line.isEmpty ? nil : line
+                return line.trimmingCharacters(in: .whitespaces)
             })
     }()
 
