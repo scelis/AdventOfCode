@@ -31,8 +31,7 @@ class Day15: Day {
         }
     }
 
-    lazy var memory: [Int] = IntcodeComputer.parse(input: inputString)
-    lazy var computer = IntcodeComputer(memory: memory)
+    lazy var computer = IntcodeComputer(input: inputString)
     var coordinates: [Coordinate2D<Int>: Node] = [:]
     var unexplored: [Node] = []
     var currentNode: Node

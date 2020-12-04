@@ -11,10 +11,8 @@ class Day13: Day {
         case ball = 4
     }
 
-    lazy var memory: [Int] = IntcodeComputer.parse(input: inputString)
-
     override func part1() -> String {
-        let computer = IntcodeComputer(memory: memory)
+        let computer = IntcodeComputer(input: inputString)
         computer.run()
 
         var output: [Coordinate2D<Int>: Tile] = [:]
@@ -29,7 +27,7 @@ class Day13: Day {
     }
 
     override func part2() -> String {
-        let computer = IntcodeComputer(memory: memory)
+        let computer = IntcodeComputer(input: inputString)
         computer[0] = 2
         computer.run()
 

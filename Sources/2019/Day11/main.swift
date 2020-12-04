@@ -8,8 +8,6 @@ class Day11: Day {
         case white = 1
     }
 
-    lazy var memory: [Int] = IntcodeComputer.parse(input: inputString)
-
     private func runComputer(startOnWhite: Bool = false) -> [Coordinate2D<Int>: Color] {
         var direction = Direction.up
         var coordinate = Coordinate2D(x: 0, y: 0)
@@ -19,7 +17,7 @@ class Day11: Day {
             coordinatesPainted[coordinate] = .white
         }
 
-        let computer = IntcodeComputer(memory: memory)
+        let computer = IntcodeComputer(input: inputString)
         computer.run()
 
         while computer.state != .halted {

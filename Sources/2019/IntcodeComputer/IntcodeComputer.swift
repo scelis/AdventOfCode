@@ -38,10 +38,6 @@ public class IntcodeComputer {
         case halted
     }
 
-    public static func parse(input: String) -> [Int] {
-        return input.components(separatedBy: ",").map({ Int($0)! })
-    }
-
     private(set) public var state = State.none
     public var outputBuffer: [Int] = []
 
@@ -67,6 +63,10 @@ public class IntcodeComputer {
 
     public init(memory: [Int]) {
         self.memory = memory
+    }
+
+    public init(input: String) {
+        self.memory = input.components(separatedBy: ",").map({ Int($0)! })
     }
 
     public func run(input: [Int] = []) {

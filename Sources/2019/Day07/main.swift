@@ -3,8 +3,6 @@ import Foundation
 import IntcodeComputer
 
 class Day07: Day {
-    lazy var memory: [Int] = IntcodeComputer.parse(input: inputString)
-
     override func part1() -> String {
         var maxSignal = Int.min
         for a in 0...4 {
@@ -14,15 +12,15 @@ class Day07: Day {
                         for e in 0...4 {
                             let set: Set<Int> = [a, b, c, d, e]
                             if set.count == 5 {
-                                let computerA = IntcodeComputer(memory: memory)
+                                let computerA = IntcodeComputer(input: inputString)
                                 computerA.run(input: [a, 0])
-                                let computerB = IntcodeComputer(memory: memory)
+                                let computerB = IntcodeComputer(input: inputString)
                                 computerB.run(input: [b, computerA.readInt()!])
-                                let computerC = IntcodeComputer(memory: memory)
+                                let computerC = IntcodeComputer(input: inputString)
                                 computerC.run(input: [c, computerB.readInt()!])
-                                let computerD = IntcodeComputer(memory: memory)
+                                let computerD = IntcodeComputer(input: inputString)
                                 computerD.run(input: [d, computerC.readInt()!])
-                                let computerE = IntcodeComputer(memory: memory)
+                                let computerE = IntcodeComputer(input: inputString)
                                 computerE.run(input: [e, computerD.readInt()!])
                                 maxSignal = max(maxSignal, computerE.readInt()!)
                             }
@@ -46,7 +44,7 @@ class Day07: Day {
                             if set.count == 5 {
                                 var computers: [IntcodeComputer] = []
                                 for _ in 0...4 {
-                                    computers.append(IntcodeComputer(memory: memory))
+                                    computers.append(IntcodeComputer(input: inputString))
                                 }
 
                                 computers[0].run(input: [a, 0])

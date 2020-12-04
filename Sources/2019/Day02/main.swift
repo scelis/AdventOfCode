@@ -3,10 +3,8 @@ import Foundation
 import IntcodeComputer
 
 class Day02: Day {
-    lazy var memory: [Int] = IntcodeComputer.parse(input: inputString)
-
     override func part1() -> String {
-        let computer = IntcodeComputer(memory: memory)
+        let computer = IntcodeComputer(input: inputString)
         computer[1] = 12
         computer[2] = 2
         computer.run()
@@ -16,7 +14,7 @@ class Day02: Day {
     override func part2() -> String {
         for noun in 0...99 {
             for verb in 0...99 {
-                let computer = IntcodeComputer(memory: memory)
+                let computer = IntcodeComputer(input: inputString)
                 computer[1] = noun
                 computer[2] = verb
                 computer.run()
