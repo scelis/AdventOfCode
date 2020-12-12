@@ -34,4 +34,8 @@ public struct Coordinate3D<T: SignedNumeric & Comparable & Hashable & BinaryInte
         let z2 = (a.z >= self.z && self.z >= b.z)
         return (x1 || x2) && (y1 || y2) && (z1 || z2)
     }
+
+    public func point3D() -> Point3D {
+        return (Double(x), Double(y), Double(z))
+    }
 }

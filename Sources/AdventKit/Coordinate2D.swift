@@ -19,7 +19,7 @@ public struct Coordinate2D<T: SignedNumeric & Comparable & Hashable & BinaryInte
     }
 
     public func manhattanDistance(from: Coordinate2D) -> T {
-        return abs(x - from.x) + abs(y - from.y)
+        return T(AdventKit.manhattanDistance(a: self.point2D(), b: from.point2D()))
     }
 
     public func isBetween(a: Coordinate2D, b: Coordinate2D) -> Bool {
@@ -28,6 +28,10 @@ public struct Coordinate2D<T: SignedNumeric & Comparable & Hashable & BinaryInte
         let y1 = (a.y <= self.y && self.y <= b.y)
         let y2 = (a.y >= self.y && self.y >= b.y)
         return (x1 || x2) && (y1 || y2)
+    }
+
+    public func point2D() -> Point2D {
+        return (Double(x), Double(y))
     }
 }
 

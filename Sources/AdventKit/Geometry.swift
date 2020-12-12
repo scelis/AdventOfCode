@@ -1,6 +1,7 @@
 import Foundation
 
 public typealias Point2D = (x: Double, y: Double)
+public typealias Point3D = (x: Double, y: Double, z: Double)
 
 public func rad2deg(_ number: Double) -> Double {
     return number * 180 / .pi
@@ -10,15 +11,15 @@ public func deg2rad(_ number: Double) -> Double {
     return number * .pi / 180
 }
 
-public func areaOfTriangle<T>(a: Coordinate2D<T>, b: Coordinate2D<T>, c: Coordinate2D<T>) -> Double {
-    let p1 = Double(a.x) * Double(b.y - c.y)
-    let p2 = Double(b.x) * Double(c.y - a.y)
-    let p3 = Double(c.x) * Double(a.y - b.y)
-    return abs(Double(p1 + p2 + p3)) / 2
+public func areaOfTriangle(a: Point2D, b: Point2D, c: Point2D) -> Double {
+    let p1 = a.x * (b.y - c.y)
+    let p2 = b.x * (c.y - a.y)
+    let p3 = c.x * (a.y - b.y)
+    return abs(p1 + p2 + p3) / 2
 }
 
-public func manhattanDistance(pointA: Point2D, pointB: Point2D) -> Double {
-    return abs(pointA.x - pointB.x) + abs(pointA.y - pointB.y)
+public func manhattanDistance(a: Point2D, b: Point2D) -> Double {
+    return abs(a.x - b.x) + abs(a.y - b.y)
 }
 
 public func rotate(

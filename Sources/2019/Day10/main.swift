@@ -36,7 +36,7 @@ class Day10: Day {
                         asteroid1 != asteroid2,
                         visibleAsteroids.contains(asteroid1),
                         visibleAsteroids.contains(asteroid2),
-                        areaOfTriangle(a: candidateStation, b: asteroid1, c: asteroid2) == 0
+                        areaOfTriangle(a: candidateStation.point2D(), b: asteroid1.point2D(), c: asteroid2.point2D()) == 0
                     {
                         if asteroid1.isBetween(a: candidateStation, b: asteroid2) {
                             visibleAsteroids.remove(asteroid2)
