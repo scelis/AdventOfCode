@@ -71,7 +71,7 @@ class Day15: Day {
     func explore(node: Node) {
         travel(to: node)
 
-        for direction in CardinalDirection.allCases {
+        for direction in CardinalDirection.mainDirections {
             let nextCoordinate = node.coordinate.step(inCardinalDirection: direction)
             if coordinates[nextCoordinate] == nil {
                 var newNode = node
