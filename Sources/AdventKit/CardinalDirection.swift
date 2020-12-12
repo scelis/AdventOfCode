@@ -5,7 +5,6 @@ public enum CardinalDirection: String {
     case south = "S"
     case east = "E"
     case west = "W"
-
     case northEast = "NE"
     case northWest = "NW"
     case southEast = "SE"
@@ -41,5 +40,29 @@ public enum CardinalDirection: String {
         case .east: return .west
         case .west: return .east
         }
+    }
+
+    public func turnRight(degrees: Int = 90) -> CardinalDirection {
+        assert(degrees >= 0)
+        var degrees = degrees
+        var direction = self
+        while degrees >= 45 {
+            switch direction {
+            case .east: direction = .southEast
+            case .southEast: direction = .south
+            case .south: direction = .southWest
+            case .southWest: direction = .west
+            case .west: direction = .northWest
+            case .northWest: direction = .north
+            case .north: direction = .northEast
+            case .northEast: direction = .east
+            }
+            degrees -= 45
+        }
+        return direction
+    }
+
+    public func turnLeft(degrees: Int = 90) -> CardinalDirection {
+        return turnRight(degrees: 360 - degrees)
     }
 }

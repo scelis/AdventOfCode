@@ -65,4 +65,13 @@ extension Coordinate2D where T == Int {
     public func step(inDirection direction: Direction, distance: T = 1) -> Coordinate2D {
         return Coordinate2D(x: x + direction.dx * distance, y: y + direction.dy * distance)
     }
+
+    public func rotate(around origin: Coordinate2D<Int>, degrees: Int) -> Coordinate2D<Int> {
+        let tmp = AdventKit.rotate(
+            point: (Double(self.x), Double(self.y)),
+            around: (Double(origin.x), Double(origin.y)),
+            degrees: Double(degrees)
+        )
+        return Coordinate2D(x: Int(round(tmp.x)), y: Int(round(tmp.y)))
+    }
 }
