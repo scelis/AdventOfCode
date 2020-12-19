@@ -45,7 +45,7 @@ open class Day {
 
     private func url(withFileName fileName: String) -> URL? {
         let className = String(cString: class_getName(type(of: self)))
-        let groups = try! className.firstMatch(withPattern: #"AOC_(\d+)_(\d+)"#)
+        let groups = try! className.firstMatch(withPattern: #"AOC_(\d+)_(\d+)"#)!
         var dir = URL(fileURLWithPath: "\(#file)").deletingLastPathComponent().deletingLastPathComponent()
         dir.appendPathComponent(groups[1])
         dir.appendPathComponent("Day\(groups[2])")

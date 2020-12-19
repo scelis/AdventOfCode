@@ -42,7 +42,7 @@ extension String {
         withPattern pattern: String,
         patternOptions: NSRegularExpression.Options = [],
         matchingOptions: NSRegularExpression.MatchingOptions = []) throws
-        -> [String]
+        -> [String]?
     {
         var ret: [String]?
         try enumerateMatches(
@@ -54,13 +54,13 @@ extension String {
                 return
             }
         )
-        return ret ?? []
+        return ret
     }
 
     public func firstMatch(
         withRegularExpression regex: NSRegularExpression,
         options: NSRegularExpression.MatchingOptions = []) throws
-        -> [String]
+        -> [String]?
     {
         var ret: [String]?
         try enumerateMatches(
@@ -71,6 +71,6 @@ extension String {
                 return
             }
         )
-        return ret ?? []
+        return ret
     }
 }
