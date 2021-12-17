@@ -66,5 +66,6 @@ let package = Package(
         .target(name: "AOC-2020-24", dependencies: ["AdventKit"], path: "Sources/2020/Day24", resources: [.copy("input.txt")]),
         .target(name: "AOC-2020-25", dependencies: ["AdventKit"], path: "Sources/2020/Day25", resources: [.copy("input.txt")]),
         .target(name: "AOC-2021-01", dependencies: ["AdventKit"], path: "Sources/2021/Day01", resources: [.copy("input.txt")]),
+        .target(name: "AOC-2021-02", dependencies: ["AdventKit"], path: "Sources/2021/Day02", resources: [.copy("input.txt")]),
     ]
 )
