@@ -10,7 +10,7 @@ let package = Package(
         .library(name: "IntcodeComputer", targets: ["IntcodeComputer"]),
     ],
     dependencies: [
-        .package(name: "swift-algorithms", url: "https://github.com/apple/swift-algorithms.git", .branch("main")),
+        .package(name: "swift-algorithms", url: "https://github.com/apple/swift-algorithms.git", from: "1.0.0"),
     ],
     targets: [
         .target(name: "AdventKit", dependencies: [.product(name: "Algorithms", package: "swift-algorithms")]),
