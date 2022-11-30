@@ -28,7 +28,7 @@ class Day02: Day {
             let j = Int(match[2])! - 1
             let character = match[3]
             let password = match[4]
-            if (password[i] == character) ^^ (password[j] == character) {
+            if (password[i] == character) != (password[j] == character) {
                 numValid += 1
             }
         }
