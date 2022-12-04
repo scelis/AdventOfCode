@@ -71,6 +71,7 @@ let package = Package(
         .executableTarget(name: "AOC-2021-04", dependencies: ["AdventKit"], path: "Sources/2021/Day04", resources: [.copy("input.txt")]),
         .executableTarget(name: "AOC-2021-05", dependencies: ["AdventKit"], path: "Sources/2021/Day05", resources: [.copy("input.txt")]),
         .executableTarget(name: "AOC-2021-06", dependencies: ["AdventKit"], path: "Sources/2021/Day06", resources: [.copy("input.txt")]),
+        .executableTarget(name: "AOC-2021-07", dependencies: ["AdventKit"], path: "Sources/2021/Day07", resources: [.copy("input.txt")]),
         .executableTarget(name: "AOC-2022-01", dependencies: ["AdventKit"], path: "Sources/2022/Day01", resources: [.copy("input.txt")]),
         .executableTarget(name: "AOC-2022-02", dependencies: ["AdventKit"], path: "Sources/2022/Day02", resources: [.copy("input.txt")]),
         .executableTarget(name: "AOC-2022-03", dependencies: ["AdventKit"], path: "Sources/2022/Day03", resources: [.copy("input.txt")]),
