@@ -11,9 +11,16 @@ let package = Package(
     ],
     dependencies: [
         .package(url: "https://github.com/apple/swift-algorithms.git", from: "1.0.0"),
+        .package(url: "https://github.com/pointfreeco/swift-parsing.git", from: "0.10.0"),
     ],
     targets: [
-        .target(name: "AdventKit", dependencies: [.product(name: "Algorithms", package: "swift-algorithms")]),
+        .target(
+            name: "AdventKit",
+            dependencies: [
+                .product(name: "Algorithms", package: "swift-algorithms"),
+                .product(name: "Parsing", package: "swift-algorithms"),
+            ]
+        ),
         .target(name: "IntcodeComputer", dependencies: ["AdventKit"], path: "Sources/2019/IntcodeComputer"),
         .executableTarget(name: "AOC-2019-01", dependencies: ["AdventKit"], path: "Sources/2019/Day01", resources: [.copy("input.txt")]),
         .executableTarget(name: "AOC-2019-02", dependencies: ["AdventKit", "IntcodeComputer"], path: "Sources/2019/Day02", resources: [.copy("input.txt")]),
