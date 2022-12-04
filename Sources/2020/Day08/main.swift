@@ -21,7 +21,7 @@ class Day08: Day {
 
     lazy var instructions: [Instruction] = inputLines.map { Instruction(line: $0) }
 
-    override func part1() -> String {
+    override func part1() -> Any {
         return execute(instructions: instructions).accumulatorValue.description
     }
 
@@ -47,7 +47,7 @@ class Day08: Day {
         return (i == instructions.count, accumulator)
     }
 
-    override func part2() -> String {
+    override func part2() -> Any {
         var i = 0
         while true {
             var modified = instructions

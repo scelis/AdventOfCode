@@ -5,7 +5,7 @@ class Day14: Day {
     let maskRegex = try! NSRegularExpression(pattern: #"mask = ([1X0]+)"#, options: [])
     let writeRegex = try! NSRegularExpression(pattern: #"mem\[([0-9]+)\] = ([0-9]+)"#, options: [])
 
-    override func part1() -> String {
+    override func part1() -> Any {
         var ones: Int64 = 0
         var zeroes: Int64 = 0
         var memory: [Int64: Int64] = [:]
@@ -36,7 +36,7 @@ class Day14: Day {
             .description
     }
 
-    override func part2() -> String {
+    override func part2() -> Any {
         var mask = ""
         var memory: [Int64: Int64] = [:]
         for line in inputLines {

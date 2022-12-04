@@ -3,7 +3,7 @@ import Foundation
 import IntcodeComputer
 
 class Day02: Day {
-    override func part1() -> String {
+    override func part1() -> Any {
         let computer = IntcodeComputer(input: inputString)
         computer[1] = 12
         computer[2] = 2
@@ -11,7 +11,7 @@ class Day02: Day {
         return computer[0].description
     }
 
-    override func part2() -> String {
+    override func part2() -> Any {
         for noun in 0...99 {
             for verb in 0...99 {
                 let computer = IntcodeComputer(input: inputString)

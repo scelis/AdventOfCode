@@ -22,7 +22,7 @@ class Day10: Day {
         return asteroids
     }()
 
-    override func part1() -> String {
+    override func part1() -> Any {
         var bestAsteroid: Coordinate2D<Int>?
         var mostDetected = 0
 
@@ -56,7 +56,7 @@ class Day10: Day {
         return "\(bestAsteroid!) \(mostDetected)"
     }
 
-    override func part2() -> String {
+    override func part2() -> Any {
         let station = Coordinate2D(x: 22, y: 28)
         let numAsteroids: Int = 200
 

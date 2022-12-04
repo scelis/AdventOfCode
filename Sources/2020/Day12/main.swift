@@ -2,7 +2,7 @@ import AdventKit
 import Foundation
 
 class Day12: Day {
-    override func part1() -> String {
+    override func part1() -> Any {
         var location = Coordinate2D<Int>(x: 0, y: 0)
         var direction = CardinalDirection.east
         inputLines.forEach { line in
@@ -22,7 +22,7 @@ class Day12: Day {
         return location.manhattanDistance(from: .init(x: 0, y: 0)).description
     }
 
-    override func part2() -> String {
+    override func part2() -> Any {
         let origin = Coordinate2D<Int>(x: 0, y: 0)
         var ship = origin
         var waypoint = origin

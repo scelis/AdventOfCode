@@ -7,7 +7,7 @@ class Day06: Day {
         return inputLines.first!.components(separatedBy: ",").map({ Int($0)! })
     }()
 
-    override func part1() -> String {
+    override func part1() -> Any {
         var state = lanternFish
 
         for _ in 0..<80 {
@@ -28,7 +28,7 @@ class Day06: Day {
             .description
     }
 
-    override func part2() -> String {
+    override func part2() -> Any {
         var counts: [Int: Int] = [:]
         for fish in lanternFish {
             counts[fish] = (counts[fish] ?? 0) + 1

@@ -2,11 +2,11 @@ import AdventKit
 import Foundation
 
 class Day03: Day {
-    override func part1() -> String {
+    override func part1() -> Any {
         return numTrees(onSlope: Coordinate2D(x: 3, y: 1)).description
     }
 
-    override func part2() -> String {
+    override func part2() -> Any {
         let slopes = [
             Coordinate2D(x: 1, y: 1),
             Coordinate2D(x: 3, y: 1),

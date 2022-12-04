@@ -3,7 +3,7 @@ import Algorithms
 import Foundation
 
 class Day03: Day {
-    override func part1() -> String {
+    override func part1() -> Any {
         let length = inputLines[0].count
         var ones: [Int] = .init(repeating: 0, count: length)
         var total = 0
@@ -76,7 +76,7 @@ class Day03: Day {
         return items[0]
     }
 
-    override func part2() -> String {
+    override func part2() -> Any {
         let oxygen = Int(whittleDown(items: inputLines, rating: .oxygenGenerator), radix: 2)!
         let co2 = Int(whittleDown(items: inputLines, rating: .co2Scrubber), radix: 2)!
         return "\(oxygen * co2)"

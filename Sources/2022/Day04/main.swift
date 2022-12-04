@@ -9,20 +9,18 @@ class Day04: Day {
         return inputLines.map { try! pairParser.parse($0) }
     }()
 
-    override func part1() -> String {
+    override func part1() -> Any {
         return pairs.filter { pair in
             return pair.0.contains(pair.1) || pair.1.contains(pair.0)
         }
         .count
-        .description
     }
 
-    override func part2() -> String {
+    override func part2() -> Any {
         return pairs.filter { pair in
             return pair.0.overlaps(pair.1)
         }
         .count
-        .description
     }
 }
 

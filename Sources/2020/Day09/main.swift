@@ -5,7 +5,7 @@ import Foundation
 class Day09: Day {
     var part1Result: Int?
 
-    override func part1() -> String {
+    override func part1() -> Any {
         part1Result = inputIntegers
             .enumerated()
             .first { (index, element) -> Bool in
@@ -19,7 +19,7 @@ class Day09: Day {
         return "\(part1Result!)"
     }
 
-    override func part2() -> String {
+    override func part2() -> Any {
         var i = 0
         while i < inputIntegers.count {
             var j = i

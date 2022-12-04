@@ -3,7 +3,7 @@ import Foundation
 import IntcodeComputer
 
 class Day07: Day {
-    override func part1() -> String {
+    override func part1() -> Any {
         var maxSignal = Int.min
         for a in 0...4 {
             for b in 0...4 {
@@ -33,7 +33,7 @@ class Day07: Day {
         return "\(maxSignal)"
     }
 
-    override func part2() -> String {
+    override func part2() -> Any {
         var maxSignal = Int.min
         for a in 5...9 {
             for b in 5...9 {

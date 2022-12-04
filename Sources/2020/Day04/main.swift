@@ -77,11 +77,11 @@ class Day04: Day {
         return true
     }
 
-    override func part1() -> String {
+    override func part1() -> Any {
         return numberOfValidPassports(strict: false).description
     }
 
-    override func part2() -> String {
+    override func part2() -> Any {
         return numberOfValidPassports(strict: true).description
     }
 }

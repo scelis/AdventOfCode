@@ -2,11 +2,11 @@ import AdventKit
 import Foundation
 
 class Day15: Day {
-    override func part1() -> String {
+    override func part1() -> Any {
         return numberSpoken(atTurn: 2020).description
     }
 
-    override func part2() -> String {
+    override func part2() -> Any {
         return numberSpoken(atTurn: 30_000_000).description
     }
 

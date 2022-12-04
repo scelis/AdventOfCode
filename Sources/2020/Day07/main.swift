@@ -29,7 +29,7 @@ class Day07: Day {
         }
     }
 
-    override func part1() -> String {
+    override func part1() -> Any {
         var colors: Set<String> = []
         addColorsThatEventuallyContain(color: "shiny gold", toSet: &colors)
         return "\(colors.count)"
@@ -45,7 +45,7 @@ class Day07: Day {
         }
     }
 
-    override func part2() -> String {
+    override func part2() -> Any {
         var work: [String: Int] = [:]
         let result = numberOfBagsInside(color: "shiny gold", work: &work)
         return "\(result)"

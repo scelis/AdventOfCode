@@ -54,11 +54,11 @@ class Day04: Day {
 
     let range = 146810...612564
 
-    override func part1() -> String {
+    override func part1() -> Any {
         return "\(numberOfPasswords(in: range, strict: false))"
     }
 
-    override func part2() -> String {
+    override func part2() -> Any {
         return "\(numberOfPasswords(in: range, strict: true))"
     }
 }

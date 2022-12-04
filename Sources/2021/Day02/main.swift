@@ -57,7 +57,7 @@ class Day02: Day {
         }
     }
 
-    override func part1() -> String {
+    override func part1() -> Any {
         let finalPosition = inputLines
             .map { Command(string: $0) }
             .reduce(Position()) { $0.apply1(command: $1) }
@@ -65,7 +65,7 @@ class Day02: Day {
         return "\(finalPosition.depth * finalPosition.horizontal)"
     }
 
-    override func part2() -> String {
+    override func part2() -> Any {
         let finalPosition = inputLines
             .map { Command(string: $0) }
             .reduce(Position()) { $0.apply2(command: $1) }

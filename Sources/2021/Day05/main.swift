@@ -73,11 +73,11 @@ class Day05: Day {
             .count
     }
 
-    override func part1() -> String {
+    override func part1() -> Any {
         return calculateOverlaps(allowDiagonals: false).description
     }
 
-    override func part2() -> String {
+    override func part2() -> Any {
         return calculateOverlaps(allowDiagonals: true).description
     }
 }

@@ -66,7 +66,7 @@ class Day02: Day {
         }
     }
 
-    override func part1() -> String {
+    override func part1() -> Any {
         return inputLines.map { line in
             let array = line.components(separatedBy: .whitespaces)
             let theirs = Choice(string: array[0])
@@ -77,7 +77,7 @@ class Day02: Day {
         .description
     }
 
-    override func part2() -> String {
+    override func part2() -> Any {
         return inputLines.map { line in
             let array = line.components(separatedBy: .whitespaces)
             let theirs = Choice(string: array[0])

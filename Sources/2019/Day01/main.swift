@@ -2,13 +2,13 @@ import AdventKit
 import Foundation
 
 class Day01: Day {
-    override func part1() -> String {
+    override func part1() -> Any {
         return inputIntegers.reduce(0) { total, mass in
             return total + mass / 3 - 2
         }.description
     }
 
-    override func part2() -> String {
+    override func part2() -> Any {
         return inputIntegers.reduce(0) { total, mass in
             return total + fuelRequired(forItemWithMass: mass)
         }.description

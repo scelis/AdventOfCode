@@ -13,11 +13,11 @@ class Day01: Day {
             .sorted(by: >)
     }()
 
-    override func part1() -> String {
+    override func part1() -> Any {
         return sortedElves.first!.description
     }
 
-    override func part2() -> String {
+    override func part2() -> Any {
         return sortedElves
             .prefix(3)
             .reduce(0, +)

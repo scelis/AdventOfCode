@@ -4,7 +4,7 @@ import Foundation
 class Day02: Day {
     let pattern = #"(\d+)-(\d+) (\w): (\w+)"#
 
-    override func part1() -> String {
+    override func part1() -> Any {
         var numValid = 0
         try! inputString.enumerateMatches(withPattern: pattern) { match in
             let min = Int(match[1])!
@@ -21,7 +21,7 @@ class Day02: Day {
         return "\(numValid)"
     }
 
-    override func part2() -> String {
+    override func part2() -> Any {
         var numValid = 0
         try! inputString.enumerateMatches(withPattern: pattern) { match in
             let i = Int(match[1])! - 1

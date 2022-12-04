@@ -15,7 +15,7 @@ class Day12: Day {
         }
     }
 
-    override func part1() -> String {
+    override func part1() -> Any {
         return part1(
             a: Coordinate3D(x: 16, y: -11, z: 2),
             b: Coordinate3D(x: 0, y: -4, z: 7),
@@ -86,7 +86,7 @@ class Day12: Day {
         return energy
     }
 
-    override func part2() -> String {
+    override func part2() -> Any {
         return part2(
             a: Coordinate3D(x: 16, y: -11, z: 2),
             b: Coordinate3D(x: 0, y: -4, z: 7),

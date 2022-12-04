@@ -34,7 +34,7 @@ class Day07: Day {
         }
     }
 
-    override func part1() -> String {
+    override func part1() -> Any {
         return solve { crabs, location in
             return crabs
                 .map { abs($0 - location) }
@@ -42,7 +42,7 @@ class Day07: Day {
         }
     }
 
-    override func part2() -> String {
+    override func part2() -> Any {
         return solve { crabs, location in
             return crabs
                 .map { crabLocation in

@@ -3,7 +3,7 @@ import Algorithms
 import Foundation
 
 class Day10: Day {
-    override func part1() -> String {
+    override func part1() -> Any {
         var differences: [Int: Int] = [:]
         let integers = inputIntegers.sorted()
         integers
@@ -17,7 +17,7 @@ class Day10: Day {
         return "\(differences[1]! * (differences[3]! + 1))"
     }
 
-    override func part2() -> String {
+    override func part2() -> Any {
         let integers = inputIntegers.sorted()
         var memoize: [Int: Int] = [0: 1]
         for int in integers {

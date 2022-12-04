@@ -59,11 +59,11 @@ class Day06: Day {
         return totalDistance
     }
 
-    override func part1() -> String {
+    override func part1() -> Any {
         return "\(countDirectAndIndirectOrbits(from: "COM"))"
     }
 
-    override func part2() -> String {
+    override func part2() -> Any {
         return "\(distance(from: "YOU", to: "SAN") - 2)"
     }
 }

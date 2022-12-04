@@ -73,12 +73,12 @@ class Day14: Day {
         return requirements["ORE"]!
     }
 
-    override func part1() -> String {
+    override func part1() -> Any {
         let reactions = parse(input: inputString)
         return requirements(for: ["FUEL": 1], reactions: reactions).description
     }
 
-    override func part2() -> String {
+    override func part2() -> Any {
         let reactions = parse(input: inputString)
         var mostFuel = 0
         var increment = 1000000000000

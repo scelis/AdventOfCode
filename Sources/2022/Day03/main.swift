@@ -11,7 +11,7 @@ class Day03: Day {
         }
     }
 
-    override func part1() -> String {
+    override func part1() -> Any {
         inputLines
             .map { line -> Int in
                 let first = Set(line[0..<line.count/2])
@@ -22,7 +22,7 @@ class Day03: Day {
             .description
     }
 
-    override func part2() -> String {
+    override func part2() -> Any {
         inputLines
             .map { Set($0) }
             .chunks(ofCount: 3)

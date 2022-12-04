@@ -2,7 +2,7 @@ import AdventKit
 import Foundation
 
 class Day06: Day {
-    override func part1() -> String {
+    override func part1() -> Any {
         inputLines
             .split(separator: "")
             .map({ Set($0.joined()) })
@@ -10,7 +10,7 @@ class Day06: Day {
             .description
     }
 
-    override func part2() -> String {
+    override func part2() -> Any {
         inputLines
             .split(separator: "")
             .map { arr in

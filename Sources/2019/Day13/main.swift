@@ -11,7 +11,7 @@ class Day13: Day {
         case ball = 4
     }
 
-    override func part1() -> String {
+    override func part1() -> Any {
         let computer = IntcodeComputer(input: inputString)
         computer.run()
 
@@ -26,7 +26,7 @@ class Day13: Day {
         }.description
     }
 
-    override func part2() -> String {
+    override func part2() -> Any {
         let computer = IntcodeComputer(input: inputString)
         computer[0] = 2
         computer.run()

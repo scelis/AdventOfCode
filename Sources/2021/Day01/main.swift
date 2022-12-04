@@ -3,7 +3,7 @@ import Algorithms
 import Foundation
 
 class Day01: Day {
-    override func part1() -> String {
+    override func part1() -> Any {
         inputIntegers.adjacentPairs()
             .reduce(0) { partialResult, pair in
                 return (pair.1 > pair.0) ? partialResult + 1 : partialResult
@@ -11,7 +11,7 @@ class Day01: Day {
             .description
     }
 
-    override func part2() -> String {
+    override func part2() -> Any {
         inputIntegers.windows(ofCount: 3)
             .map { $0.reduce(0, +) }
             .adjacentPairs()

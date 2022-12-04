@@ -2,7 +2,7 @@ import AdventKit
 import Foundation
 
 class Day13: Day {
-    override func part1() -> String {
+    override func part1() -> Any {
         let timestamp = Int(inputLines[0])!
         let buses = inputLines[1]
             .components(separatedBy: ",")
@@ -32,7 +32,7 @@ class Day13: Day {
             }
     }
 
-    override func part2() -> String {
+    override func part2() -> Any {
         // (T + 0) % 13   == 0 == (T + 13) % 13
         // (T + 3) % 41   == 0 == (T + 44) % 41
         // (T + 13) % 997 == 0 == (T + 13) % 997

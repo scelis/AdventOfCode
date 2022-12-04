@@ -2,7 +2,7 @@ import AdventKit
 import Foundation
 
 class Day16: Day {
-    override func part1() -> String {
+    override func part1() -> Any {
         var numbers: [Int] = inputString.map( { Int(String($0))! })
         let pattern = [0, 1, 0, -1]
 
@@ -22,7 +22,7 @@ class Day16: Day {
         return Int(numbers[0..<8].map({ "\($0)" }).joined())!.description
     }
 
-    override func part2() -> String {
+    override func part2() -> Any {
         let numbers: [Int] = inputString.map( { Int(String($0))! })
         var input = Array<[Int]>.init(repeating: numbers, count: 10000).flatMap({ $0 })
         let startIndex = Int(Array(input.prefix(7)).map({ "\($0)" }).joined())!

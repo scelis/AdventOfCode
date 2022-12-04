@@ -26,14 +26,14 @@ class Day05: Day {
         return low * 8 + left
     }
 
-    override func part1() -> String {
+    override func part1() -> Any {
         return inputLines
             .map({ seatID(for: $0) })
             .reduce(0, max)
             .description
     }
 
-    override func part2() -> String {
+    override func part2() -> Any {
         let ids = inputLines.map({ seatID(for: $0) })
         let set = Set<Int>(ids)
         for i in (set.min()! + 1)..<set.max()! {

@@ -55,11 +55,11 @@ open class Day {
 
     // MARK: - Solving
 
-    open func part1() -> String {
+    open func part1() -> Any {
         return ""
     }
 
-    open func part2() -> String {
+    open func part2() -> Any {
         return ""
     }
 

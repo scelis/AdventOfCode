@@ -99,7 +99,7 @@ class Day15: Day {
         }
     }
 
-    override func part1() -> String {
+    override func part1() -> Any {
         while oxygenSystem == nil {
             let unexploredNode = unexplored.removeFirst()
             explore(node: unexploredNode)
@@ -108,7 +108,7 @@ class Day15: Day {
         return oxygenSystem!.distance.description
     }
 
-    override func part2() -> String {
+    override func part2() -> Any {
         travel(to: oxygenSystem!)
         home = oxygenSystem!.coordinate
         oxygenSystem?.distance = 0

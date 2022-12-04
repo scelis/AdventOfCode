@@ -5,7 +5,7 @@ class Day08: Day {
     let imageWidth = 25
     let imageHeight = 6
 
-    override func part1() -> String {
+    override func part1() -> Any {
         var layer = 0
         var x = 0
         var y = 0
@@ -34,7 +34,7 @@ class Day08: Day {
         return "\(result)"
     }
 
-    override func part2() -> String {
+    override func part2() -> Any {
         var x = 0
         var y = 0
         var result: [[String]] = .init(repeating: .init(repeating: "2", count: imageWidth), count: imageHeight)

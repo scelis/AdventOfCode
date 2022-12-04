@@ -96,7 +96,7 @@ class Day04: Day {
         return (numbers, boards)
     }
 
-    override func part1() -> String {
+    override func part1() -> Any {
         let (numbers, boards) = numbersAndBoards
 
         for number in numbers {
@@ -117,7 +117,7 @@ class Day04: Day {
         fatalError()
     }
 
-    override func part2() -> String {
+    override func part2() -> Any {
         var (numbers, boards) = numbersAndBoards
 
         for number in numbers {

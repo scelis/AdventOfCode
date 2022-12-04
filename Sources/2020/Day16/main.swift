@@ -47,7 +47,7 @@ class Day16: Day {
 
     var potentialTickets: [[Int]] = []
 
-    override func part1() -> String {
+    override func part1() -> Any {
         var allValidRanges = IndexSet()
         for indexSet in fields.values {
             allValidRanges = allValidRanges.union(indexSet)
@@ -72,7 +72,7 @@ class Day16: Day {
         return "\(errorRate)"
     }
 
-    override func part2() -> String {
+    override func part2() -> Any {
         var actualFields: [Set<String>] = .init(repeating: Set(Array(fields.keys)), count: fields.count)
 
         while true {

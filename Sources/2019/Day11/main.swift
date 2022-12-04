@@ -42,12 +42,12 @@ class Day11: Day {
         return coordinatesPainted
     }
 
-    override func part1() -> String {
+    override func part1() -> Any {
         let coordinatesPainted = runComputer()
         return "\(coordinatesPainted.count)"
     }
 
-    override func part2() -> String {
+    override func part2() -> Any {
         let coordinatesPainted = runComputer(startOnWhite: true)
 
         var output = "\n"
