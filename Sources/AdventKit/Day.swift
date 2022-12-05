@@ -28,15 +28,11 @@ open class Day {
             let string = String(data: input, encoding: .utf8)
             else { return "" }
 
-        return string.trimmingCharacters(in: .whitespacesAndNewlines)
+        return string.trimmingCharacters(in: .newlines)
     }()
 
     public lazy var inputLines: [String] = {
-        return inputString
-            .components(separatedBy: .newlines)
-            .compactMap({ line in
-                return line.trimmingCharacters(in: .whitespaces)
-            })
+        return inputString.components(separatedBy: .newlines)
     }()
 
     public lazy var inputIntegers: [Int] = {
