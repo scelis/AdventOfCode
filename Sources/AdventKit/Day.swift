@@ -1,6 +1,6 @@
 import Foundation
 
-open class Day {
+open class Day<Part1: CustomStringConvertible, Part2: CustomStringConvertible> {
 
     // MARK: - Initialization
 
@@ -8,7 +8,7 @@ open class Day {
     }
 
     public init(input: String) {
-        inputString = input
+        self.input = input
     }
 
     public init(fileName: String) {
@@ -21,7 +21,7 @@ open class Day {
         return url(withFileName: "input.txt")
     }()
 
-    public lazy var inputString: String = {
+    public lazy var input: String = {
         guard
             let url = inputURL,
             let input = FileManager.default.contents(atPath: url.path),
@@ -32,16 +32,12 @@ open class Day {
     }()
 
     public lazy var inputLines: [String] = {
-        return inputString.components(separatedBy: .newlines)
+        return input.components(separatedBy: .newlines)
     }()
 
-    public lazy var inputIntegers: [Int] = {
-        return inputLines.compactMap({ Int($0) })
-    }()
-
-    private func url(withFileName fileName: String) -> URL? {
+    private func url(withFileName fileName: String) -> URL {
         let className = String(cString: class_getName(type(of: self)))
-        let groups = try! className.firstMatch(withPattern: #"AOC_(\d+)_(\d+)"#)!
+        let groups = try! className.firstMatch(withPattern: #"AOC(\d+)\.Day(\d+)"#)!
         var dir = URL(fileURLWithPath: "\(#file)").deletingLastPathComponent().deletingLastPathComponent()
         dir.appendPathComponent(groups[1])
         dir.appendPathComponent("Day\(groups[2])")
@@ -51,16 +47,11 @@ open class Day {
 
     // MARK: - Solving
 
-    open func part1() -> Any {
-        return ""
+    open func part1() throws -> Part1 {
+        fatalError("You must implement part1()")
     }
 
-    open func part2() -> Any {
-        return ""
-    }
-
-    public func run() {
-        print("Part 1: \(part1())")
-        print("Part 2: \(part2())")
+    open func part2() throws -> Part2 {
+        fatalError("You must implement part2()")
     }
 }
