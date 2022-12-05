@@ -1,12 +1,12 @@
 import AdventKit
 import Foundation
 
-class Day03: Day {
-    override func part1() -> Any {
-        return numTrees(onSlope: Coordinate2D(x: 3, y: 1)).description
+public class Day03: Day<Int, Int> {
+    public override func part1() throws -> Int {
+        return numTrees(onSlope: Coordinate2D(x: 3, y: 1))
     }
 
-    override func part2() -> Any {
+    public override func part2() throws -> Int {
         let slopes = [
             Coordinate2D(x: 1, y: 1),
             Coordinate2D(x: 3, y: 1),
@@ -17,7 +17,6 @@ class Day03: Day {
         return slopes
             .map({ numTrees(onSlope: $0) })
             .reduce(1, *)
-            .description
     }
 
     func numTrees(onSlope slope: Coordinate2D<Int>) -> Int {

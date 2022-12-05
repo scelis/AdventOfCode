@@ -2,7 +2,7 @@ import AdventKit
 import Algorithms
 import Foundation
 
-class Day11: Day {
+public class Day11: Day<Int, Int> {
     enum Tile: Character {
         case floor = "."
         case emptySeat = "L"
@@ -73,11 +73,11 @@ class Day11: Day {
         }
     }
 
-    override func part1() -> Any {
+    public override func part1() throws -> Int {
         return solve(part: 1)
     }
 
-    override func part2() -> Any {
+    public override func part2() throws -> Int {
         return solve(part: 2)
     }
 }

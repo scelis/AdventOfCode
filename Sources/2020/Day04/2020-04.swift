@@ -1,7 +1,7 @@
 import AdventKit
 import Foundation
 
-class Day04: Day {
+public class Day04: Day<Int, Int> {
     enum Field: String, CaseIterable {
         case birthYear = "byr"
         case issueYear = "iyr"
@@ -77,11 +77,11 @@ class Day04: Day {
         return true
     }
 
-    override func part1() -> Any {
-        return numberOfValidPassports(strict: false).description
+    public override func part1() throws -> Int {
+        return numberOfValidPassports(strict: false)
     }
 
-    override func part2() -> Any {
-        return numberOfValidPassports(strict: true).description
+    public override func part2() throws -> Int {
+        return numberOfValidPassports(strict: true)
     }
 }

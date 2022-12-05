@@ -1,11 +1,11 @@
 import AdventKit
 import Foundation
 
-class Day14: Day {
+public class Day14: Day<Int64, Int64> {
     let maskRegex = try! NSRegularExpression(pattern: #"mask = ([1X0]+)"#, options: [])
     let writeRegex = try! NSRegularExpression(pattern: #"mem\[([0-9]+)\] = ([0-9]+)"#, options: [])
 
-    override func part1() -> Any {
+    public override func part1() throws -> Int64 {
         var ones: Int64 = 0
         var zeroes: Int64 = 0
         var memory: [Int64: Int64] = [:]
@@ -35,7 +35,7 @@ class Day14: Day {
             .reduce(0, +)
     }
 
-    override func part2() -> Any {
+    public override func part2() throws -> Int64 {
         var mask = ""
         var memory: [Int64: Int64] = [:]
         for line in inputLines {

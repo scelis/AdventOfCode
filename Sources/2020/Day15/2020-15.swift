@@ -1,18 +1,20 @@
 import AdventKit
 import Foundation
 
-class Day15: Day {
-    override func part1() -> Any {
-        return numberSpoken(atTurn: 2020).description
+public class Day15: Day<Int, Int> {
+    lazy var numbers: [Int] = {
+        return input.components(separatedBy: ",").map({ Int($0)! })
+    }()
+
+    public override func part1() throws -> Int {
+        return numberSpoken(atTurn: 2020)
     }
 
-    override func part2() -> Any {
-        return numberSpoken(atTurn: 30_000_000).description
+    public override func part2() throws -> Int {
+        return numberSpoken(atTurn: 30_000_000)
     }
 
     func numberSpoken(atTurn turn: Int) -> Int {
-        let numbers = inputString.components(separatedBy: ",").map({ Int($0)! })
-
         var lastNumber = 0
         var turnForNumber: [Int: Int] = [:]
         var turnsSinceLastNumber = 0

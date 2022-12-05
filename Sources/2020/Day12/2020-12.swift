@@ -1,8 +1,8 @@
 import AdventKit
 import Foundation
 
-class Day12: Day {
-    override func part1() -> Any {
+public class Day12: Day<Int, Int> {
+    public override func part1() throws -> Int {
         var location = Coordinate2D<Int>(x: 0, y: 0)
         var direction = CardinalDirection.east
         inputLines.forEach { line in
@@ -19,10 +19,10 @@ class Day12: Day {
             }
         }
 
-        return location.manhattanDistance(from: .init(x: 0, y: 0)).description
+        return location.manhattanDistance(from: .init(x: 0, y: 0))
     }
 
-    override func part2() -> Any {
+    public override func part2() throws -> Int {
         let origin = Coordinate2D<Int>(x: 0, y: 0)
         var ship = origin
         var waypoint = origin
@@ -49,6 +49,6 @@ class Day12: Day {
             }
         }
 
-        return ship.manhattanDistance(from: origin).description
+        return ship.manhattanDistance(from: origin)
     }
 }

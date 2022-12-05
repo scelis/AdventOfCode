@@ -1,12 +1,12 @@
 import AdventKit
 import Foundation
 
-class Day02: Day {
+public class Day02: Day<Int, Int> {
     let pattern = #"(\d+)-(\d+) (\w): (\w+)"#
 
-    override func part1() -> Any {
+    public override func part1() throws -> Int {
         var numValid = 0
-        try! inputString.enumerateMatches(withPattern: pattern) { match in
+        try! input.enumerateMatches(withPattern: pattern) { match in
             let min = Int(match[1])!
             let max = Int(match[2])!
             let character = match[3]
@@ -18,12 +18,12 @@ class Day02: Day {
                 numValid += 1
             }
         }
-        return "\(numValid)"
+        return numValid
     }
 
-    override func part2() -> Any {
+    public override func part2() throws -> Int {
         var numValid = 0
-        try! inputString.enumerateMatches(withPattern: pattern) { match in
+        try! input.enumerateMatches(withPattern: pattern) { match in
             let i = Int(match[1])! - 1
             let j = Int(match[2])! - 1
             let character = match[3]
@@ -32,6 +32,6 @@ class Day02: Day {
                 numValid += 1
             }
         }
-        return "\(numValid)"
+        return numValid
     }
 }

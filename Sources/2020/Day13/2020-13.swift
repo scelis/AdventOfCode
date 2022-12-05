@@ -1,8 +1,8 @@
 import AdventKit
 import Foundation
 
-class Day13: Day {
-    override func part1() -> Any {
+public class Day13: Day<Int, Int> {
+    public override func part1() throws -> Int {
         let timestamp = Int(inputLines[0])!
         let buses = inputLines[1]
             .components(separatedBy: ",")
@@ -18,7 +18,7 @@ class Day13: Day {
             }
         }
 
-        return (bestBus * bestTimeToWait).description
+        return bestBus * bestTimeToWait
     }
 
     func printFunctions() {
@@ -32,7 +32,7 @@ class Day13: Day {
             }
     }
 
-    override func part2() -> Any {
+    public override func part2() throws -> Int {
         // (T + 0) % 13   == 0 == (T + 13) % 13
         // (T + 3) % 41   == 0 == (T + 44) % 41
         // (T + 13) % 997 == 0 == (T + 13) % 997
@@ -53,7 +53,7 @@ class Day13: Day {
         var current = increment
         while true {
             if (current + (44 - 13)) % 9_923_189 == 0 {
-                return "\(current - 13)"
+                return current - 13
             }
             current += increment
         }

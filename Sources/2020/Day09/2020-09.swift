@@ -2,10 +2,14 @@ import AdventKit
 import Algorithms
 import Foundation
 
-class Day09: Day {
+public class Day09: Day<Int, Int> {
     var part1Result: Int?
 
-    override func part1() -> Any {
+    lazy var inputIntegers: [Int] = {
+        return inputLines.map { Int($0)! }
+    }()
+
+    public override func part1() throws -> Int {
         part1Result = inputIntegers
             .enumerated()
             .first { (index, element) -> Bool in
@@ -16,10 +20,10 @@ class Day09: Day {
                     } == nil
             }!.element
 
-        return "\(part1Result!)"
+        return part1Result!
     }
 
-    override func part2() -> Any {
+    public override func part2() throws -> Int {
         var i = 0
         while i < inputIntegers.count {
             var j = i
@@ -33,11 +37,11 @@ class Day09: Day {
             if sum == part1Result {
                 let range = inputIntegers[i...j]
                 let result = range.min()! + range.max()!
-                return "\(result)"
+                return result
             } else {
                 i += 1
             }
         }
-        return ""
+        fatalError()
     }
 }

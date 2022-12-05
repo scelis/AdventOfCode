@@ -25,7 +25,7 @@ wagon: 26-657 or 672-959
 zone: 36-621 or 637-963
 """
 
-class Day16: Day {
+public class Day16: Day<Int, Int> {
     let ticket = [83,127,131,137,113,73,139,101,67,53,107,103,59,149,109,61,79,71,97,89]
 
     let regex = try! NSRegularExpression(
@@ -47,7 +47,7 @@ class Day16: Day {
 
     var potentialTickets: [[Int]] = []
 
-    override func part1() -> Any {
+    public override func part1() throws -> Int {
         var allValidRanges = IndexSet()
         for indexSet in fields.values {
             allValidRanges = allValidRanges.union(indexSet)
@@ -69,10 +69,10 @@ class Day16: Day {
             }
         }
 
-        return "\(errorRate)"
+        return errorRate
     }
 
-    override func part2() -> Any {
+    public override func part2() throws -> Int {
         var actualFields: [Set<String>] = .init(repeating: Set(Array(fields.keys)), count: fields.count)
 
         while true {
@@ -117,7 +117,7 @@ class Day16: Day {
                         ret *= ticket[i]
                     }
                 }
-                return "\(ret)"
+                return ret
             }
         }
     }
