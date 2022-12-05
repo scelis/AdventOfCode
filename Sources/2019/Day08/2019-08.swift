@@ -1,18 +1,18 @@
 import AdventKit
 import Foundation
 
-class Day08: Day {
+public class Day08: Day<Int, String> {
     let imageWidth = 25
     let imageHeight = 6
 
-    override func part1() -> Any {
+    public override func part1() throws -> Int {
         var layer = 0
         var x = 0
         var y = 0
         var layerData: [Character: Int] = [:]
 
         var layerDatas: [[Character: Int]] = []
-        for character in inputString {
+        for character in input {
             layerData[character] = (layerData[character] ?? 0) + 1
 
             x = (x + 1) % imageWidth
@@ -31,15 +31,15 @@ class Day08: Day {
         }
 
         let result = (minData![Character("1")] ?? 0) * (minData![Character("2")] ?? 0)
-        return "\(result)"
+        return result
     }
 
-    override func part2() -> Any {
+    public override func part2() throws -> String {
         var x = 0
         var y = 0
         var result: [[String]] = .init(repeating: .init(repeating: "2", count: imageWidth), count: imageHeight)
 
-        for character in inputString {
+        for character in input {
             switch character {
             case "0", "1":
                 if result[y][x] == "2" {
@@ -62,6 +62,6 @@ class Day08: Day {
             answer += "\n"
             answer += line.joined()
         }
-        return "\(answer)"
+        return answer
     }
 }

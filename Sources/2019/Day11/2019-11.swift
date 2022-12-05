@@ -1,8 +1,7 @@
 import AdventKit
 import Foundation
-import IntcodeComputer
 
-class Day11: Day {
+public class Day11: Day<Int, String> {
     enum Color: Int {
         case black = 0
         case white = 1
@@ -17,7 +16,7 @@ class Day11: Day {
             coordinatesPainted[coordinate] = .white
         }
 
-        let computer = IntcodeComputer(input: inputString)
+        let computer = IntcodeComputer(input: input)
         computer.run()
 
         while computer.state != .halted {
@@ -42,12 +41,12 @@ class Day11: Day {
         return coordinatesPainted
     }
 
-    override func part1() -> Any {
+    public override func part1() throws -> Int {
         let coordinatesPainted = runComputer()
-        return "\(coordinatesPainted.count)"
+        return coordinatesPainted.count
     }
 
-    override func part2() -> Any {
+    public override func part2() throws -> String {
         let coordinatesPainted = runComputer(startOnWhite: true)
 
         var output = "\n"

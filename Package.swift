@@ -21,10 +21,11 @@ let package = Package(
                 .product(name: "Parsing", package: "swift-parsing"),
             ]
         ),
+        .target(name: "AOC2019", dependencies: ["AdventKit"], path: "Sources/2019"),
         .target(name: "AOC2020", dependencies: ["AdventKit"], path: "Sources/2020"),
         .target(name: "AOC2021", dependencies: ["AdventKit"], path: "Sources/2021"),
         .target(name: "AOC2022", dependencies: ["AdventKit"], path: "Sources/2022"),
-        .executableTarget(name: "AdventOfCode", dependencies: ["AOC2020", "AOC2021", "AOC2022"]),
-        .testTarget(name: "AdventOfCodeTests", dependencies: ["AOC2020", "AOC2021", "AOC2022"]),
+        .executableTarget(name: "AdventOfCode", dependencies: ["AOC2019", "AOC2020", "AOC2021", "AOC2022"]),
+        .testTarget(name: "AdventOfCodeTests", dependencies: ["AOC2019", "AOC2020", "AOC2021", "AOC2022"]),
     ]
 )

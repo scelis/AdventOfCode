@@ -1,17 +1,16 @@
 import AdventKit
 import Foundation
-import IntcodeComputer
 
-class Day05: Day {
-    override func part1() -> Any {
-        let computer = IntcodeComputer(input: inputString)
+public class Day05: Day<Int, Int> {
+    public override func part1() throws -> Int {
+        let computer = IntcodeComputer(input: input)
         computer.run(input: [1])
-        return "\(computer.outputBuffer.last!)"
+        return computer.outputBuffer.last!
     }
 
-    override func part2() -> Any {
-        let computer = IntcodeComputer(input: inputString)
+    public override func part2() throws -> Int {
+        let computer = IntcodeComputer(input: input)
         computer.run(input: [5])
-        return "\(computer.outputBuffer.last!)"
+        return computer.outputBuffer.last!
     }
 }

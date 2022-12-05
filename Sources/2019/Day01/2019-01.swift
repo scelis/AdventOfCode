@@ -1,9 +1,9 @@
 import AdventKit
 import Foundation
 
-public class Day01: Day {
-    public func part1() throws -> Int {
-        return input()
+public class Day01: Day<Int, Int> {
+    public override func part1() throws -> Int {
+        return input
             .components(separatedBy: .newlines)
             .map { Int($0)! }
             .reduce(0) { total, mass in
@@ -11,8 +11,8 @@ public class Day01: Day {
             }
     }
 
-    public func part2() throws -> Int {
-        return input()
+    public override func part2() throws -> Int {
+        return input
             .components(separatedBy: .newlines)
             .map { Int($0)! }
             .reduce(0) { total, mass in

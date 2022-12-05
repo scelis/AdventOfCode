@@ -1,9 +1,8 @@
 import AdventKit
 import Algorithms
 import Foundation
-import IntcodeComputer
 
-class Day13: Day {
+public class Day13: Day<Int, Int> {
     enum Tile: Int {
         case empty = 0
         case wall = 1
@@ -12,23 +11,24 @@ class Day13: Day {
         case ball = 4
     }
 
-    override func part1() -> Any {
-        let computer = IntcodeComputer(input: inputString)
+    public override func part1() throws -> Int {
+        let computer = IntcodeComputer(input: input)
         computer.run()
 
         var output: [Coordinate2D<Int>: Tile] = [:]
         for instruction in computer.outputBuffer.chunks(ofCount: 3) {
-            let coordinate = Coordinate2D(x: instruction[0], y: instruction[1])
-            output[coordinate] = Tile(rawValue: instruction[2])
+            let i = instruction.startIndex
+            let coordinate = Coordinate2D(x: instruction[i], y: instruction[i + 1])
+            output[coordinate] = Tile(rawValue: instruction[i + 2])
         }
 
         return output.values.reduce(0) { (result, tile) -> Int in
             return (tile == .block) ? result + 1 : result
-        }.description
+        }
     }
 
-    override func part2() -> Any {
-        let computer = IntcodeComputer(input: inputString)
+    public override func part2() throws -> Int {
+        let computer = IntcodeComputer(input: input)
         computer[0] = 2
         computer.run()
 
@@ -38,11 +38,12 @@ class Day13: Day {
         var blockPositions: Set<Coordinate2D<Int>> = []
         while true {
             for instruction in computer.outputBuffer.chunks(ofCount: 3) {
-                let coordinate = Coordinate2D(x: instruction[0], y: instruction[1])
+                let i = instruction.startIndex
+                let coordinate = Coordinate2D(x: instruction[i], y: instruction[i + 1])
                 if coordinate == Coordinate2D(x: -1, y: 0) {
-                    score = instruction[2]
+                    score = instruction[i + 2]
                 } else {
-                    let tile = Tile(rawValue: instruction[2])!
+                    let tile = Tile(rawValue: instruction[i + 2])!
                     if tile == .ball {
                         ballPosition = coordinate
                     }
@@ -76,6 +77,6 @@ class Day13: Day {
             }
         }
 
-        return score.description
+        return score
     }
 }

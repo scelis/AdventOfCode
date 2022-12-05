@@ -1,9 +1,9 @@
 import AdventKit
 import Foundation
 
-class Day16: Day {
-    override func part1() -> Any {
-        var numbers: [Int] = inputString.map( { Int(String($0))! })
+public class Day16: Day<Int, Int> {
+    public override func part1() throws -> Int {
+        var numbers: [Int] = input.map( { Int(String($0))! })
         let pattern = [0, 1, 0, -1]
 
         for _ in 0..<100 {
@@ -19,11 +19,11 @@ class Day16: Day {
             }
         }
 
-        return Int(numbers[0..<8].map({ "\($0)" }).joined())!.description
+        return Int(numbers[0..<8].map({ "\($0)" }).joined())!
     }
 
-    override func part2() -> Any {
-        let numbers: [Int] = inputString.map( { Int(String($0))! })
+    public override func part2() throws -> Int {
+        let numbers: [Int] = input.map( { Int(String($0))! })
         var input = Array<[Int]>.init(repeating: numbers, count: 10000).flatMap({ $0 })
         let startIndex = Int(Array(input.prefix(7)).map({ "\($0)" }).joined())!
 
@@ -33,6 +33,6 @@ class Day16: Day {
             }
         }
 
-        return Int(input[startIndex..<(startIndex + 8)].map({ "\($0)" }).joined())!.description
+        return Int(input[startIndex..<(startIndex + 8)].map({ "\($0)" }).joined())!
     }
 }

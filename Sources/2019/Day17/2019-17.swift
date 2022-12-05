@@ -1,8 +1,7 @@
 import AdventKit
 import Foundation
-import IntcodeComputer
 
-class Day17: Day {
+public class Day17: Day<Int, Int> {
     enum Tile: Character {
         case scaffold = "#"
         case space = "."
@@ -31,8 +30,8 @@ class Day17: Day {
         }
     }
 
-    override func part1() -> Any {
-        let computer = IntcodeComputer(input: inputString)
+    public override func part1() throws -> Int {
+        let computer = IntcodeComputer(input: input)
         computer.run()
 
         prettyPrint(integers: computer.outputBuffer)
@@ -55,11 +54,11 @@ class Day17: Day {
             }
         }
 
-        return "\(sum)"
+        return sum
     }
 
-    override func part2() -> Any {
-        let computer = IntcodeComputer(input: inputString)
+    public override func part2() throws -> Int {
+        let computer = IntcodeComputer(input: input)
         computer[0] = 2
         computer.run()
 
@@ -79,7 +78,7 @@ class Day17: Day {
         }
 
         prettyPrint(integers: computer.outputBuffer)
-        return "\(computer.outputBuffer.last!)"
+        return computer.outputBuffer.last!
     }
 
     func readTiles(integers: [Int]) -> [Coordinate2D<Int>: Tile] {

@@ -1,11 +1,11 @@
 import AdventKit
 import Foundation
 
-class Day06: Day {
+public class Day06: Day<Int, Int> {
     var centerToFarDict: [String: [String]] = [:]
     var farToCenterDict: [String: String] = [:]
 
-    override init() {
+    public override init() {
         super.init()
 
         for line in inputLines {
@@ -59,11 +59,11 @@ class Day06: Day {
         return totalDistance
     }
 
-    override func part1() -> Any {
-        return "\(countDirectAndIndirectOrbits(from: "COM"))"
+    public override func part1() throws -> Int {
+        return countDirectAndIndirectOrbits(from: "COM")
     }
 
-    override func part2() -> Any {
-        return "\(distance(from: "YOU", to: "SAN") - 2)"
+    public override func part2() throws -> Int {
+        return distance(from: "YOU", to: "SAN") - 2
     }
 }

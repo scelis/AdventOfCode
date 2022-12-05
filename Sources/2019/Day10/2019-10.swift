@@ -1,7 +1,7 @@
 import AdventKit
 import Foundation
 
-class Day10: Day {
+public class Day10: Day<Int, Int> {
     lazy var asteroids: Set<Coordinate2D<Int>> = {
         var asteroids: Set<Coordinate2D<Int>> = []
 
@@ -22,8 +22,7 @@ class Day10: Day {
         return asteroids
     }()
 
-    override func part1() -> Any {
-        var bestAsteroid: Coordinate2D<Int>?
+    public override func part1() throws -> Int {
         var mostDetected = 0
 
         for candidateStation in asteroids {
@@ -49,14 +48,13 @@ class Day10: Day {
 
             if visibleAsteroids.count > mostDetected {
                 mostDetected = visibleAsteroids.count
-                bestAsteroid = candidateStation
             }
         }
 
-        return "\(bestAsteroid!) \(mostDetected)"
+        return mostDetected
     }
 
-    override func part2() -> Any {
+    public override func part2() throws -> Int {
         let station = Coordinate2D(x: 22, y: 28)
         let numAsteroids: Int = 200
 
@@ -109,6 +107,6 @@ class Day10: Day {
             numDestroyed += 1
         }
 
-        return "\(lastDestroyed!) \(lastDestroyed!.x * 100 + lastDestroyed!.y)"
+        return lastDestroyed!.x * 100 + lastDestroyed!.y
     }
 }

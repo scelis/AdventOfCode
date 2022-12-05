@@ -1,7 +1,7 @@
 import AdventKit
 import Foundation
 
-class Day03: Day {
+public class Day03: Day<Int, Int> {
     struct SimpleVector {
         var direction: Direction
         var length: Int
@@ -59,11 +59,11 @@ class Day03: Day {
     }
 
 
-    override func part1() -> Any {
-        return findIntersection(input: inputString).description
+    public override func part1() throws -> Int {
+        return findIntersection(input: input)
     }
 
-    override func part2() -> Any {
-        return findIntersection(input: inputString, closest: false).description
+    public override func part2() throws -> Int {
+        return findIntersection(input: input, closest: false)
     }
 }

@@ -1,9 +1,8 @@
 import AdventKit
 import Foundation
-import IntcodeComputer
 
-class Day07: Day {
-    override func part1() -> Any {
+public class Day07: Day<Int, Int> {
+    public override func part1() throws -> Int {
         var maxSignal = Int.min
         for a in 0...4 {
             for b in 0...4 {
@@ -12,15 +11,15 @@ class Day07: Day {
                         for e in 0...4 {
                             let set: Set<Int> = [a, b, c, d, e]
                             if set.count == 5 {
-                                let computerA = IntcodeComputer(input: inputString)
+                                let computerA = IntcodeComputer(input: input)
                                 computerA.run(input: [a, 0])
-                                let computerB = IntcodeComputer(input: inputString)
+                                let computerB = IntcodeComputer(input: input)
                                 computerB.run(input: [b, computerA.readInt()!])
-                                let computerC = IntcodeComputer(input: inputString)
+                                let computerC = IntcodeComputer(input: input)
                                 computerC.run(input: [c, computerB.readInt()!])
-                                let computerD = IntcodeComputer(input: inputString)
+                                let computerD = IntcodeComputer(input: input)
                                 computerD.run(input: [d, computerC.readInt()!])
-                                let computerE = IntcodeComputer(input: inputString)
+                                let computerE = IntcodeComputer(input: input)
                                 computerE.run(input: [e, computerD.readInt()!])
                                 maxSignal = max(maxSignal, computerE.readInt()!)
                             }
@@ -30,10 +29,10 @@ class Day07: Day {
             }
         }
 
-        return "\(maxSignal)"
+        return maxSignal
     }
 
-    override func part2() -> Any {
+    public override func part2() throws -> Int {
         var maxSignal = Int.min
         for a in 5...9 {
             for b in 5...9 {
@@ -44,7 +43,7 @@ class Day07: Day {
                             if set.count == 5 {
                                 var computers: [IntcodeComputer] = []
                                 for _ in 0...4 {
-                                    computers.append(IntcodeComputer(input: inputString))
+                                    computers.append(IntcodeComputer(input: input))
                                 }
 
                                 computers[0].run(input: [a, 0])
@@ -73,6 +72,6 @@ class Day07: Day {
             }
         }
 
-        return "\(maxSignal)"
+        return maxSignal
     }
 }

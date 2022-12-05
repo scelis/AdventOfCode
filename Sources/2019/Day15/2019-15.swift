@@ -1,8 +1,7 @@
 import AdventKit
 import Foundation
-import IntcodeComputer
 
-extension CardinalDirection {
+private extension CardinalDirection {
     var command: Int {
         switch self {
         case .north: return 1
@@ -14,7 +13,7 @@ extension CardinalDirection {
     }
 }
 
-class Day15: Day {
+public class Day15: Day<Int, Int> {
     struct Node {
         enum NodeType: Int {
             case wall = 0
@@ -32,7 +31,7 @@ class Day15: Day {
         }
     }
 
-    lazy var computer = IntcodeComputer(input: inputString)
+    lazy var computer = IntcodeComputer(input: input)
     var coordinates: [Coordinate2D<Int>: Node] = [:]
     var unexplored: [Node] = []
     var currentNode: Node
@@ -100,16 +99,16 @@ class Day15: Day {
         }
     }
 
-    override func part1() -> Any {
+    public override func part1() throws -> Int {
         while oxygenSystem == nil {
             let unexploredNode = unexplored.removeFirst()
             explore(node: unexploredNode)
         }
 
-        return oxygenSystem!.distance.description
+        return oxygenSystem!.distance
     }
 
-    override func part2() -> Any {
+    public override func part2() throws -> Int {
         travel(to: oxygenSystem!)
         home = oxygenSystem!.coordinate
         oxygenSystem?.distance = 0
@@ -123,6 +122,6 @@ class Day15: Day {
 
         return coordinates.values.reduce(0) { (result, node) -> Int in
             return max(result, (node.type == .floor) ? node.distance : 0)
-        }.description
+        }
     }
 }

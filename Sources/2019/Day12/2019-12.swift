@@ -1,7 +1,7 @@
 import AdventKit
 import Foundation
 
-class Day12: Day {
+public class Day12: Day<Int, Int> {
     class Moon {
         var position: Coordinate3D<Int>
         var velocity: Coordinate3D<Int>
@@ -15,14 +15,14 @@ class Day12: Day {
         }
     }
 
-    override func part1() -> Any {
+    public override func part1() throws -> Int {
         return part1(
             a: Coordinate3D(x: 16, y: -11, z: 2),
             b: Coordinate3D(x: 0, y: -4, z: 7),
             c: Coordinate3D(x: 6, y: 4, z: -10),
             d: Coordinate3D(x: -3, y: -2, z: -4),
             steps: 1000
-        ).description
+        )
     }
 
     func part1(
@@ -86,13 +86,13 @@ class Day12: Day {
         return energy
     }
 
-    override func part2() -> Any {
+    public override func part2() throws -> Int {
         return part2(
             a: Coordinate3D(x: 16, y: -11, z: 2),
             b: Coordinate3D(x: 0, y: -4, z: 7),
             c: Coordinate3D(x: 6, y: 4, z: -10),
             d: Coordinate3D(x: -3, y: -2, z: -4)
-        ).description
+        )
     }
 
     func part2(

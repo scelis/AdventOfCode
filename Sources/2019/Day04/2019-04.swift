@@ -1,7 +1,7 @@
 import AdventKit
 import Foundation
 
-class Day04: Day {
+public class Day04: Day<Int, Int> {
     func isValidPassword(number: Int, strict: Bool) -> Bool {
         var previous: Int?
         var foundDouble = false
@@ -54,11 +54,11 @@ class Day04: Day {
 
     let range = 146810...612564
 
-    override func part1() -> Any {
-        return "\(numberOfPasswords(in: range, strict: false))"
+    public override func part1() throws -> Int {
+        return numberOfPasswords(in: range, strict: false)
     }
 
-    override func part2() -> Any {
-        return "\(numberOfPasswords(in: range, strict: true))"
+    public override func part2() throws -> Int {
+        return numberOfPasswords(in: range, strict: true)
     }
 }
