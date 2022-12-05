@@ -2,7 +2,7 @@ import AdventKit
 import Algorithms
 import Foundation
 
-public class Day04: Day {
+public class Day04: Day<Int, Int> {
     class Square {
         var value: Int
         var marked: Bool = false
@@ -96,7 +96,7 @@ public class Day04: Day {
         return (numbers, boards)
     }
 
-    override func part1() -> Int {
+    public override func part1() throws -> Int {
         let (numbers, boards) = numbersAndBoards
 
         for number in numbers {
@@ -117,7 +117,7 @@ public class Day04: Day {
         fatalError()
     }
 
-    override func part2() -> Int {
+    public override func part2() throws -> Int {
         var (numbers, boards) = numbersAndBoards
 
         for number in numbers {

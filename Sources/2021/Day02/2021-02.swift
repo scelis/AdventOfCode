@@ -2,7 +2,7 @@ import AdventKit
 import Algorithms
 import Foundation
 
-class Day02: Day<String, String> {
+public class Day02: Day<Int, Int> {
     enum Command {
         case forward(Int)
         case up(Int)
@@ -57,21 +57,21 @@ class Day02: Day<String, String> {
         }
     }
 
-    override func part1() throws -> String {
+    public override func part1() throws -> Int {
         let finalPosition = input
             .components(separatedBy: .newlines)
             .map { Command(string: $0) }
             .reduce(Position()) { $0.apply1(command: $1) }
 
-        return "\(finalPosition.depth * finalPosition.horizontal)"
+        return finalPosition.depth * finalPosition.horizontal
     }
 
-    override func part2() throws -> String {
+    public override func part2() throws -> Int {
         let finalPosition = input
             .components(separatedBy: .newlines)
             .map { Command(string: $0) }
             .reduce(Position()) { $0.apply2(command: $1) }
 
-        return "\(finalPosition.depth * finalPosition.horizontal)"
+        return finalPosition.depth * finalPosition.horizontal
     }
 }

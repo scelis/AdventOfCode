@@ -2,15 +2,15 @@ import AdventKit
 import Algorithms
 import Foundation
 
-class Day07: Day {
-    func solve(distanceFunction: ([Int], Int) -> Int) -> String {
-        let crabs = inputString.components(separatedBy: ",").map({ Int($0)! })
+public class Day07: Day<Int, Int> {
+    func solve(distanceFunction: ([Int], Int) -> Int) -> Int {
+        let crabs = input.components(separatedBy: ",").map({ Int($0)! })
         let average: Int = crabs.reduce(0, +) / crabs.count
         let base = distanceFunction(crabs, average)
         let increasing = distanceFunction(crabs, average + 1)
         let decreasing = distanceFunction(crabs, average - 1)
 
-        guard base > increasing || base > decreasing else { return base.description }
+        guard base > increasing || base > decreasing else { return base }
 
         var best: Int
         var distanceFromAverage: Int
@@ -29,12 +29,12 @@ class Day07: Day {
                 best = nextTotalCost
                 distanceFromAverage = nextDistanceFromAverage
             } else {
-                return best.description
+                return best
             }
         }
     }
 
-    override func part1() -> Any {
+    public override func part1() throws -> Int {
         return solve { crabs, location in
             return crabs
                 .map { abs($0 - location) }
@@ -42,7 +42,7 @@ class Day07: Day {
         }
     }
 
-    override func part2() -> Any {
+    public override func part2() throws -> Int {
         return solve { crabs, location in
             return crabs
                 .map { crabLocation in

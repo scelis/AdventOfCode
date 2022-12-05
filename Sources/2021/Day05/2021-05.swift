@@ -2,7 +2,7 @@ import AdventKit
 import Algorithms
 import Foundation
 
-class Day05: Day {
+public class Day05: Day<Int, Int> {
     struct Line {
         var first: Coordinate2D<Int>
         var second: Coordinate2D<Int>
@@ -73,11 +73,11 @@ class Day05: Day {
             .count
     }
 
-    override func part1() -> Any {
-        return calculateOverlaps(allowDiagonals: false).description
+    public override func part1() throws -> Int {
+        return calculateOverlaps(allowDiagonals: false)
     }
 
-    override func part2() -> Any {
-        return calculateOverlaps(allowDiagonals: true).description
+    public override func part2() throws -> Int {
+        return calculateOverlaps(allowDiagonals: true)
     }
 }

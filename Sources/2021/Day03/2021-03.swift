@@ -2,8 +2,8 @@ import AdventKit
 import Algorithms
 import Foundation
 
-class Day03: Day<Int, Int> {
-    override func part1() -> Int {
+public class Day03: Day<Int, Int> {
+    public override func part1() throws -> Int {
         let length = inputLines[0].count
         var ones: [Int] = .init(repeating: 0, count: length)
         var total = 0
@@ -76,7 +76,7 @@ class Day03: Day<Int, Int> {
         return items[0]
     }
 
-    override func part2() throws -> Int {
+    public override func part2() throws -> Int {
         let oxygen = Int(whittleDown(items: inputLines, rating: .oxygenGenerator), radix: 2)!
         let co2 = Int(whittleDown(items: inputLines, rating: .co2Scrubber), radix: 2)!
         return oxygen * co2

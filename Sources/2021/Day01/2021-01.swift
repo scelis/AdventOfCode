@@ -2,8 +2,8 @@ import AdventKit
 import Algorithms
 import Foundation
 
-class Day01: Day<Int, Int> {
-    override func part1() throws -> Int {
+public class Day01: Day<Int, Int> {
+    public override func part1() throws -> Int {
         input
             .components(separatedBy: .newlines)
             .map { Int($0)! }
@@ -13,7 +13,7 @@ class Day01: Day<Int, Int> {
             }
     }
 
-    override func part2() throws -> Int {
+    public override func part2() throws -> Int {
         input
             .components(separatedBy: .newlines)
             .map { Int($0)! }
