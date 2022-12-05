@@ -1,4 +1,5 @@
 import AdventKit
+import Algorithms
 import Foundation
 import IntcodeComputer
 

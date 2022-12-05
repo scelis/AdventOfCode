@@ -9,6 +9,7 @@ extension CardinalDirection {
         case .south: return 2
         case .west: return 3
         case .east: return 4
+        default: return -1
         }
     }
 }

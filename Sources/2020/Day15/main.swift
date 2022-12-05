@@ -33,11 +33,4 @@ class Day15: Day {
     }
 }
 
-assert(Day15(input: "1,3,2").part1() == "1")
-assert(Day15(input: "2,1,3").part1() == "10")
-assert(Day15(input: "1,2,3").part1() == "27")
-assert(Day15(input: "2,3,1").part1() == "78")
-assert(Day15(input: "3,2,1").part1() == "438")
-assert(Day15(input: "3,1,2").part1() == "1836")
-
 Day15().run()

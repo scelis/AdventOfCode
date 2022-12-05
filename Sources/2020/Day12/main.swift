@@ -53,15 +53,4 @@ class Day12: Day {
     }
 }
 
-let example = """
-F10
-N3
-F7
-R90
-F11
-"""
-
-assert(Day12(input: example).part1() == "25")
-assert(Day12(input: example).part2() == "286")
-
 Day12().run()

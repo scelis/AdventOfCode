@@ -33,7 +33,6 @@ class Day14: Day {
         return memory
             .values
             .reduce(0, +)
-            .description
     }
 
     override func part2() -> Any {
@@ -74,7 +73,6 @@ class Day14: Day {
         return memory
             .values
             .reduce(0, +)
-            .description
     }
 
     func write(value: Int64, toAddress address: [Character], memory: inout [Int64: Int64]) {
@@ -95,23 +93,5 @@ class Day14: Day {
         }
     }
 }
-
-let example1 = """
-mask = XXXXXXXXXXXXXXXXXXXXXXXXXXXXX1XXXX0X
-mem[8] = 11
-mem[7] = 101
-mem[8] = 0
-"""
-
-assert(Day14(input: example1).part1() == "165")
-
-let example2 = """
-mask = 000000000000000000000000000000X1001X
-mem[42] = 100
-mask = 00000000000000000000000000000000X0XX
-mem[26] = 1
-"""
-
-assert(Day14(input: example2).part2() == "208")
 
 Day14().run()

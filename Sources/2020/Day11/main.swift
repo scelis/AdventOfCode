@@ -74,28 +74,12 @@ class Day11: Day {
     }
 
     override func part1() -> Any {
-        return solve(part: 1).description
+        return solve(part: 1)
     }
 
     override func part2() -> Any {
-        return solve(part: 2).description
+        return solve(part: 2)
     }
 }
-
-let example1 = """
-L.LL.LL.LL
-LLLLLLL.LL
-L.L.L..L..
-LLLL.LL.LL
-L.LL.LL.LL
-L.LLLLL.LL
-..L.L.....
-LLLLLLLLLL
-L.LLLLLL.L
-L.LLLLL.LL
-"""
-
-assert(Day11(input: example1).part1() == "37")
-assert(Day11(input: example1).part2() == "26")
 
 Day11().run()

@@ -5,10 +5,7 @@ import PackageDescription
 let package = Package(
     name: "Advent of Code",
     platforms: [.macOS(.v13)],
-    products: [
-        .library(name: "AdventKit", targets: ["AdventKit"]),
-        .library(name: "IntcodeComputer", targets: ["IntcodeComputer"]),
-    ],
+    products: [],
     dependencies: [
         .package(url: "https://github.com/apple/swift-algorithms.git", from: "1.0.0"),
         .package(url: "https://github.com/pointfreeco/swift-parsing.git", from: "0.10.0"),
@@ -83,5 +80,6 @@ let package = Package(
         .executableTarget(name: "AOC-2022-02", dependencies: ["AdventKit"], path: "Sources/2022/Day02", resources: [.copy("input.txt")]),
         .executableTarget(name: "AOC-2022-03", dependencies: ["AdventKit"], path: "Sources/2022/Day03", resources: [.copy("input.txt")]),
         .executableTarget(name: "AOC-2022-04", dependencies: ["AdventKit"], path: "Sources/2022/Day04", resources: [.copy("input.txt")]),
+        .executableTarget(name: "AOC-2022-05", dependencies: ["AdventKit"], path: "Sources/2022/Day05", resources: [.copy("input.txt")]),
     ]
 )
