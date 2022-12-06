@@ -1,6 +1,15 @@
 import Foundation
 
 extension Int {
+    public init(digits: [Int]) {
+        var number = 0
+        for digit in digits {
+            number *= 10
+            number += digit
+        }
+        self = number
+    }
+
     public var digits: [Int] {
         var digits: [Int] = []
         var number = self
