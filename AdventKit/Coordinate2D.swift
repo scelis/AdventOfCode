@@ -70,6 +70,14 @@ extension Coordinate2D where T == Int {
         return Coordinate2D(x: x + direction.dx * distance, y: y + direction.dy * distance)
     }
 
+    public func neighboringCoordinates() -> Set<Coordinate2D> {
+        let neighbors = CardinalDirection.mainDirections.map { direction in
+            self.step(inCardinalDirection: direction)
+        }
+
+        return Set(neighbors)
+    }
+
     public func rotate(around origin: Coordinate2D<Int>, degrees: Int) -> Coordinate2D<Int> {
         let tmp = AdventKit.rotate(
             point: (Double(self.x), Double(self.y)),
