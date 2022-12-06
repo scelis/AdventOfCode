@@ -2,12 +2,7 @@ import Foundation
 
 extension Int {
     public init(digits: [Int]) {
-        var number = 0
-        for digit in digits {
-            number *= 10
-            number += digit
-        }
-        self = number
+        self = digits.reduce(0) { ($0 * 10) + $1 }
     }
 
     public var digits: [Int] {
