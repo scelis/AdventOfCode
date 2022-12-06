@@ -40,6 +40,7 @@ open class Day<Part1: CustomStringConvertible, Part2: CustomStringConvertible> {
         let groups = try! className.firstMatch(withPattern: #"AOC(\d+)\.Day(\d+)"#)!
         var dir = URL(fileURLWithPath: "\(#file)").deletingLastPathComponent().deletingLastPathComponent()
         dir.appendPathComponent(groups[1])
+        dir.appendPathComponent("Sources")
         dir.appendPathComponent("Day\(groups[2])")
         dir.appendPathComponent(fileName)
         return dir
