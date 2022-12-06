@@ -4,18 +4,17 @@ import Foundation
 
 public class Day06: Day<Int, Int> {
     public override func part1() throws -> Int {
-        return indexOfUniqueSequence(ofSize: 4, inString: input)! + 4
+        return endIndexOfUniqueSequence(ofSize: 4, inString: input)
     }
 
     public override func part2() throws -> Int {
-        return indexOfUniqueSequence(ofSize: 14, inString: input)! + 14
+        return endIndexOfUniqueSequence(ofSize: 14, inString: input)
     }
 
-    private func indexOfUniqueSequence(ofSize size: Int, inString string: String) -> Int? {
-        string
+    private func endIndexOfUniqueSequence(ofSize size: Int, inString string: String) -> Int {
+        return Array(string)
             .windows(ofCount: size)
-            .enumerated()
-            .first { Set($0.element).count == size }?
-            .offset
+            .first(where: { Set($0).count == size })!
+            .endIndex
     }
 }
