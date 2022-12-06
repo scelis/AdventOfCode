@@ -9,8 +9,8 @@ public class Day11: Day<Int, Int> {
         case occupiedSeat = "#"
     }
 
-    lazy var tiles: [Coordinate2D<Int>: Tile] = {
-        var dict = [Coordinate2D<Int>: Tile]()
+    lazy var tiles: [Coordinate2D: Tile] = {
+        var dict = [Coordinate2D: Tile]()
         for (y, line) in inputLines.enumerated() {
             for (x, character) in line.enumerated() {
                 dict[Coordinate2D(x: x, y: y)] = Tile(rawValue: character)

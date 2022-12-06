@@ -4,15 +4,15 @@ import Foundation
 
 public class Day05: Day<Int, Int> {
     struct Line {
-        var first: Coordinate2D<Int>
-        var second: Coordinate2D<Int>
+        var first: Coordinate2D
+        var second: Coordinate2D
 
         var isHorizontal: Bool { first.x == second.x }
         var isVertical: Bool { first.y == second.y }
         var isDiagonal: Bool { !isHorizontal && !isVertical }
 
-        var points: [Coordinate2D<Int>] {
-            var array: [Coordinate2D<Int>] = []
+        var points: [Coordinate2D] {
+            var array: [Coordinate2D] = []
 
             var current = first
             array.append(current)
@@ -43,7 +43,7 @@ public class Day05: Day<Int, Int> {
         return Line(first: coordinates[0], second: coordinates[1])
     }
 
-    func parse(coordinate: String) -> Coordinate2D<Int> {
+    func parse(coordinate: String) -> Coordinate2D {
         let numbers = coordinate
             .components(separatedBy: ",")
             .map { Int($0)! }
@@ -60,7 +60,7 @@ public class Day05: Day<Int, Int> {
             lines = lines.filter { $0.isDiagonal == false }
         }
 
-        var points: [Coordinate2D<Int> : Int] = [:]
+        var points: [Coordinate2D : Int] = [:]
         for line in lines {
             for point in line.points {
                 points[point] = (points[point] ?? 0) + 1

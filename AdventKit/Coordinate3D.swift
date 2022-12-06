@@ -1,27 +1,17 @@
 import Foundation
 
-public struct Coordinate3D<T: SignedNumeric & Comparable & Hashable & BinaryInteger>: Hashable {
-    public var x: T
-    public var y: T
-    public var z: T
+public struct Coordinate3D: Equatable, Hashable {
+    public var x: Int
+    public var y: Int
+    public var z: Int
 
-    public init(x: T, y: T, z: T) {
+    public init(x: Int, y: Int, z: Int) {
         self.x = x
         self.y = y
         self.z = z
     }
 
-    public static func == (lhs: Coordinate3D, rhs: Coordinate3D) -> Bool {
-        return lhs.x == rhs.x && lhs.y == rhs.y && lhs.z == rhs.z
-    }
-
-    public func hash(into hasher: inout Hasher) {
-        hasher.combine(x)
-        hasher.combine(y)
-        hasher.combine(z)
-    }
-
-    public func manhattanDistance(from: Coordinate3D) -> T {
+    public func manhattanDistance(from: Coordinate3D) -> Int {
         return abs(x - from.x) + abs(y - from.y) + abs(z - from.z)
     }
 
@@ -33,9 +23,5 @@ public struct Coordinate3D<T: SignedNumeric & Comparable & Hashable & BinaryInte
         let z1 = (a.z <= self.z && self.z <= b.z)
         let z2 = (a.z >= self.z && self.z >= b.z)
         return (x1 || x2) && (y1 || y2) && (z1 || z2)
-    }
-
-    public func point3D() -> Point3D {
-        return (Double(x), Double(y), Double(z))
     }
 }

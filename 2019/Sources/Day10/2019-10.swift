@@ -2,8 +2,8 @@ import AdventKit
 import Foundation
 
 public class Day10: Day<Int, Int> {
-    lazy var asteroids: Set<Coordinate2D<Int>> = {
-        var asteroids: Set<Coordinate2D<Int>> = []
+    lazy var asteroids: Set<Coordinate2D> = {
+        var asteroids: Set<Coordinate2D> = []
 
         let array = inputLines.map { Array($0) }
         for y in 0..<array.count {
@@ -35,7 +35,7 @@ public class Day10: Day<Int, Int> {
                         asteroid1 != asteroid2,
                         visibleAsteroids.contains(asteroid1),
                         visibleAsteroids.contains(asteroid2),
-                        areaOfTriangle(a: candidateStation.point2D(), b: asteroid1.point2D(), c: asteroid2.point2D()) == 0
+                        Geometry.areaOfTriangle(candidateStation, asteroid1, asteroid2) == 0
                     {
                         if asteroid1.isBetween(a: candidateStation, b: asteroid2) {
                             visibleAsteroids.remove(asteroid2)
@@ -61,13 +61,13 @@ public class Day10: Day<Int, Int> {
         var asteroids = self.asteroids
         asteroids.remove(station)
 
-        var degreesToCoordinates: [Int: [Coordinate2D<Int>]] = [:]
+        var degreesToCoordinates: [Int: [Coordinate2D]] = [:]
         for asteroid in asteroids {
             // Get the slope from the station to the asteroid in radians
             let radians = atan2(Double(asteroid.y - station.y), Double(asteroid.x - station.x))
 
             // Convert to degrees and distill down to the 0..<360 range
-            var degrees = rad2deg(radians) + 90
+            var degrees = Math.rad2deg(radians) + 90
             if degrees < 0 {
                 degrees += 360
             }
@@ -85,11 +85,11 @@ public class Day10: Day<Int, Int> {
         }
 
         let allDegreesSorted = degreesToCoordinates.keys.sorted()
-        var lastDestroyed: Coordinate2D<Int>?
+        var lastDestroyed: Coordinate2D?
         var numDestroyed = 0
         var degreesPointer = 0
         while numDestroyed < numAsteroids {
-            var coordinates: [Coordinate2D<Int>] = []
+            var coordinates: [Coordinate2D] = []
             var degrees = 0
 
             while coordinates.isEmpty {

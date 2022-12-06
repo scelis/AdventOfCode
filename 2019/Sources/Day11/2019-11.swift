@@ -7,10 +7,10 @@ public class Day11: Day<Int, String> {
         case white = 1
     }
 
-    private func runComputer(startOnWhite: Bool = false) -> [Coordinate2D<Int>: Color] {
+    private func runComputer(startOnWhite: Bool = false) -> [Coordinate2D: Color] {
         var direction = Direction.up
         var coordinate = Coordinate2D(x: 0, y: 0)
-        var coordinatesPainted: [Coordinate2D<Int>: Color] = [:]
+        var coordinatesPainted: [Coordinate2D: Color] = [:]
 
         if startOnWhite {
             coordinatesPainted[coordinate] = .white

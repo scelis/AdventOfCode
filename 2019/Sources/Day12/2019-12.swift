@@ -3,12 +3,12 @@ import Foundation
 
 public class Day12: Day<Int, Int> {
     class Moon {
-        var position: Coordinate3D<Int>
-        var velocity: Coordinate3D<Int>
+        var position: Coordinate3D
+        var velocity: Coordinate3D
 
         init(
-            position: Coordinate3D<Int>,
-            velocity: Coordinate3D<Int> = Coordinate3D(x: 0, y: 0, z: 0))
+            position: Coordinate3D,
+            velocity: Coordinate3D = Coordinate3D(x: 0, y: 0, z: 0))
         {
             self.position = position
             self.velocity = velocity
@@ -26,10 +26,10 @@ public class Day12: Day<Int, Int> {
     }
 
     func part1(
-        a: Coordinate3D<Int>,
-        b: Coordinate3D<Int>,
-        c: Coordinate3D<Int>,
-        d: Coordinate3D<Int>,
+        a: Coordinate3D,
+        b: Coordinate3D,
+        c: Coordinate3D,
+        d: Coordinate3D,
         steps: Int)
         -> Int
     {
@@ -96,10 +96,10 @@ public class Day12: Day<Int, Int> {
     }
 
     func part2(
-        a: Coordinate3D<Int>,
-        b: Coordinate3D<Int>,
-        c: Coordinate3D<Int>,
-        d: Coordinate3D<Int>)
+        a: Coordinate3D,
+        b: Coordinate3D,
+        c: Coordinate3D,
+        d: Coordinate3D)
         -> Int
     {
         var moons: [Moon] = []

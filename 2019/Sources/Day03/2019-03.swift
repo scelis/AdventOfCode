@@ -17,14 +17,14 @@ public class Day03: Day<Int, Int> {
         return line.components(separatedBy: ",").compactMap({ SimpleVector(rawValue: $0) })
     }
 
-    func allCoordinates(vectors: [SimpleVector]) -> [Coordinate2D<Int>: Int] {
-        var coordinates = [Coordinate2D<Int>: Int]()
+    func allCoordinates(vectors: [SimpleVector]) -> [Coordinate2D: Int] {
+        var coordinates = [Coordinate2D: Int]()
 
         var steps = 0
-        var current = Coordinate2D<Int>(x: 0, y: 0)
+        var current = Coordinate2D(x: 0, y: 0)
         for vector in vectors {
             for _ in 0..<vector.length {
-                let next = Coordinate2D<Int>(x: current.x + vector.direction.dx, y: current.y + vector.direction.dy)
+                let next = Coordinate2D(x: current.x + vector.direction.dx, y: current.y + vector.direction.dy)
                 steps += 1
                 coordinates[next] = coordinates[next] ?? steps
                 current = next
@@ -40,7 +40,7 @@ public class Day03: Day<Int, Int> {
             vectors.append(parseVectors(line: line))
         }
 
-        let origin = Coordinate2D<Int>(x: 0, y: 0)
+        let origin = Coordinate2D(x: 0, y: 0)
         let vA = vectors[0]
         let vB = vectors[1]
         let coordinatesA = allCoordinates(vectors: vA)

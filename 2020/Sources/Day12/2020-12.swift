@@ -3,7 +3,7 @@ import Foundation
 
 public class Day12: Day<Int, Int> {
     public override func part1() throws -> Int {
-        var location = Coordinate2D<Int>(x: 0, y: 0)
+        var location = Coordinate2D(x: 0, y: 0)
         var direction = CardinalDirection.east
         inputLines.forEach { line in
             let number = Int(line.dropFirst())!
@@ -23,7 +23,7 @@ public class Day12: Day<Int, Int> {
     }
 
     public override func part2() throws -> Int {
-        let origin = Coordinate2D<Int>(x: 0, y: 0)
+        let origin = Coordinate2D(x: 0, y: 0)
         var ship = origin
         var waypoint = origin
             .step(inCardinalDirection: .east, distance: 10)

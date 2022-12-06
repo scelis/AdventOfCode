@@ -19,7 +19,7 @@ public class Day03: Day<Int, Int> {
             .reduce(1, *)
     }
 
-    func numTrees(onSlope slope: Coordinate2D<Int>) -> Int {
+    func numTrees(onSlope slope: Coordinate2D) -> Int {
         var numTrees = 0
         let xLength = inputLines[0].count
         var current = Coordinate2D(x: 0, y: 0)

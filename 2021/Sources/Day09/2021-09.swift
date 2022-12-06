@@ -7,11 +7,11 @@ public class Day09: Day<Int, Int> {
     }
 
     public override func part2() throws -> Int {
-        var basinSizes: [Coordinate2D<Int>: Int] = [:]
-        var coordinatesToBasins: [Coordinate2D<Int>: Coordinate2D<Int>] = [:]
-        var coordinatesToCheck: Set<Coordinate2D<Int>> = []
+        var basinSizes: [Coordinate2D: Int] = [:]
+        var coordinatesToBasins: [Coordinate2D: Coordinate2D] = [:]
+        var coordinatesToCheck: Set<Coordinate2D> = []
 
-        let peekAroundCoordinate: (Coordinate2D<Int>) -> Void = { coordinate in
+        let peekAroundCoordinate: (Coordinate2D) -> Void = { coordinate in
             coordinate
                 .neighboringCoordinates()
                 .forEach { nearby in
@@ -58,8 +58,8 @@ public class Day09: Day<Int, Int> {
         return inputLines.map { $0.map { Int(String($0))! } }
     }()
 
-    private lazy var lowPoints: [Coordinate2D<Int>: Int] = {
-        var lowPoints: [Coordinate2D<Int>: Int] = [:]
+    private lazy var lowPoints: [Coordinate2D: Int] = {
+        var lowPoints: [Coordinate2D: Int] = [:]
         for i in 0..<integers.count {
             for j in 0..<integers[i].count {
                 let coordinate = Coordinate2D(x: j, y: i)

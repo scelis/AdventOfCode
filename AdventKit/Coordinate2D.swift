@@ -1,25 +1,16 @@
 import Foundation
 
-public struct Coordinate2D<T: SignedNumeric & Comparable & Hashable & BinaryInteger>: Hashable {
-    public var x: T
-    public var y: T
+public struct Coordinate2D: Equatable, Hashable {
+    public var x: Int
+    public var y: Int
 
-    public init(x: T, y: T) {
+    public init(x: Int, y: Int) {
         self.x = x
         self.y = y
     }
 
-    public static func == (lhs: Coordinate2D, rhs: Coordinate2D) -> Bool {
-        return lhs.x == rhs.x && lhs.y == rhs.y
-    }
-
-    public func hash(into hasher: inout Hasher) {
-        hasher.combine(x)
-        hasher.combine(y)
-    }
-
-    public func manhattanDistance(from: Coordinate2D) -> T {
-        return T(AdventKit.manhattanDistance(a: self.point2D(), b: from.point2D()))
+    public func manhattanDistance(from: Coordinate2D) -> Int {
+        return abs(from.x - x) + abs(from.y - y)
     }
 
     public func isBetween(a: Coordinate2D, b: Coordinate2D) -> Bool {
@@ -30,43 +21,29 @@ public struct Coordinate2D<T: SignedNumeric & Comparable & Hashable & BinaryInte
         return (x1 || x2) && (y1 || y2)
     }
 
-    public func point2D() -> Point2D {
-        return (Double(x), Double(y))
-    }
-}
-
-extension Collection where Element == Coordinate2D<Int> {
-    public var top: Coordinate2D<Int>? {
-        return self.min { a, b -> Bool in
-            return a.y < b.y
-        }
-    }
-
-    public var bottom: Coordinate2D<Int>? {
-        return self.max { a, b -> Bool in
-            return a.y < b.y
-        }
+    public func rotate(
+        around origin: Coordinate2D,
+        radians: Double
+    ) -> Coordinate2D {
+        let s = sin(radians)
+        let c = cos(radians)
+        let newX = c * Double(x - origin.x) - s * Double(y - origin.y) + Double(origin.x)
+        let newY = s * Double(x - origin.x) + c * Double(y - origin.y) + Double(origin.y)
+        return Coordinate2D(x: Int(round(newX)), y: Int(round(newY)))
     }
 
-    public var left: Coordinate2D<Int>? {
-        return self.min { a, b -> Bool in
-            return a.x < b.x
-        }
+    public func rotate(
+        around origin: Coordinate2D,
+        degrees: Int
+    ) -> Coordinate2D {
+        return rotate(around: origin, radians: Math.deg2rad(Double(degrees)))
     }
 
-    public var right: Coordinate2D<Int>? {
-        return self.max { a, b -> Bool in
-            return a.x < b.x
-        }
-    }
-}
-
-extension Coordinate2D where T == Int {
     public func step(inCardinalDirection direction: CardinalDirection, distance: Int = 1) -> Coordinate2D {
         return Coordinate2D(x: x + direction.dx * distance, y: y + direction.dy * distance)
     }
 
-    public func step(inDirection direction: Direction, distance: T = 1) -> Coordinate2D {
+    public func step(inDirection direction: Direction, distance: Int = 1) -> Coordinate2D {
         return Coordinate2D(x: x + direction.dx * distance, y: y + direction.dy * distance)
     }
 
@@ -77,13 +54,30 @@ extension Coordinate2D where T == Int {
 
         return Set(neighbors)
     }
+}
 
-    public func rotate(around origin: Coordinate2D<Int>, degrees: Int) -> Coordinate2D<Int> {
-        let tmp = AdventKit.rotate(
-            point: (Double(self.x), Double(self.y)),
-            around: (Double(origin.x), Double(origin.y)),
-            degrees: Double(degrees)
-        )
-        return Coordinate2D(x: Int(round(tmp.x)), y: Int(round(tmp.y)))
+extension Collection where Element == Coordinate2D {
+    public var top: Coordinate2D? {
+        return self.min { a, b -> Bool in
+            return a.y < b.y
+        }
+    }
+
+    public var bottom: Coordinate2D? {
+        return self.max { a, b -> Bool in
+            return a.y < b.y
+        }
+    }
+
+    public var left: Coordinate2D? {
+        return self.min { a, b -> Bool in
+            return a.x < b.x
+        }
+    }
+
+    public var right: Coordinate2D? {
+        return self.max { a, b -> Bool in
+            return a.x < b.x
+        }
     }
 }

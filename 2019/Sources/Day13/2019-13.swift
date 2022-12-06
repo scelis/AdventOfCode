@@ -15,7 +15,7 @@ public class Day13: Day<Int, Int> {
         let computer = IntcodeComputer(input: input)
         computer.run()
 
-        var output: [Coordinate2D<Int>: Tile] = [:]
+        var output: [Coordinate2D: Tile] = [:]
         for instruction in computer.outputBuffer.chunks(ofCount: 3) {
             let i = instruction.startIndex
             let coordinate = Coordinate2D(x: instruction[i], y: instruction[i + 1])
@@ -33,9 +33,9 @@ public class Day13: Day<Int, Int> {
         computer.run()
 
         var score = 0
-        var ballPosition: Coordinate2D<Int>?
-        var paddlePosition: Coordinate2D<Int>?
-        var blockPositions: Set<Coordinate2D<Int>> = []
+        var ballPosition: Coordinate2D?
+        var paddlePosition: Coordinate2D?
+        var blockPositions: Set<Coordinate2D> = []
         while true {
             for instruction in computer.outputBuffer.chunks(ofCount: 3) {
                 let i = instruction.startIndex

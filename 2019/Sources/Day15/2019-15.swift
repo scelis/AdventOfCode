@@ -21,7 +21,7 @@ public class Day15: Day<Int, Int> {
             case oxygenSystem = 2
         }
 
-        var coordinate: Coordinate2D<Int>
+        var coordinate: Coordinate2D
         var type: NodeType
         var distance: Int
         var path: [CardinalDirection]
@@ -32,7 +32,7 @@ public class Day15: Day<Int, Int> {
     }
 
     lazy var computer = IntcodeComputer(input: input)
-    var coordinates: [Coordinate2D<Int>: Node] = [:]
+    var coordinates: [Coordinate2D: Node] = [:]
     var unexplored: [Node] = []
     var currentNode: Node
     var oxygenSystem: Node?

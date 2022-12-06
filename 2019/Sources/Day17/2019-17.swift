@@ -81,8 +81,8 @@ public class Day17: Day<Int, Int> {
         return computer.outputBuffer.last!
     }
 
-    func readTiles(integers: [Int]) -> [Coordinate2D<Int>: Tile] {
-        var tiles: [Coordinate2D<Int>: Tile] = [:]
+    func readTiles(integers: [Int]) -> [Coordinate2D: Tile] {
+        var tiles: [Coordinate2D: Tile] = [:]
         var x = 0
         var y = 0
         for int in integers {
