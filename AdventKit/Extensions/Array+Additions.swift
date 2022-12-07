@@ -5,3 +5,9 @@ extension Array {
         return indices ~= index ? self[index] : nil
     }
 }
+
+extension Array<String> {
+    public func toFilePath() -> String {
+        return "/" + joined(separator: "/")
+    }
+}
