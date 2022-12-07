@@ -58,7 +58,7 @@ public class Day07: Day<Int, Int> {
 
         func calculateAndCacheSize(nodeId: String) -> Int {
             var size = 0
-            for child in graph.nodesAccessible(from: nodeId) {
+            for child in try! graph.nodesAccessible(from: nodeId) {
                 let childSize = graph.value(of: child)!
                 if childSize == 0 {
                     size += calculateAndCacheSize(nodeId: child)

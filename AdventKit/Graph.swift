@@ -52,8 +52,8 @@ public class Graph<NodeID: Hashable, NodeValue: Equatable> {
         return nodes[of]?.value
     }
 
-    public func nodesAccessible(from: NodeID) -> Set<NodeID> {
-        guard let node = nodes[from] else { return [] }
+    public func nodesAccessible(from: NodeID) throws -> Set<NodeID> {
+        guard let node = nodes[from] else { throw Error.nodeNotFound }
         return Set(node.connections.keys)
     }
 }
