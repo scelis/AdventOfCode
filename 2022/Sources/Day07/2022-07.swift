@@ -37,6 +37,7 @@ public class Day07: Day<Int, Int> {
                         case "..": currentPath.removeLast()
                         default: currentPath.append(dir)
                         }
+                        currentCommand = nil
                     }
                 } else if let currentCommand, case .ls = currentCommand {
                     let size = (components[0] == "dir") ? 0 : Int(components[0])!
