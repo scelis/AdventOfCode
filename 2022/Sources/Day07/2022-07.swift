@@ -17,9 +17,27 @@ public class Day07: Day<Int, Int> {
         }
     }
 
+    private struct Item: GraphNode {
+        enum ItemType: Equatable {
+            case file(Int)
+            case directory
+        }
+
+        var itemType: ItemType
+        var path: String
+        var id: String { path }
+
+        var size: Int {
+            switch itemType {
+            case .file(let size): return size
+            case .directory: return 0
+            }
+        }
+    }
+
     private lazy var graph = {
-        let graph = Graph<String, Int>()
-        graph.addNode(id: "/", value: 0)
+        let graph = Graph<Item>()
+        graph.add(node: Item(itemType: .directory, path: "/"))
 
         var currentCommand: Command?
         var currentPath: [String] = []
@@ -40,11 +58,15 @@ public class Day07: Day<Int, Int> {
                         currentCommand = nil
                     }
                 } else if let currentCommand, case .ls = currentCommand {
-                    let size = (components[0] == "dir") ? 0 : Int(components[0])!
                     let name = components[1]
                     let currentPathString = currentPath.toFilePath()
                     let childPathString = (currentPath + [name]).toFilePath()
-                    graph.addNode(id: childPathString, value: size)
+                    if components[0] == "dir" {
+                        graph.add(node: Item(itemType: .directory, path: childPathString))
+                    } else {
+                        let size = Int(components[0])!
+                        graph.add(node: Item(itemType: .file(size), path: childPathString))
+                    }
                     try! graph.addConnection(from: currentPathString, to: childPathString, bidirectional: false)
                 } else {
                     fatalError("Unknown output")
@@ -57,21 +79,22 @@ public class Day07: Day<Int, Int> {
     private lazy var directorySizes: [String: Int] = {
         var sizes: [String: Int] = [:]
 
-        func calculateAndCacheSize(nodeId: String) -> Int {
+        func calculateAndCacheSize(nodeID: String) -> Int {
             var size = 0
-            for child in try! graph.nodesAccessible(from: nodeId) {
-                let childSize = graph.value(of: child)!
-                if childSize == 0 {
-                    size += calculateAndCacheSize(nodeId: child)
-                } else {
+            for childID in try! graph.nodesAccessible(from: nodeID) {
+                let childNode = graph.node(withID: childID)!
+                switch childNode.itemType {
+                case .directory:
+                    size += calculateAndCacheSize(nodeID: childNode.id)
+                case .file(let childSize):
                     size += childSize
                 }
             }
-            sizes[nodeId] = size
+            sizes[nodeID] = size
             return size
         }
 
-        _ = calculateAndCacheSize(nodeId: "/")
+        _ = calculateAndCacheSize(nodeID: "/")
 
         return sizes
     }()

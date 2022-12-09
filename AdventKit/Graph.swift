@@ -1,59 +1,54 @@
 import Foundation
 
-public class Graph<NodeID: Hashable, NodeValue: Equatable> {
+public protocol GraphNode: Equatable, Identifiable {}
 
+public class Graph<Node: GraphNode> {
     public enum Error: Swift.Error {
         case nodeNotFound
     }
 
-    /// A representation of a node within the graph.
-    private struct Node {
-
-        /// The node identifier
-        var id: NodeID
-
-        /// The value associated with the node
-        var value: NodeValue
-
-        /// A dictionary of nodes connected to this node and the cost to travel there
-        var connections: [NodeID: Int] = [:]
+    private struct Connection: Hashable {
+        var origin: Node.ID
+        var destination: Node.ID
     }
 
-    private var nodes: [NodeID: Node] = [:]
+    private var nodes: [Node.ID: Node] = [:]
+    private var connections: [Node.ID: Set<Node.ID>] = [:]
+    private var connectionCosts: [Connection: Int] = [:]
 
     public init() {
     }
 
-    public func addNode(id: NodeID, value: NodeValue) {
-        nodes[id] = Node(id: id, value: value)
+    public func add(node: Node) {
+        nodes[node.id] = node
     }
 
     public func addConnection(
-        from: NodeID,
-        to: NodeID,
+        from: Node.ID,
+        to: Node.ID,
         cost: Int = 1,
         bidirectional: Bool = true
     ) throws {
         guard
-            var fromNode = nodes[from],
-            var toNode = nodes[to]
+            let _ = nodes[from],
+            let _ = nodes[to]
             else { throw Error.nodeNotFound }
 
-        fromNode.connections[to] = cost
-        nodes[fromNode.id] = fromNode
+        connections[from, default: []].insert(to)
+        connectionCosts[Connection(origin: from, destination: to)] = cost
 
         if bidirectional {
-            toNode.connections[from] = cost
-            nodes[toNode.id] = toNode
+            connections[to, default: []].insert(from)
+            connectionCosts[Connection(origin: to, destination: from)] = cost
         }
     }
 
-    public func value(of: NodeID) -> NodeValue? {
-        return nodes[of]?.value
+    public func node(withID id: Node.ID) -> Node? {
+        return nodes[id]
     }
 
-    public func nodesAccessible(from: NodeID) throws -> Set<NodeID> {
-        guard let node = nodes[from] else { throw Error.nodeNotFound }
-        return Set(node.connections.keys)
+    public func nodesAccessible(from: Node.ID) throws -> Set<Node.ID> {
+        guard let connections = connections[from] else { throw Error.nodeNotFound }
+        return connections
     }
 }
