@@ -31,16 +31,16 @@ public class Day11: Day<Int, Int> {
 
                 var sum = 0
                 if part == 1 {
-                    sum = CardinalDirection.allDirections
-                        .map({ coordinate.step(inCardinalDirection: $0) })
+                    sum = Direction.cardinalAndIntercardinalDirections
+                        .map({ coordinate.step(inDirection: $0) })
                         .compactMap({ current[$0] })
                         .filter({ $0 == .occupiedSeat })
                         .count
                 } else {
-                    for direction in CardinalDirection.allDirections {
+                    for direction in Direction.cardinalAndIntercardinalDirections {
                         var steps = 1
                         walking: while true {
-                            switch current[coordinate.step(inCardinalDirection: direction, distance: steps)] {
+                            switch current[coordinate.step(inDirection: direction, distance: steps)] {
                             case .emptySeat:
                                 break walking
                             case .occupiedSeat:

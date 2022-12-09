@@ -39,17 +39,13 @@ public struct Coordinate2D: Equatable, Hashable {
         return rotate(around: origin, radians: Math.deg2rad(Double(degrees)))
     }
 
-    public func step(inCardinalDirection direction: CardinalDirection, distance: Int = 1) -> Coordinate2D {
-        return Coordinate2D(x: x + direction.dx * distance, y: y + direction.dy * distance)
-    }
-
     public func step(inDirection direction: Direction, distance: Int = 1) -> Coordinate2D {
         return Coordinate2D(x: x + direction.dx * distance, y: y + direction.dy * distance)
     }
 
     public func neighboringCoordinates() -> Set<Coordinate2D> {
-        let neighbors = CardinalDirection.mainDirections.map { direction in
-            self.step(inCardinalDirection: direction)
+        let neighbors = Direction.cardinalDirections.map { direction in
+            self.step(inDirection: direction)
         }
 
         return Set(neighbors)

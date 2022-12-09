@@ -1,7 +1,7 @@
 import AdventKit
 import Foundation
 
-private extension CardinalDirection {
+private extension Direction {
     var command: Int {
         switch self {
         case .north: return 1
@@ -24,10 +24,10 @@ public class Day15: Day<Int, Int> {
         var coordinate: Coordinate2D
         var type: NodeType
         var distance: Int
-        var path: [CardinalDirection]
+        var path: [Direction]
 
-        var reversePath: [CardinalDirection] {
-            return path.map { $0.opposite }.reversed()
+        var reversePath: [Direction] {
+            return path.map { $0.turnAround() }.reversed()
         }
     }
 
@@ -71,8 +71,8 @@ public class Day15: Day<Int, Int> {
     func explore(node: Node) {
         travel(to: node)
 
-        for direction in CardinalDirection.mainDirections {
-            let nextCoordinate = node.coordinate.step(inCardinalDirection: direction)
+        for direction in Direction.cardinalDirections {
+            let nextCoordinate = node.coordinate.step(inDirection: direction)
             if coordinates[nextCoordinate] == nil {
                 var newNode = node
                 newNode.coordinate = nextCoordinate
@@ -85,12 +85,12 @@ public class Day15: Day<Int, Int> {
                 switch newNode.type {
                 case .floor:
                     unexplored.append(newNode)
-                    computer.run(input: [direction.opposite.command])
+                    computer.run(input: [direction.turnAround().command])
                     computer.outputBuffer = []
                 case .oxygenSystem:
                     oxygenSystem = newNode
                     unexplored.append(newNode)
-                    computer.run(input: [direction.opposite.command])
+                    computer.run(input: [direction.turnAround().command])
                     computer.outputBuffer = []
                 case .wall:
                     break
