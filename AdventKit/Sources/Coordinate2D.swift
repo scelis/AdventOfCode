@@ -4,6 +4,8 @@ public struct Coordinate2D: Equatable, Hashable {
     public var x: Int
     public var y: Int
 
+    public static let zero = Coordinate2D(x: 0, y: 0)
+
     public init(x: Int, y: Int) {
         self.x = x
         self.y = y

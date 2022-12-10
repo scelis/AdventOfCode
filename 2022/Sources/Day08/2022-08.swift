@@ -1,5 +1,4 @@
 import AdventKit
-import Algorithms
 import Foundation
 
 public class Day08: Day<Int, Int> {
