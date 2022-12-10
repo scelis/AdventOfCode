@@ -18,26 +18,32 @@ public class Day08: Day<Int, Int> {
 
     public override func part1() throws -> Int {
         graph.reduce(0) { partialResult, treeCoordinate -> Int in
-            Direction.cardinalDirections.first { direction in
+            let (tree, coordinate) = treeCoordinate
+
+            let isVisible = Direction.cardinalDirections.first { direction in
                 var isVisible = true
-                graph.walk(direction, from: treeCoordinate.1) { other, _, stop in
-                    if other.height >= treeCoordinate.0.height {
+                graph.walk(direction, from: coordinate) { other, _, stop in
+                    if other.height >= tree.height {
                         isVisible = false
                         stop = true
                     }
                 }
                 return isVisible
-            } != nil ? partialResult + 1 : partialResult
+            } != nil
+
+            return isVisible ? partialResult + 1 : partialResult
         }
     }
 
     public override func part2() throws -> Int {
         graph.reduce(0) { partialResult, treeCoordinate -> Int in
+            let (tree, coordinate) = treeCoordinate
+
             let score = Direction.cardinalDirections.map { direction -> Int in
                 var numVisible = 0
-                graph.walk(direction, from: treeCoordinate.1) { other, _, stop in
+                graph.walk(direction, from: coordinate) { other, _, stop in
                     numVisible += 1
-                    if other.height >= treeCoordinate.0.height {
+                    if other.height >= tree.height {
                         stop = true
                     }
                 }
