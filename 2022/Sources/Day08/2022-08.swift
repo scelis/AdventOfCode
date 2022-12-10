@@ -17,46 +17,35 @@ public class Day08: Day<Int, Int> {
     }()
 
     public override func part1() throws -> Int {
-        var numVisible = 0
-        for (tree, coordinate) in graph {
-            for direction in Direction.cardinalDirections {
+        graph.reduce(0) { partialResult, treeCoordinate -> Int in
+            Direction.cardinalDirections.first { direction in
                 var isVisible = true
-                graph.walk(direction, from: coordinate) { other, _, stop in
-                    if other.height >= tree.height {
+                graph.walk(direction, from: treeCoordinate.1) { other, _, stop in
+                    if other.height >= treeCoordinate.0.height {
                         isVisible = false
                         stop = true
                     }
                 }
-
-                if isVisible {
-                    numVisible += 1
-                    break
-                }
-            }
+                return isVisible
+            } != nil ? partialResult + 1 : partialResult
         }
-
-        return numVisible
     }
 
     public override func part2() throws -> Int {
-        var highestScore = 0
-        for (tree, coordinate) in graph {
-            var currentScore = 1
-            for direction in Direction.cardinalDirections {
+        graph.reduce(0) { partialResult, treeCoordinate -> Int in
+            let score = Direction.cardinalDirections.map { direction -> Int in
                 var numVisible = 0
-                graph.walk(direction, from: coordinate) { other, _, stop in
+                graph.walk(direction, from: treeCoordinate.1) { other, _, stop in
                     numVisible += 1
-                    if other.height >= tree.height {
+                    if other.height >= treeCoordinate.0.height {
                         stop = true
                     }
                 }
-
-                currentScore *= numVisible
+                return numVisible
             }
+            .reduce(1, *)
 
-            highestScore = (currentScore > highestScore) ? currentScore : highestScore
+            return score > partialResult ? score : partialResult
         }
-
-        return highestScore
     }
 }
