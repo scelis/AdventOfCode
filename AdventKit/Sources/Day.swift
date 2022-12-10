@@ -38,11 +38,14 @@ open class Day<Part1: CustomStringConvertible, Part2: CustomStringConvertible> {
     private func url(withFileName fileName: String) -> URL {
         let className = String(cString: class_getName(type(of: self)))
         let groups = try! className.firstMatch(withPattern: #"AOC(\d+)\.Day(\d+)"#)!
-        var dir = URL(fileURLWithPath: "\(#file)").deletingLastPathComponent().deletingLastPathComponent()
-        dir.appendPathComponent(groups[1])
-        dir.appendPathComponent("Sources")
-        dir.appendPathComponent("Day\(groups[2])")
-        dir.appendPathComponent(fileName)
+        let dir = URL(fileURLWithPath: "\(#file)")
+            .deletingLastPathComponent()
+            .deletingLastPathComponent()
+            .deletingLastPathComponent()
+            .appending(component: groups[1])
+            .appending(component: "Sources")
+            .appending(component: "Day\(groups[2])")
+            .appending(component: fileName)
         return dir
     }
 

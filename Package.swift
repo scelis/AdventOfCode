@@ -20,14 +20,9 @@ let package = Package(
                 .product(name: "Algorithms", package: "swift-algorithms"),
                 .product(name: "Parsing", package: "swift-parsing"),
             ],
-            path: "AdventKit"
+            path: "AdventKit/Sources"
         ),
-
-        .executableTarget(
-            name: "AdventOfCode",
-            dependencies: ["AOC2019", "AOC2020", "AOC2021", "AOC2022"],
-            path: "AdventOfCode"
-        ),
+        .testTarget(name: "AdventKitTests", dependencies: ["AdventKit"], path: "AdventKit/Tests"),
 
         .target(name: "AOC2019", dependencies: ["AdventKit"], path: "2019/Sources"),
         .testTarget(name: "AOC2019Tests", dependencies: ["AOC2019"], path: "2019/Tests"),
@@ -40,5 +35,11 @@ let package = Package(
 
         .target(name: "AOC2022", dependencies: ["AdventKit"], path: "2022/Sources"),
         .testTarget(name: "AOC2022Tests", dependencies: ["AOC2022"], path: "2022/Tests"),
+
+        .executableTarget(
+            name: "AdventOfCode",
+            dependencies: ["AOC2019", "AOC2020", "AOC2021", "AOC2022"],
+            path: "AdventOfCode"
+        ),
     ]
 )
