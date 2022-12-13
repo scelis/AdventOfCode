@@ -1,33 +1,57 @@
 import Foundation
 
-public protocol GridGraphNode: Equatable {}
+public protocol GridGraphNode: GraphNode where ID == Coordinate2D {
+    var coordinate: Coordinate2D { get }
+}
 
-public class GridGraph<Node: GridGraphNode> {
+extension GridGraphNode {
+    public var id: ID { coordinate }
+}
+
+public class GridGraph<Node: GridGraphNode>: Graph<Node> {
     public enum Error: Swift.Error {
         case notRectangular
     }
 
+    public let origin: Coordinate2D
     public let height: Int
     public let width: Int
     public let diagonalsAllowed: Bool
 
-    /// Store the nodes in a dictionary so that we can at some point support graphs with unknown dimensions, negative
-    /// coordinates, etc.
-    fileprivate let nodes: [Coordinate2D: Node]
-
-    public init(data: [[Node]], diagonalsAllowed: Bool = false) throws {
+    public init<T>(
+        data: [[T]],
+        origin: Coordinate2D = .zero,
+        diagonalsAllowed: Bool = false,
+        addConnections: Bool = true,
+        createNode: (T, Coordinate2D) -> Node
+    ) throws {
+        self.origin = origin
+        self.diagonalsAllowed = diagonalsAllowed
         self.height = data.count
         self.width = data.first?.count ?? 0
-        self.diagonalsAllowed = diagonalsAllowed
 
-        var nodes: [Coordinate2D: Node] = [:]
+        super.init()
+
         for (rowIndex, row) in data.enumerated() {
             guard row.count == width else { throw Error.notRectangular }
-            for (columnIndex, node) in row.enumerated() {
-                nodes[Coordinate2D(x: columnIndex, y: rowIndex)] = node
+            for (columnIndex, rawNode) in row.enumerated() {
+                let coordinate = Coordinate2D(x: origin.x + columnIndex, y: origin.y + rowIndex)
+                let node = createNode(rawNode, coordinate)
+                add(node: node)
             }
         }
-        self.nodes = nodes
+
+        if addConnections {
+            for x in 0..<width {
+                for y in 0..<height {
+                    let current = Coordinate2D(x: x + origin.x, y: y + origin.y)
+                    for direction in validDirections {
+                        let neighbor = current.step(inDirection: direction)
+                        try? addConnection(from: current, to: neighbor, bidirectional: false)
+                    }
+                }
+            }
+        }
     }
 
     public var validDirections: Set<Direction> {
@@ -38,20 +62,23 @@ public class GridGraph<Node: GridGraphNode> {
         }
     }
 
-    public func node(at coordinate: Coordinate2D) -> Node? {
-        return nodes[coordinate]
-    }
-
     public func walk(
         _ direction: Direction,
         from coordinate: Coordinate2D,
-        using block: (Node, Coordinate2D, inout Bool) -> Void)
-    {
+        using block: (Node, inout Bool) -> Void
+    ) throws {
+        let _ = try self.node(withID: coordinate)
         var stop = false
-        var coordinate = coordinate.step(inDirection: direction)
-        while !stop, let node = node(at: coordinate) {
-            block(node, coordinate, &stop)
-            coordinate = coordinate.step(inDirection: direction)
+        var currentCoordinate = coordinate
+        var nextCoordinate = coordinate.step(inDirection: direction)
+        while
+            !stop,
+            let nextNode = try? self.node(withID: nextCoordinate),
+            connections[currentCoordinate]?.keys.contains(nextCoordinate) == true
+        {
+            block(nextNode, &stop)
+            currentCoordinate = nextCoordinate
+            nextCoordinate = nextCoordinate.step(inDirection: direction)
         }
     }
 }

@@ -1,7 +1,7 @@
 import AOC2022
 import Foundation
 
-let day = AOC2022.Day11()
+let day = AOC2022.Day12()
 
 let clock = ContinuousClock()
 let time = try clock.measure {

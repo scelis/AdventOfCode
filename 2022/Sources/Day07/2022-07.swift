@@ -80,8 +80,8 @@ public class Day07: Day<Int, Int> {
 
         func calculateAndCacheSize(nodeID: String) -> Int {
             var size = 0
-            for childID in try! graph.nodesAccessible(from: nodeID) {
-                let childNode = graph.node(withID: childID)!
+            for childID in try! graph.connections(from: nodeID).keys {
+                let childNode = try! graph.node(withID: childID)
                 switch childNode.itemType {
                 case .directory:
                     size += calculateAndCacheSize(nodeID: childNode.id)

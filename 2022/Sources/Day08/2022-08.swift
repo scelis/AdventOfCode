@@ -4,24 +4,26 @@ import Foundation
 public class Day08: Day<Int, Int> {
     private struct Tree: GridGraphNode {
         var height: Int
+        var coordinate: Coordinate2D
     }
 
     private lazy var graph: GridGraph<Tree> = {
-        let nodes = inputLines.map { line -> [Tree] in
-            return line.map { character -> Tree in
-                return Tree(height: Int(String(character))!)
+        let integers = inputLines.map { line -> [Int] in
+            return line.map { character -> Int in
+                return Int(String(character))!
             }
         }
-        return try! GridGraph(data: nodes)
+
+        return try! GridGraph(data: integers, createNode: Tree.init)
     }()
 
     public override func part1() throws -> Int {
-        graph.reduce(0) { partialResult, treeCoordinate -> Int in
+        try graph.reduce(0) { partialResult, treeCoordinate -> Int in
             let (tree, coordinate) = treeCoordinate
 
-            let isVisible = Direction.cardinalDirections.first { direction in
+            let isVisible = try Direction.cardinalDirections.first { direction in
                 var isVisible = true
-                graph.walk(direction, from: coordinate) { other, _, stop in
+                try graph.walk(direction, from: coordinate) { other, stop in
                     if other.height >= tree.height {
                         isVisible = false
                         stop = true
@@ -35,12 +37,12 @@ public class Day08: Day<Int, Int> {
     }
 
     public override func part2() throws -> Int {
-        graph.reduce(0) { partialResult, treeCoordinate -> Int in
+        try graph.reduce(0) { partialResult, treeCoordinate -> Int in
             let (tree, coordinate) = treeCoordinate
 
-            let score = Direction.cardinalDirections.map { direction -> Int in
+            let score = try Direction.cardinalDirections.map { direction -> Int in
                 var numVisible = 0
-                graph.walk(direction, from: coordinate) { other, _, stop in
+                try graph.walk(direction, from: coordinate) { other, stop in
                     numVisible += 1
                     if other.height >= tree.height {
                         stop = true
