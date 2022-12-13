@@ -59,6 +59,13 @@ public class Graph<Node: GraphNode> {
 
     // MARK: Pathfinding
 
+    public func findPath(
+        from start: Node.ID,
+        to end: Node.ID
+    ) throws -> [Node.ID] {
+        return try findPath(from: start, toEndCondition: { $0 == end })
+    }
+
     /// Uses Dijkstra's algorithm to find the shortest path from the start to a node that satisfies the end condition.
     public func findPath(
         from start: Node.ID,

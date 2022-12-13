@@ -48,10 +48,7 @@ public class Day12: Day<Int, Int> {
 
     public override func part1() throws -> Int {
         let (graph, start, destination) = try parseInput()
-        return try graph.findPath(
-            from: start,
-            toEndCondition: { $0 == destination }
-        ).count - 1
+        return try graph.findPath(from: start, to: destination).count - 1
     }
 
     public override func part2() throws -> Int {
