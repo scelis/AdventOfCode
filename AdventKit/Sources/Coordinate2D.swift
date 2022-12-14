@@ -45,6 +45,13 @@ public struct Coordinate2D: Equatable, Hashable {
         return Coordinate2D(x: x + direction.dx * distance, y: y + direction.dy * distance)
     }
 
+    public func step(toward coordinate: Coordinate2D) -> Coordinate2D {
+        var step = self
+        step.x = step.x + (coordinate.x - step.x).signum()
+        step.y = step.y + (coordinate.y - step.y).signum()
+        return step
+    }
+
     public func neighboringCoordinates() -> Set<Coordinate2D> {
         let neighbors = Direction.cardinalDirections.map { direction in
             self.step(inDirection: direction)
