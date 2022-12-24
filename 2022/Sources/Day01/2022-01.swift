@@ -4,9 +4,9 @@ import Foundation
 public class Day01: Day<Int, Int> {
     lazy var sortedElves: [Int] = {
         return input
-            .split(separator: "\n\n")
+            .components(separatedBy: "\n\n")
             .map {
-                $0.split(separator: "\n")
+                $0.components(separatedBy: "\n")
                     .map { Int($0)! }
                     .reduce(0, +)
             }

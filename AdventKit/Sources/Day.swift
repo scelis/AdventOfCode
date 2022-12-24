@@ -42,10 +42,10 @@ open class Day<Part1: CustomStringConvertible, Part2: CustomStringConvertible> {
             .deletingLastPathComponent()
             .deletingLastPathComponent()
             .deletingLastPathComponent()
-            .appending(component: groups[1])
-            .appending(component: "Sources")
-            .appending(component: "Day\(groups[2])")
-            .appending(component: fileName)
+            .appending(pathComponent: groups[1])
+            .appending(pathComponent: "Sources")
+            .appending(pathComponent: "Day\(groups[2])")
+            .appending(pathComponent: fileName)
         return dir
     }
 
