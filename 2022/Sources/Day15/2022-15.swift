@@ -1,6 +1,5 @@
 import AdventKit
 import Foundation
-import Parsing
 
 public class Day15: Day<Int, Int> {
     private struct Sensor {
@@ -9,20 +8,13 @@ public class Day15: Day<Int, Int> {
     }
 
     private lazy var sensors: [Coordinate2D: Sensor] = {
-        let sensorParser = Parse {
-            "Sensor at x="; Int.parser(); ", y="; Int.parser()
-            ": closest beacon is at x="; Int.parser(); ", y="; Int.parser()
-        }
-        .map { tuple in
-            Sensor(
-                location: Coordinate2D(x: tuple.0, y: tuple.1),
-                closestBeacon: Coordinate2D(x: tuple.2, y: tuple.3)
-            )
-        }
-
         var sensors: [Coordinate2D: Sensor] = [:]
-        let parser = Many(element: { sensorParser }, separator: { "\n" })
-        for sensor in try! parser.parse(input) {
+
+        try! input.enumerateMatches(withPattern: "Sensor at x=(-?[0-9]+), y=(-?[0-9]+): closest beacon is at x=(-?[0-9]+), y=(-?[0-9]+)") { match in
+            let sensor = Sensor(
+                location: Coordinate2D(x: Int(match[1])!, y: Int(match[2])!),
+                closestBeacon: Coordinate2D(x: Int(match[3])!, y: Int(match[4])!)
+            )
             sensors[sensor.location] = sensor
         }
 

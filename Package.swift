@@ -1,24 +1,22 @@
-// swift-tools-version:5.7
+// swift-tools-version:5.9
 
 import PackageDescription
 
 let package = Package(
     name: "AdventOfCode",
-    platforms: [.macOS(.v13)],
+    platforms: [.macOS(.v14)],
     products: [
         .library(name: "AdventKit", targets: ["AdventKit"]),
         .executable(name: "AdventOfCode", targets: ["AdventOfCode"]),
     ],
     dependencies: [
-        .package(url: "https://github.com/apple/swift-algorithms.git", from: "1.0.0"),
-        .package(url: "https://github.com/pointfreeco/swift-parsing.git", from: "0.11.0"),
+        .package(url: "https://github.com/apple/swift-algorithms.git", from: "1.2.0"),
     ],
     targets: [
         .target(
             name: "AdventKit",
             dependencies: [
                 .product(name: "Algorithms", package: "swift-algorithms"),
-                .product(name: "Parsing", package: "swift-parsing"),
             ],
             path: "AdventKit/Sources"
         ),

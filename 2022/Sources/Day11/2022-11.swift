@@ -1,11 +1,20 @@
 import AdventKit
 import Foundation
-import Parsing
 
 public class Day11: Day<Int, Int> {
     private enum Value {
         case int(Int)
         case old
+
+        init?(rawValue: String) {
+            if rawValue == "old" {
+                self = .old
+            } else if let integer = Int(rawValue) {
+                self = .int(integer)
+            } else {
+                return nil
+            }
+        }
     }
 
     private enum Operation: String, CaseIterable {
@@ -60,24 +69,23 @@ public class Day11: Day<Int, Int> {
     }
 
     private func parseMonkeys() throws -> [Monkey] {
-        let valueParser = Parse {
-            OneOf {
-                Int.parser().map { Value.int($0) }
-                "old".map { Value.old }
-            }
+        var monkeys: [Monkey] = []
+
+        try input.enumerateMatches(withPattern: "Monkey ([0-9]+):\n  Starting items: ([0-9, ]+)\n  Operation: new = old ([*+]) ([0-9]+|old)\n  Test: divisible by ([0-9]+)\n    If true: throw to monkey ([0-9]+)\n    If false: throw to monkey ([0-9]+)") { match in
+            monkeys.append(
+                Monkey(
+                    id: Int(match[1])!,
+                    items: match[2].components(separatedBy: ", ").map({ Int($0)! }),
+                    operation: Operation(rawValue: match[3])!,
+                    value: Value(rawValue: match[4])!,
+                    divisibleByTest: Int(match[5])!,
+                    divisibleTrueTarget: Int(match[6])!,
+                    divisibleFalseTarget: Int(match[7])!
+                )
+            )
         }
 
-        let monkeyParser = Parse {
-            "Monkey "; Int.parser(); ":\n"
-            "  Starting items: "; Many { Int.parser() } separator: { ", " }; "\n"
-            "  Operation: new = old "; Operation.parser(); " "; valueParser; "\n"
-            "  Test: divisible by "; Int.parser(); "\n"
-            "    If true: throw to monkey "; Int.parser(); "\n"
-            "    If false: throw to monkey "; Int.parser()
-        }
-
-        let parser = Many(element: { monkeyParser }, separator: { "\n\n" })
-        return try parser.parse(input).map(Monkey.init)
+        return monkeys
     }
 
     private func solve(monkeys: [Monkey], numRounds: Int, worryDecay: (Int) -> Int) throws -> Int {

@@ -1,12 +1,16 @@
 import AdventKit
 import Foundation
-import Parsing
 
 public class Day04: Day<Int, Int> {
     lazy var pairs: [(ClosedRange<Int>, ClosedRange<Int>)] = {
-        let rangeParser = Parse(with: { Int.parser(); "-"; Int.parser() }).map { $0...$1 }
-        let pairParser = Parse(with: { rangeParser; ","; rangeParser }).map { ($0, $1) }
-        return input.components(separatedBy: .newlines).map { try! pairParser.parse($0) }
+        return inputLines.map { line in
+            let rangeStrings = line.components(separatedBy: ",")
+            let ranges = rangeStrings.map { rangeString in
+                let components = rangeString.components(separatedBy: "-")
+                return Int(components[0])!...Int(components[1])!
+            }
+            return (ranges[0], ranges[1])
+        }
     }()
 
     public override func part1() throws -> Int {

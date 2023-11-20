@@ -1,7 +1,6 @@
 import AdventKit
 import Algorithms
 import Foundation
-import Parsing
 
 public class Day14: Day<Int, Int> {
     private enum Tile {
@@ -15,11 +14,14 @@ public class Day14: Day<Int, Int> {
 
         init(string: String, addFloor: Bool) throws {
             var tiles: [Coordinate2D: Tile] = [:]
-            let coordinateParser = Parse { Int.parser(); ","; Int.parser() }.map { Coordinate2D(x: $0, y: $1) }
-            let coordinateArrayParser = Many { coordinateParser } separator: { " -> " }
             for line in string.components(separatedBy: .newlines) {
-                let array = try coordinateArrayParser.parse(line)
-                for pair in array.adjacentPairs() {
+                let coordinateStrings = line.components(separatedBy: " -> ")
+                let coordinates: [Coordinate2D] = coordinateStrings.map { string in
+                    let components = string.components(separatedBy: ",").map { Int($0)! }
+                    return Coordinate2D(x: components[0], y: components[1])
+                }
+
+                for pair in coordinates.adjacentPairs() {
                     tiles[pair.0] = .rock
                     tiles[pair.1] = .rock
                     var step = pair.0.step(toward: pair.1)
