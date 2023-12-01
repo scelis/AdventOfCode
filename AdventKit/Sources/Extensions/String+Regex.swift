@@ -5,8 +5,8 @@ extension String {
         withPattern pattern: String,
         patternOptions: NSRegularExpression.Options = [],
         matchingOptions: NSRegularExpression.MatchingOptions = [],
-        using block: ([String]) -> ()) throws
-    {
+        using block: ([String]) -> ()
+    ) throws {
         let regex = try NSRegularExpression(pattern: pattern, options: patternOptions)
         return try enumerateMatches(
             withRegularExpression: regex,
@@ -18,8 +18,8 @@ extension String {
     public func enumerateMatches(
         withRegularExpression regex: NSRegularExpression,
         options: NSRegularExpression.MatchingOptions = [],
-        using block: ([String]) -> ()) throws
-    {
+        using block: ([String]) -> ()
+    ) throws {
         let numGroups = regex.numberOfCaptureGroups
         regex.enumerateMatches(in: self, options: options, range: nsRange, using: { result, _, _ in
             if let result = result {
@@ -41,9 +41,8 @@ extension String {
     public func firstMatch(
         withPattern pattern: String,
         patternOptions: NSRegularExpression.Options = [],
-        matchingOptions: NSRegularExpression.MatchingOptions = []) throws
-        -> [String]?
-    {
+        matchingOptions: NSRegularExpression.MatchingOptions = []
+    ) throws -> [String]? {
         var ret: [String]?
         try enumerateMatches(
             withPattern: pattern,
@@ -59,9 +58,8 @@ extension String {
 
     public func firstMatch(
         withRegularExpression regex: NSRegularExpression,
-        options: NSRegularExpression.MatchingOptions = []) throws
-        -> [String]?
-    {
+        options: NSRegularExpression.MatchingOptions = []
+    ) throws -> [String]? {
         var ret: [String]?
         try enumerateMatches(
             withRegularExpression: regex,
