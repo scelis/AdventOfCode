@@ -8,4 +8,10 @@ class AOC2023Tests: XCTestCase {
         XCTAssertEqual(try day.part1(), 54951)
         XCTAssertEqual(try day.part2(), 55218)
     }
+
+    func testDay02() throws {
+        let day = Day02()
+        XCTAssertEqual(try day.part1(), 1931)
+        XCTAssertEqual(try day.part2(), 83105)
+    }
 }
