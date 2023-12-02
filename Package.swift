@@ -23,6 +23,9 @@ let package = Package(
         ),
         .testTarget(name: "AdventKitTests", dependencies: ["AdventKit"], path: "AdventKit/Tests"),
 
+        .target(name: "AOC2015", dependencies: ["AdventKit"], path: "2015/Sources", exclude: inputFiles(for: 2015)),
+        .testTarget(name: "AOC2015Tests", dependencies: ["AOC2015"], path: "2015/Tests"),
+
         .target(name: "AOC2019", dependencies: ["AdventKit"], path: "2019/Sources", exclude: inputFiles(for: 2019)),
         .testTarget(name: "AOC2019Tests", dependencies: ["AOC2019"], path: "2019/Tests"),
 
@@ -40,7 +43,7 @@ let package = Package(
 
         .executableTarget(
             name: "AdventOfCode",
-            dependencies: ["AOC2019", "AOC2020", "AOC2021", "AOC2022", "AOC2023"],
+            dependencies: ["AOC2015", "AOC2019", "AOC2020", "AOC2021", "AOC2022", "AOC2023"],
             path: "AdventOfCode"
         ),
     ]
