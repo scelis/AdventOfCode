@@ -65,10 +65,15 @@ public class GridGraph<Node: GridGraphNode>: Graph<Node> {
     public func walk(
         _ direction: Direction,
         from coordinate: Coordinate2D,
+        includeStartingNode: Bool = false,
         using block: (Node, inout Bool) -> Void
     ) throws {
-        let _ = try self.node(withID: coordinate)
+        let startingNode = try self.node(withID: coordinate)
         var stop = false
+        if includeStartingNode {
+            block(startingNode, &stop)
+        }
+
         var currentCoordinate = coordinate
         var nextCoordinate = coordinate.step(inDirection: direction)
         while
