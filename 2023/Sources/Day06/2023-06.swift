@@ -4,30 +4,24 @@ import Foundation
 public class Day06: Day<Int, Int> {
     public override func part1() throws -> Int {
         return zip(times, distances)
-            .map { winningTimeRange(totalRaceTime: $0.0, currentRecord: $0.1).count }
+            .map { numberOfSolutions(time: $0, distance: $1) }
             .reduce(1, *)
     }
 
     public override func part2() throws -> Int {
         let time = Int(times.map { String($0) }.joined())!
-        let record = Int(distances.map { String($0) }.joined())!
-        return winningTimeRange(totalRaceTime: time, currentRecord: record).count
+        let distance = Int(distances.map { String($0) }.joined())!
+        return numberOfSolutions(time: time, distance: distance)
     }
 
-    func winningTimeRange(totalRaceTime: Int, currentRecord: Int) -> Range<Int> {
-        let middle = totalRaceTime / 2
-        let left = (1..<middle).binaryFirstIndex { i in
-            return distanceTraveled(timeHoldingButton: i, totalTime: totalRaceTime) > currentRecord
-        } ?? middle
-        let right = (middle..<totalRaceTime).binaryLastIndex { i in
-            return distanceTraveled(timeHoldingButton: i, totalTime: totalRaceTime) > currentRecord
-        } ?? middle
-
-        return left..<(right + 1)
+    func numberOfSolutions(time: Int, distance: Int) -> Int {
+        let times = solveQuadraticEquation(a: -1, b: Double(time), c: -Double(distance))
+        return Int(floor(times.1)) - Int(ceil(times.0)) + 1
     }
 
-    func distanceTraveled(timeHoldingButton: Int, totalTime: Int) -> Int {
-        return (totalTime - timeHoldingButton) * timeHoldingButton
+    func solveQuadraticEquation(a: Double, b: Double, c: Double) -> (Double, Double) {
+        let discriminant = sqrt(b * b - 4 * a * c)
+        return ((-b + discriminant) / (2 * a), (-b - discriminant) / (2 * a))
     }
 
     // MARK: - Parsing
