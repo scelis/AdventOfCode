@@ -8,47 +8,31 @@ public class Day08: Day<Int, Int> {
         var right: String
     }
 
-    struct Visit: Equatable, Hashable {
-        var id: String
-        var step: Int
-    }
-
     public override func part1() throws -> Int {
-        return numberOfSteps(from: "AAA", to: "ZZZ")!
+        return numberOfSteps(from: "AAA", to: { $0 == "ZZZ" })
     }
 
     public override func part2() throws -> Int {
-        let startingIDs: [String] = nodes.keys.filter { $0.hasSuffix("A") }
-        let endingIDs: [String] = nodes.keys.filter { $0.hasSuffix("Z") }
-        let distances: [[Int]] = startingIDs.map { start in
-            endingIDs.compactMap { end in
-                numberOfSteps(from: start, to: end)
-            }
-        }
-        return distances
-            .map { $0.min()! }
+        // Apparently each starting node has a singular ending node that it can reach and the
+        // number of steps from start to end is the same as looping from end back to end. That
+        // makes this problem significantly easier.
+        nodes.keys
+            .filter { $0.hasSuffix("A") }
+            .map { numberOfSteps(from: $0, to: { $0.hasSuffix("Z") }) }
             .leastCommonMultiple
     }
 
-    func numberOfSteps(from start: String, to end: String) -> Int? {
+    func numberOfSteps(from start: String, to condition: (String) -> Bool) -> Int {
         var steps = 0
         var current = start
-        var visits: Set<Visit> = []
         while true {
             let node = nodes[current]!
             let direction = directions[steps % directions.count]
             current = direction == "L" ? node.left : node.right
             steps += 1
 
-            if current == end {
+            if condition(current) {
                 return steps
-            }
-
-            let visit = Visit(id: current, step: steps % directions.count)
-            if visits.contains(visit) {
-                return nil
-            } else {
-                visits.insert(visit)
             }
         }
     }
