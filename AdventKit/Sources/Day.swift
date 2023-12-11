@@ -21,7 +21,7 @@ open class Day<Part1: CustomStringConvertible, Part2: CustomStringConvertible> {
         return url(withFileName: "input.txt")
     }()
 
-    public lazy var input: String = {
+    public private(set) lazy var input: String = {
         guard
             let url = inputURL,
             let input = FileManager.default.contents(atPath: url.path),
@@ -31,7 +31,7 @@ open class Day<Part1: CustomStringConvertible, Part2: CustomStringConvertible> {
         return string.trimmingCharacters(in: .newlines)
     }()
 
-    public lazy var inputLines: [String] = {
+    public private(set) lazy var inputLines: [String] = {
         return input.components(separatedBy: .newlines)
     }()
 
