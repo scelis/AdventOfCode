@@ -124,6 +124,39 @@ public class Graph<Node: GraphNode> {
         }
     }
 
+    /// Returns a map of all nodes reachable from the start and the cheapest cost to reach that node.
+    public func explore(from start: Node.ID) throws -> [Node.ID: Int] {
+        var map: [Node.ID: Int] = [start: 0]
+        var visited: Set<Node.ID> = []
+        var nodesToCheck = [start]
+        while let originID = nodesToCheck.first {
+            nodesToCheck.removeFirst()
+            visited.insert(originID)
+
+            var addedNodeToCheck = false
+            for (destinationID, connectionCost) in connections[originID] ?? [:] {
+                let costToOrigin = map[originID]!
+                let totalCost = costToOrigin + connectionCost
+                if map[destinationID] == nil || totalCost < map[destinationID]! {
+                    map[destinationID] = totalCost
+
+                    if !visited.contains(destinationID) {
+                        nodesToCheck.append(destinationID)
+                        addedNodeToCheck = true
+                    }
+                }
+            }
+
+            if addedNodeToCheck {
+                nodesToCheck.sort { a, b in
+                    return map[a]! < map[b]!
+                }
+            }
+        }
+
+        return map
+    }
+
     // MARK: Derivitives
 
     /// Reverses the graph so that all nodes going from A -> B now go from B -> A. This is useful for calculating a path backwards
