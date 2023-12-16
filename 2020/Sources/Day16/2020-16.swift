@@ -25,15 +25,15 @@ wagon: 26-657 or 672-959
 zone: 36-621 or 637-963
 """
 
-public class Day16: Day<Int, Int> {
-    let ticket = [83,127,131,137,113,73,139,101,67,53,107,103,59,149,109,61,79,71,97,89]
+public struct Day16: Day {
+    static let ticket = [83,127,131,137,113,73,139,101,67,53,107,103,59,149,109,61,79,71,97,89]
 
-    let regex = try! NSRegularExpression(
+    static let regex = try! NSRegularExpression(
         pattern: #"^(.+): ([0-9]+)-([0-9]+) or ([0-9]+)-([0-9]+)$"#,
         options: [.anchorsMatchLines]
     )
 
-    lazy var fields: [String: IndexSet] = {
+    static var fields: [String: IndexSet] = {
         var dict: [String: IndexSet] = [:]
         try! fieldsInput.enumerateMatches(withRegularExpression: regex) { match in
             let a = Int(match[2])!
@@ -45,16 +45,20 @@ public class Day16: Day<Int, Int> {
         return dict
     }()
 
-    var potentialTickets: [[Int]] = []
+    struct ScanTicketsResult {
+        var potentialTickets: [[Int]]
+        var errorRate: Int
+    }
 
-    public override func part1() throws -> Int {
+    func scanTickets() -> ScanTicketsResult {
         var allValidRanges = IndexSet()
-        for indexSet in fields.values {
+        for indexSet in Self.fields.values {
             allValidRanges = allValidRanges.union(indexSet)
         }
 
         var errorRate = 0
-        for ticket in inputLines.map({ $0.components(separatedBy: ",").map({ Int($0)! }) }) {
+        var potentialTickets: [[Int]] = []
+        for ticket in inputLines().map({ $0.components(separatedBy: ",").map({ Int($0)! }) }) {
             var isValid = true
 
             for field in ticket {
@@ -69,20 +73,25 @@ public class Day16: Day<Int, Int> {
             }
         }
 
-        return errorRate
+        return ScanTicketsResult(potentialTickets: potentialTickets, errorRate: errorRate)
     }
 
-    public override func part2() throws -> Int {
-        var actualFields: [Set<String>] = .init(repeating: Set(Array(fields.keys)), count: fields.count)
+    public func part1() async throws -> Int {
+        scanTickets().errorRate
+    }
+
+    public func part2() async throws -> Int {
+        var actualFields: [Set<String>] = .init(repeating: Set(Array(Self.fields.keys)), count: Self.fields.count)
+        let scanTicketsResult = scanTickets()
 
         while true {
-            for i in 0..<ticket.count {
+            for i in 0..<Self.ticket.count {
                 var potentialFields = actualFields[i]
 
                 fields: for field in actualFields[i] {
-                    tickets: for ticket in potentialTickets {
+                tickets: for ticket in scanTicketsResult.potentialTickets {
                         let value = ticket[i]
-                        let indexSet = fields[field]!
+                    let indexSet = Self.fields[field]!
                         if !indexSet.contains(value) {
                             potentialFields.remove(field)
                             continue fields
@@ -112,9 +121,9 @@ public class Day16: Day<Int, Int> {
 
             if finished {
                 var ret = 1
-                for i in 0..<ticket.count {
+                for i in 0..<Self.ticket.count {
                     if actualFields[i].first!.starts(with: "departure") {
-                        ret *= ticket[i]
+                        ret *= Self.ticket[i]
                     }
                 }
                 return ret

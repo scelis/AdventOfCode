@@ -1,14 +1,14 @@
 import AdventKit
 import Foundation
 
-public class Day06: Day<Int, Int> {
-    public override func part1() throws -> Int {
+public struct Day06: Day {
+    public func part1() async throws -> Int {
         return zip(times, distances)
             .map { numberOfSolutions(time: $0, distance: $1) }
             .reduce(1, *)
     }
 
-    public override func part2() throws -> Int {
+    public func part2() async throws -> Int {
         let time = Int(times.map { String($0) }.joined())!
         let distance = Int(distances.map { String($0) }.joined())!
         return numberOfSolutions(time: time, distance: distance)
@@ -26,6 +26,11 @@ public class Day06: Day<Int, Int> {
 
     // MARK: - Parsing
 
-    lazy var times: [Int] = inputLines[0].components(separatedBy: .whitespaces).compactMap(Int.init)
-    lazy var distances: [Int] = inputLines[1].components(separatedBy: .whitespaces).compactMap(Int.init)
+    var times: [Int] {
+        inputLines()[0].components(separatedBy: .whitespaces).compactMap(Int.init)
+    }
+
+    var distances: [Int] {
+        inputLines()[1].components(separatedBy: .whitespaces).compactMap(Int.init)
+    }
 }

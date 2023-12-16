@@ -1,16 +1,16 @@
 import AdventKit
 import Foundation
 
-public class Day14: Day<Int64, Int64> {
+public struct Day14: Day {
     let maskRegex = try! NSRegularExpression(pattern: #"mask = ([1X0]+)"#, options: [])
     let writeRegex = try! NSRegularExpression(pattern: #"mem\[([0-9]+)\] = ([0-9]+)"#, options: [])
 
-    public override func part1() throws -> Int64 {
+    public func part1() async throws -> Int64 {
         var ones: Int64 = 0
         var zeroes: Int64 = 0
         var memory: [Int64: Int64] = [:]
 
-        for line in inputLines {
+        for line in inputLines() {
             if let match = try! line.firstMatch(withRegularExpression: maskRegex) {
                 for character in match[1] {
                     ones = ones << 1
@@ -35,10 +35,10 @@ public class Day14: Day<Int64, Int64> {
             .reduce(0, +)
     }
 
-    public override func part2() throws -> Int64 {
+    public func part2() async throws -> Int64 {
         var mask = ""
         var memory: [Int64: Int64] = [:]
-        for line in inputLines {
+        for line in inputLines() {
             if let match = try! line.firstMatch(withRegularExpression: maskRegex) {
                 mask = match[1]
             } else if let match = try! line.firstMatch(withRegularExpression: writeRegex) {

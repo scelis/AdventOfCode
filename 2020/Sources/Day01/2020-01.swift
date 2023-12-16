@@ -1,28 +1,26 @@
 import AdventKit
 import Foundation
 
-public class Day01: Day<Int, Int> {
-    public lazy var inputIntegers: [Int] = {
-        return inputLines.map { Int($0)! }
-    }()
-
-    public override func part1() throws -> Int {
-        for i in 0..<inputIntegers.count {
-            for j in (i + 1)..<inputIntegers.count {
-                if inputIntegers[i] + inputIntegers[j] == 2020 {
-                    return inputIntegers[i] * inputIntegers[j]
+public struct Day01: Day {
+    public func part1() async throws -> Int {
+        let integers = inputIntegers()
+        for i in 0..<integers.count {
+            for j in (i + 1)..<integers.count {
+                if integers[i] + integers[j] == 2020 {
+                    return integers[i] * integers[j]
                 }
             }
         }
         fatalError()
     }
 
-    public override func part2() throws -> Int {
-        for i in 0..<inputIntegers.count {
-            for j in (i + 1)..<inputIntegers.count {
-                for k in (j + 1)..<inputIntegers.count {
-                    if inputIntegers[i] + inputIntegers[j] + inputIntegers[k] == 2020 {
-                        return inputIntegers[i] * inputIntegers[j] * inputIntegers[k]
+    public func part2() async throws -> Int {
+        let integers = inputIntegers()
+        for i in 0..<integers.count {
+            for j in (i + 1)..<integers.count {
+                for k in (j + 1)..<integers.count {
+                    if integers[i] + integers[j] + integers[k] == 2020 {
+                        return integers[i] * integers[j] * integers[k]
                     }
                 }
             }

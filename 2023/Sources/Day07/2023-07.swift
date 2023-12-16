@@ -1,7 +1,10 @@
 import AdventKit
 import Foundation
 
-public class Day07: Day<Int, Int> {
+public struct Day07: Day {
+
+    // MARK: - Structures
+
     enum Card: Int, CaseIterable {
         case two = 2
         case three = 3
@@ -60,6 +63,10 @@ public class Day07: Day<Int, Int> {
         var bid: Int
     }
 
+    // MARK: - Solving
+
+    let hands: [Hand]
+
     func calculateRelativeStrength(_ hand: Hand, usingJokers: Bool) -> Int {
         let counts: [Card: Int] = {
             var counts = hand.cards.reduce(into: [:]) { partialResult, card in
@@ -93,23 +100,22 @@ public class Day07: Day<Int, Int> {
             }
     }
 
-    public override func part1() throws -> Int {
+    public func part1() async throws -> Int {
         calculateTotalWinnings(usingJokers: false)
     }
 
-    public override func part2() throws -> Int {
+    public func part2() async throws -> Int {
         calculateTotalWinnings(usingJokers: true)
     }
 
     // MARK: - Parsing
 
-    lazy var hands: [Hand] = {
-        inputLines
-            .map { line in
-                let components = line.components(separatedBy: " ")
-                let cards: [Card] = components[0].compactMap(Card.init)
-                let bid = Int(components[1])!
-                return Hand(cards: cards, bid: bid)
-            }
-    }()
+    init() {
+        self.hands = Self.inputLines().map { line in
+            let components = line.components(separatedBy: " ")
+            let cards: [Card] = components[0].compactMap(Card.init)
+            let bid = Int(components[1])!
+            return Hand(cards: cards, bid: bid)
+        }
+    }
 }

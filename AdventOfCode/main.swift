@@ -1,13 +1,13 @@
-import AOC2023
+@testable import AOC2023
 import Foundation
 
 let day = AOC2023.Day12()
 
 let clock = ContinuousClock()
-let time = try clock.measure {
-    let part1 = try day.part1()
-    print("Part 1: \(part1)")
-    let part2 = try day.part2()
-    print("Part 2: \(part2)")
+let time = try await clock.measure {
+    async let parts = day.run()
+    print("Part 1: \(try await parts.0)")
+    print("Part 2: \(try await parts.1)")
 }
 print("Time: \(time)")
+

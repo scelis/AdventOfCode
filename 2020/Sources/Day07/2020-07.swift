@@ -1,17 +1,15 @@
 import AdventKit
 import Foundation
 
-public class Day07: Day<Int, Int> {
+public struct Day07: Day {
     let lineRegex = try! NSRegularExpression(pattern: #"^(.+) bags contain (.+)\.$"#, options: [.anchorsMatchLines])
     let contentsRegex = try! NSRegularExpression(pattern: #"(\d)+ (\D+) bags?"#, options: [])
 
     var containers: [String: [(Int, String)]] = [:]
     var containedBy: [String: [String]] = [:]
 
-    override init() {
-        super.init()
-
-        try! input.enumerateMatches(withRegularExpression: lineRegex) { groups in
+    init() {
+        try! input().enumerateMatches(withRegularExpression: lineRegex) { groups in
             let outerColor = groups[1]
             let contents = groups[2]
             try! contents.enumerateMatches(withRegularExpression: contentsRegex) { groups in
@@ -29,7 +27,7 @@ public class Day07: Day<Int, Int> {
         }
     }
 
-    public override func part1() throws -> Int {
+    public func part1() throws -> Int {
         var colors: Set<String> = []
         addColorsThatEventuallyContain(color: "shiny gold", toSet: &colors)
         return colors.count
@@ -45,7 +43,7 @@ public class Day07: Day<Int, Int> {
         }
     }
 
-    public override func part2() throws -> Int {
+    public func part2() throws -> Int {
         var work: [String: Int] = [:]
         let result = numberOfBagsInside(color: "shiny gold", work: &work)
         return result

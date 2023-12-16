@@ -1,7 +1,10 @@
 import AdventKit
 import Foundation
 
-public class Day03: Day<Int, Int> {
+public struct Day03: Day {
+
+    // MARK: - Structures
+
     private struct Node: GridGraphNode {
         var character: Character
         var coordinate: Coordinate2D
@@ -16,19 +19,36 @@ public class Day03: Day<Int, Int> {
         var location: [Coordinate2D]
     }
 
-    private lazy var schematic: [[Character]] = inputLines.map { Array($0) }
-    private lazy var graph = try! GridGraph(data: schematic, diagonalsAllowed: true, createNode: Node.init)
+    // MARK: - Solving
 
-    public override func part1() throws -> Int {
-        return try schematicNumbers
-            .filter { try isPartNumber($0) }
+    public func run() async throws -> (Int, Int) {
+        let schematic = Self.inputLines().map { Array($0) }
+        let graph = try createGraph(schematic: schematic)
+        let schematicNumbers = try findSchematicNumbers(graph: graph)
+        let part1 = try sumOfPartNumbers(schematicNumbers: schematicNumbers, graph: graph)
+        let part2 = try sumOfGearRatios(schematicNumbers: schematicNumbers, graph: graph)
+        return (part1, part2)
+    }
+
+    private func sumOfPartNumbers(schematicNumbers: [SchematicNumber], graph: GridGraph<Node>) throws -> Int {
+        try schematicNumbers
+            .filter { try isPartNumber($0, graph: graph) }
             .map { $0.number }
             .reduce(0, +)
     }
 
-    public override func part2() throws -> Int {
-        var total = 0
+    private func sumOfGearRatios(schematicNumbers: [SchematicNumber], graph: GridGraph<Node>) throws -> Int {
+        let coordinateToNumberMap: [Coordinate2D: SchematicNumber] = {
+            var map: [Coordinate2D: SchematicNumber] = [:]
+            for number in schematicNumbers {
+                for coordinate in number.location {
+                    map[coordinate] = number
+                }
+            }
+            return map
+        }()
 
+        var total = 0
         for (node, coordinate) in graph where node.character == "*" {
             var partNumbers: Set<SchematicNumber> = []
             for (neighborCoordinate, _) in try graph.connections(from: coordinate) {
@@ -44,7 +64,7 @@ public class Day03: Day<Int, Int> {
         return total
     }
 
-    private func isPartNumber(_ number: SchematicNumber) throws -> Bool {
+    private func isPartNumber(_ number: SchematicNumber, graph: GridGraph<Node>) throws -> Bool {
         for location in number.location {
             for (coordinate, _) in try graph.connections(from: location) {
                 let neighbor = try graph.node(withID: coordinate)
@@ -56,24 +76,20 @@ public class Day03: Day<Int, Int> {
         return false
     }
 
-    // MARK: - Parsing
-
-    private lazy var schematicNumbers: [SchematicNumber] = {
+    private func findSchematicNumbers(graph: GridGraph<Node>) throws -> [SchematicNumber] {
         var numbers: [SchematicNumber] = []
-        var currentLocation = Coordinate2D.zero
-
         for y in 0..<graph.height {
             var currentNumberDigits: [Int] = []
             var currentNumberCoordinates: [Coordinate2D] = []
 
-            var addCurrentNumber: () -> Void = {
+            let addCurrentNumber: () -> Void = {
                 let number = currentNumberDigits.reduce(0) { $0 * 10 + $1 }
                 numbers.append(SchematicNumber(number: number, location: currentNumberCoordinates))
                 currentNumberDigits.removeAll()
                 currentNumberCoordinates.removeAll()
             }
 
-            try! graph.walk(.right, from: Coordinate2D(x: 0, y: y), includeStartingNode: true) { node, _ in
+            try graph.walk(.right, from: Coordinate2D(x: 0, y: y), includeStartingNode: true) { node, _ in
                 if let currentDigit = node.digit {
                     currentNumberDigits.append(currentDigit)
                     currentNumberCoordinates.append(node.coordinate)
@@ -88,15 +104,11 @@ public class Day03: Day<Int, Int> {
         }
 
         return numbers
-    }()
+    }
 
-    private lazy var coordinateToNumberMap: [Coordinate2D: SchematicNumber] = {
-        var map: [Coordinate2D: SchematicNumber] = [:]
-        for number in schematicNumbers {
-            for coordinate in number.location {
-                map[coordinate] = number
-            }
-        }
-        return map
-    }()
+    // MARK: - Parsing
+
+    private func createGraph(schematic: [[Character]]) throws -> GridGraph<Node> {
+        try GridGraph(data: schematic, diagonalsAllowed: true, createNode: Node.init)
+    }
 }

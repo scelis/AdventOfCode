@@ -2,12 +2,12 @@ import AdventKit
 import Algorithms
 import Foundation
 
-public class Day06: Day<Int, Int> {
-    lazy var lanternFish: [Int] = {
-        return inputLines.first!.components(separatedBy: ",").map({ Int($0)! })
-    }()
+public struct Day06: Day {
+    var lanternFish: [Int] {
+        return input().components(separatedBy: ",").map({ Int($0)! })
+    }
 
-    public override func part1() throws -> Int {
+    public func part1() async throws -> Int {
         var state = lanternFish
 
         for _ in 0..<80 {
@@ -27,7 +27,7 @@ public class Day06: Day<Int, Int> {
             .count
     }
 
-    public override func part2() throws -> Int {
+    public func part2() async throws -> Int {
         var counts: [Int: Int] = [:]
         for fish in lanternFish {
             counts[fish] = (counts[fish] ?? 0) + 1

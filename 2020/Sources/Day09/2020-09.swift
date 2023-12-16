@@ -2,15 +2,12 @@ import AdventKit
 import Algorithms
 import Foundation
 
-public class Day09: Day<Int, Int> {
-    var part1Result: Int?
+public struct Day09: Day {
 
-    lazy var inputIntegers: [Int] = {
-        return inputLines.map { Int($0)! }
-    }()
+    public func part1() async throws -> Int {
+        let inputIntegers = inputIntegers()
 
-    public override func part1() throws -> Int {
-        part1Result = inputIntegers
+        return inputIntegers
             .enumerated()
             .first { (index, element) -> Bool in
                 return
@@ -19,17 +16,17 @@ public class Day09: Day<Int, Int> {
                         return arr[0] != arr[1] && arr[0] + arr[1] == element
                     } == nil
             }!.element
-
-        return part1Result!
     }
 
-    public override func part2() throws -> Int {
+    public func part2(part1Result: Int) async throws -> Int {
+        let inputIntegers = inputIntegers()
+
         var i = 0
         while i < inputIntegers.count {
             var j = i
             var sum = inputIntegers[i]
 
-            while sum < part1Result! {
+            while sum < part1Result {
                 j += 1
                 sum += inputIntegers[j]
             }
@@ -43,5 +40,11 @@ public class Day09: Day<Int, Int> {
             }
         }
         fatalError()
+    }
+
+    public func run() async throws -> (Int, Int) {
+        let part1 = try await part1()
+        let part2 = try await part2(part1Result: part1)
+        return (part1, part2)
     }
 }

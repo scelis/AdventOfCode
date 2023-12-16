@@ -1,7 +1,9 @@
 import AdventKit
 import Foundation
 
-public class Day17: Day<Int, Int> {
+public struct Day17: Day {
+    let debugPrinting = false
+
     enum Tile: Character {
         case scaffold = "#"
         case space = "."
@@ -30,8 +32,8 @@ public class Day17: Day<Int, Int> {
         }
     }
 
-    public override func part1() throws -> Int {
-        let computer = IntcodeComputer(input: input)
+    public func part1() async throws -> Int {
+        let computer = IntcodeComputer(input: input())
         computer.run()
 
         prettyPrint(integers: computer.outputBuffer)
@@ -57,8 +59,8 @@ public class Day17: Day<Int, Int> {
         return sum
     }
 
-    public override func part2() throws -> Int {
-        let computer = IntcodeComputer(input: input)
+    public func part2() async throws -> Int {
+        let computer = IntcodeComputer(input: input())
         computer[0] = 2
         computer.run()
 
@@ -73,7 +75,9 @@ public class Day17: Day<Int, Int> {
         for command in commands {
             prettyPrint(integers: computer.outputBuffer)
             computer.clearOutputBuffer()
-            print("> \(command)")
+            if debugPrinting {
+                print("> \(command)")
+            }
             computer.run(input: parse(command: command))
         }
 
@@ -110,6 +114,8 @@ public class Day17: Day<Int, Int> {
     }
 
     func prettyPrint(integers: [Int]) {
+        guard debugPrinting else { return }
+
         var output = ""
         for int in integers {
             output += String(Character(UnicodeScalar(int)!))

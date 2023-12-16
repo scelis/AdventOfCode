@@ -1,20 +1,16 @@
 import AdventKit
 import Foundation
 
-public class Day01: Day<Int, Int> {
-    public override func part1() throws -> Int {
-        return input
-            .components(separatedBy: .newlines)
-            .map { Int($0)! }
+public struct Day01: Day {
+    public func part1() async throws -> Int {
+        return inputIntegers()
             .reduce(0) { total, mass in
                 return total + mass / 3 - 2
             }
     }
 
-    public override func part2() throws -> Int {
-        return input
-            .components(separatedBy: .newlines)
-            .map { Int($0)! }
+    public func part2() async throws -> Int {
+        return inputIntegers()
             .reduce(0) { total, mass in
                 return total + fuelRequired(forItemWithMass: mass)
             }

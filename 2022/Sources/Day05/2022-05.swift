@@ -2,17 +2,17 @@ import AdventKit
 import Algorithms
 import Foundation
 
-public class Day05: Day<String, String> {
-    public override func part1() throws -> String {
+public struct Day05: Day {
+    public func part1() async throws -> String {
         return try solve(isPartOne: true)
     }
 
-    public override func part2() throws -> String {
+    public func part2() async throws -> String {
         return try solve(isPartOne: false)
     }
 
     func solve(isPartOne: Bool) throws -> String {
-        let parts = input.components(separatedBy: "\n\n")
+        let parts = input().components(separatedBy: "\n\n")
 
         var stacks: [[Character]] = .init(repeating: [], count: 9)
         parts[0].components(separatedBy: .newlines).dropLast().forEach { line in
@@ -29,7 +29,6 @@ public class Day05: Day<String, String> {
             stacks[source] = Array(stacks[source].dropFirst(count))
             stacks[destination] = (isPartOne ? crates.reversed() : crates) + stacks[destination]
         }
-
 
         return stacks.reduce("") { $0 + String($1.first!) }
     }

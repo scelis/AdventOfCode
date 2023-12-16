@@ -1,14 +1,14 @@
 import AdventKit
 import Foundation
 
-public class Day12: Day<Int, Int> {
+public struct Day12: Day {
     private struct Node: GridGraphNode {
         var height: Int
         var coordinate: Coordinate2D
     }
 
     private func parseInput() throws -> (GridGraph<Node>, Coordinate2D, Coordinate2D) {
-        let characters = inputLines.map { Array($0) }
+        let characters = input().components(separatedBy: .newlines).map { Array($0) }
         var start: Coordinate2D?
         var destination: Coordinate2D?
 
@@ -46,12 +46,12 @@ public class Day12: Day<Int, Int> {
         return (graph, start!, destination!)
     }
 
-    public override func part1() throws -> Int {
+    public func part1() async throws -> Int {
         let (graph, start, destination) = try parseInput()
         return try graph.findPath(from: start, to: destination).count - 1
     }
 
-    public override func part2() throws -> Int {
+    public func part2() async throws -> Int {
         let (graph, _, destination) = try parseInput()
         try graph.reverse()
         return try graph.findPath(

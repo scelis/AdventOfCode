@@ -1,7 +1,7 @@
 import AdventKit
 import Foundation
 
-public class Day11: Day<Int, Int> {
+public struct Day11: Day {
     private enum Value {
         case int(Int)
         case old
@@ -71,7 +71,7 @@ public class Day11: Day<Int, Int> {
     private func parseMonkeys() throws -> [Monkey] {
         var monkeys: [Monkey] = []
 
-        try input.enumerateMatches(withPattern: "Monkey ([0-9]+):\n  Starting items: ([0-9, ]+)\n  Operation: new = old ([*+]) ([0-9]+|old)\n  Test: divisible by ([0-9]+)\n    If true: throw to monkey ([0-9]+)\n    If false: throw to monkey ([0-9]+)") { match in
+        try input().enumerateMatches(withPattern: "Monkey ([0-9]+):\n  Starting items: ([0-9, ]+)\n  Operation: new = old ([*+]) ([0-9]+|old)\n  Test: divisible by ([0-9]+)\n    If true: throw to monkey ([0-9]+)\n    If false: throw to monkey ([0-9]+)") { match in
             monkeys.append(
                 Monkey(
                     id: Int(match[1])!,
@@ -104,12 +104,12 @@ public class Day11: Day<Int, Int> {
             .reduce(1, *)
     }
 
-    public override func part1() throws -> Int {
+    public func part1() async throws -> Int {
         let monkeys = try parseMonkeys()
         return try solve(monkeys: monkeys, numRounds: 20, worryDecay: { $0 / 3 })
     }
 
-    public override func part2() throws -> Int {
+    public func part2() async throws -> Int {
         let monkeys = try parseMonkeys()
         let leastCommonMultiple = monkeys.map { $0.divisibleByTest }.leastCommonMultiple
         return try solve(monkeys: monkeys, numRounds: 10000, worryDecay: { $0 % leastCommonMultiple })

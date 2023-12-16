@@ -14,9 +14,9 @@ private extension Coordinate2D {
     }
 }
 
-public class Day09: Day<Int, Int> {
-    private lazy var commands: [(Direction, Int)] = {
-        return inputLines.map { line -> (Direction, Int) in
+public struct Day09: Day {
+    private static var commands: [(Direction, Int)] = {
+        return input().components(separatedBy: .newlines).map { line -> (Direction, Int) in
             let components = line.components(separatedBy: .whitespaces)
             return (Direction(rawValue: components[0])!, Int(components[1])!)
         }
@@ -25,7 +25,7 @@ public class Day09: Day<Int, Int> {
     private func simulate(numKnots: Int) -> Int {
         var rope: [Coordinate2D] = .init(repeating: .zero, count: numKnots)
         var visited: Set<Coordinate2D> = [.zero]
-        commands.forEach { (direction, steps) in
+        Self.commands.forEach { (direction, steps) in
             for _ in 0..<steps {
                 rope[0] = rope[0].step(inDirection: direction)
                 for i in 1..<rope.count {
@@ -38,11 +38,11 @@ public class Day09: Day<Int, Int> {
         return visited.count
     }
 
-    public override func part1() throws -> Int {
+    public func part1() async throws -> Int {
         simulate(numKnots: 2)
     }
 
-    public override func part2() throws -> Int {
+    public func part2() async throws -> Int {
         simulate(numKnots: 10)
     }
 }

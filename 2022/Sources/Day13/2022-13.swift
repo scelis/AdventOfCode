@@ -1,7 +1,7 @@
 import AdventKit
 import Foundation
 
-public class Day13: Day<Int, Int> {
+public struct Day13: Day {
     private struct Packet: Comparable {
         let value: [Any]
 
@@ -83,8 +83,8 @@ public class Day13: Day<Int, Int> {
         }
     }
 
-    public override func part1() throws -> Int {
-        try input
+    public func part1() async throws -> Int {
+        try input()
             .components(separatedBy: "\n\n")
             .map { chunk in
                 let components = chunk.components(separatedBy: "\n")
@@ -95,8 +95,8 @@ public class Day13: Day<Int, Int> {
             .reduce(0, +)
     }
 
-    public override func part2() throws -> Int {
-        var packets = try input
+    public func part2() async throws -> Int {
+        var packets = try input()
             .components(separatedBy: "\n")
             .filter{ !$0.isEmpty }
             .map { try Packet(string: $0) }

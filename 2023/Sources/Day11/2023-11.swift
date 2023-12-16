@@ -2,12 +2,24 @@ import AdventKit
 import Algorithms
 import Foundation
 
-public class Day11: Day<Int, Int> {
-    public override func part1() throws -> Int {
+public struct Day11: Day {
+    
+    // MARK: - Structures
+
+    struct Universe {
+        var map: [[Character]]
+        var galaxies: Set<Coordinate2D>
+        var columnsWithGalaxies: Set<Int>
+        var rowsWithGalaxies: Set<Int>
+    }
+
+    // MARK: - Solving
+
+    public func part1() async throws -> Int {
         sumOfShortestPaths(expansion: 2)
     }
 
-    public override func part2() throws -> Int {
+    public func part2() async throws -> Int {
         sumOfShortestPaths(expansion: 1000000)
     }
 
@@ -28,15 +40,10 @@ public class Day11: Day<Int, Int> {
 
     // MARK: - Parsing
 
-    struct Universe {
-        var map: [[Character]]
-        var galaxies: Set<Coordinate2D>
-        var columnsWithGalaxies: Set<Int>
-        var rowsWithGalaxies: Set<Int>
-    }
+    let universe: Universe
 
-    lazy var universe: Universe = {
-        let map: [[Character]] = inputLines.map({ Array($0) })
+    init() {
+        let map: [[Character]] = Self.inputLines().map({ Array($0) })
         var galaxies: Set<Coordinate2D> = []
         var columnsWithGalaxies: Set<Int> = []
         var rowsWithGalaxies: Set<Int> = []
@@ -52,11 +59,11 @@ public class Day11: Day<Int, Int> {
             }
         }
 
-        return Universe(
+        self.universe = Universe(
             map: map,
             galaxies: galaxies,
             columnsWithGalaxies: columnsWithGalaxies,
             rowsWithGalaxies: rowsWithGalaxies
         )
-    }()
+    }
 }

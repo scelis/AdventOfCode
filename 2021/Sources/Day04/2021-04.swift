@@ -2,7 +2,7 @@ import AdventKit
 import Algorithms
 import Foundation
 
-public class Day04: Day<Int, Int> {
+public struct Day04: Day {
     class Square {
         var value: Int
         var marked: Bool = false
@@ -66,12 +66,12 @@ public class Day04: Day<Int, Int> {
         }
     }
 
-    var numbersAndBoards: ([Int], [Bingo]) {
+    func numbersAndBoards() -> ([Int], [Bingo]) {
         var numbers: [Int] = []
         var boards: [Bingo] = []
         var currentBoard: [[Square]] = []
 
-        for line in inputLines {
+        for line in input().components(separatedBy: .newlines) {
             if numbers.isEmpty {
                 numbers = line.components(separatedBy: ",").map({ Int($0)! })
             } else if line.isEmpty {
@@ -96,8 +96,8 @@ public class Day04: Day<Int, Int> {
         return (numbers, boards)
     }
 
-    public override func part1() throws -> Int {
-        let (numbers, boards) = numbersAndBoards
+    public func part1() async throws -> Int {
+        let (numbers, boards) = numbersAndBoards()
 
         for number in numbers {
             var bestScore = 0
@@ -117,8 +117,8 @@ public class Day04: Day<Int, Int> {
         fatalError()
     }
 
-    public override func part2() throws -> Int {
-        var (numbers, boards) = numbersAndBoards
+    public func part2() async throws -> Int {
+        var (numbers, boards) = numbersAndBoards()
 
         for number in numbers {
             var lastScore = Int.max

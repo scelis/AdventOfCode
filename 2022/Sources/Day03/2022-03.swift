@@ -2,7 +2,7 @@ import AdventKit
 import Algorithms
 import Foundation
 
-public class Day03: Day<Int, Int> {
+public struct Day03: Day {
     func priority(for character: Character) -> Int {
         if character.isLowercase {
             return Int(character.asciiValue! - Character("a").asciiValue!) + 1
@@ -11,9 +11,8 @@ public class Day03: Day<Int, Int> {
         }
     }
 
-    public override func part1() throws -> Int {
-        return input
-            .components(separatedBy: .newlines)
+    public func part1() async throws -> Int {
+        return inputLines()
             .map { line -> Int in
                 let first = Set(line[0..<line.count/2])
                 let second = Set(line[line.count/2..<line.count])
@@ -22,9 +21,8 @@ public class Day03: Day<Int, Int> {
             .reduce(0, +)
     }
 
-    public override func part2() throws -> Int {
-        return input
-            .components(separatedBy: .newlines)
+    public func part2() async throws -> Int {
+        return inputLines()
             .map { Set($0) }
             .chunks(ofCount: 3)
             .map { chunk -> Int in

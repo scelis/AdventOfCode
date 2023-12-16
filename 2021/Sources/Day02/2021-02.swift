@@ -2,7 +2,7 @@ import AdventKit
 import Algorithms
 import Foundation
 
-public class Day02: Day<Int, Int> {
+public struct Day02: Day {
     enum Command {
         case forward(Int)
         case up(Int)
@@ -57,8 +57,8 @@ public class Day02: Day<Int, Int> {
         }
     }
 
-    public override func part1() throws -> Int {
-        let finalPosition = input
+    public func part1() async throws -> Int {
+        let finalPosition = input()
             .components(separatedBy: .newlines)
             .map { Command(string: $0) }
             .reduce(Position()) { $0.apply1(command: $1) }
@@ -66,8 +66,8 @@ public class Day02: Day<Int, Int> {
         return finalPosition.depth * finalPosition.horizontal
     }
 
-    public override func part2() throws -> Int {
-        let finalPosition = input
+    public func part2() async throws -> Int {
+        let finalPosition = input()
             .components(separatedBy: .newlines)
             .map { Command(string: $0) }
             .reduce(Position()) { $0.apply2(command: $1) }

@@ -1,61 +1,73 @@
 import Foundation
 
-open class Day<Part1: CustomStringConvertible, Part2: CustomStringConvertible> {
+public protocol Day {
+    associatedtype Part1: CustomStringConvertible
+    associatedtype Part2: CustomStringConvertible
 
-    // MARK: - Initialization
+    func part1() async throws -> Part1
+    func part2() async throws -> Part2
+    func run() async throws -> (Part1, Part2)
+}
 
-    public init() {
+extension Day {
+
+    // MARK: Solving
+
+    public func part1() async throws -> Part1 {
+        fatalError("Unimplemented")
     }
 
-    public init(input: String) {
-        self.input = input
+    public func part2() async throws -> Part2 {
+        fatalError("Unimplemented")
     }
 
-    public init(fileName: String) {
-        inputURL = url(withFileName: fileName)
+    public func run() async throws -> (Part1, Part2) {
+        async let p1 = part1()
+        async let p2 = part2()
+        return (try await p1, try await p2)
     }
 
-    // MARK: - Input
+    // MARK: Input
 
-    private lazy var inputURL: URL? = {
-        return url(withFileName: "input.txt")
-    }()
-
-    public private(set) lazy var input: String = {
-        guard
-            let url = inputURL,
+    public static func input(file: StaticString = #file) -> String {
+        let url = URL(filePath: file.description).deletingLastPathComponent().appending(pathComponent: "input.txt")
+        if
             let input = FileManager.default.contents(atPath: url.path),
             let string = String(data: input, encoding: .utf8)
-            else { return "" }
-
-        return string.trimmingCharacters(in: .newlines)
-    }()
-
-    public private(set) lazy var inputLines: [String] = {
-        return input.components(separatedBy: .newlines)
-    }()
-
-    private func url(withFileName fileName: String) -> URL {
-        let className = String(cString: class_getName(type(of: self)))
-        let groups = try! className.firstMatch(withPattern: #"AOC(\d+)\.Day(\d+)"#)!
-        let dir = URL(fileURLWithPath: "\(#file)")
-            .deletingLastPathComponent()
-            .deletingLastPathComponent()
-            .deletingLastPathComponent()
-            .appending(pathComponent: groups[1])
-            .appending(pathComponent: "Sources")
-            .appending(pathComponent: "Day\(groups[2])")
-            .appending(pathComponent: fileName)
-        return dir
+        {
+            return string.trimmingCharacters(in: .newlines)
+        } else {
+            return ""
+        }
     }
 
-    // MARK: - Solving
-
-    open func part1() throws -> Part1 {
-        fatalError("You must implement part1()")
+    public func input(file: StaticString = #file) -> String {
+        Self.input(file: file)
     }
 
-    open func part2() throws -> Part2 {
-        fatalError("You must implement part2()")
+    public static func inputLines(file: StaticString = #file) -> [String] {
+        input(file: file).components(separatedBy: .newlines)
+    }
+
+    public func inputLines(file: StaticString = #file) -> [String] {
+        Self.inputLines(file: file)
+    }
+
+    public static func inputIntegers(file: StaticString = #file) -> [Int] {
+        input(file: file).components(separatedBy: .whitespacesAndNewlines).compactMap(Int.init)
+    }
+
+    public func inputIntegers(file: StaticString = #file) -> [Int] {
+        Self.inputIntegers(file: file)
+    }
+
+    public static func inputIntegerArrays(file: StaticString = #file) -> [[Int]] {
+        inputLines(file: file).map { line in
+            line.components(separatedBy: .whitespaces).compactMap(Int.init)
+        }
+    }
+
+    public func inputIntegerArrays(file: StaticString = #file) -> [[Int]] {
+        Self.inputIntegerArrays(file: file)
     }
 }

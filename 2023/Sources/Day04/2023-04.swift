@@ -1,7 +1,10 @@
 import AdventKit
 import Foundation
 
-public class Day04: Day<Int, Int> {
+public struct Day04: Day {
+
+    // MARK: - Structures
+
     private struct Card {
         var id: Int
         var winningNumbers: [Int]
@@ -12,14 +15,18 @@ public class Day04: Day<Int, Int> {
         }
     }
 
-    public override func part1() throws -> Int {
+    // MARK: - Solving
+
+    private let cards: [Card]
+
+    public func part1() async throws -> Int {
         cards.reduce(0) { partialResult, card in
             let numberOfMatches = card.numberOfMatches
             return (numberOfMatches == 0) ? partialResult : partialResult + pow(2, numberOfMatches - 1)
         }
     }
 
-    public override func part2() throws -> Int {
+    public func part2() async throws -> Int {
         let lastCardID = cards.last!.id
         var cardCounts: [Int: Int] = [:]
         for card in cards {
@@ -35,11 +42,13 @@ public class Day04: Day<Int, Int> {
 
     // MARK: - Parsing
 
-    private lazy var cards: [Card] = inputLines.map { parseCard(string: $0) }
+    private static let cardRegex = #/^Card +(\d+): +/#
 
-    private let cardRegex = #/^Card +(\d+): +/#
+    init() {
+        self.cards = Self.inputLines().map { Self.parseCard(string: $0) }
+    }
 
-    private func parseCard(string: String) -> Card {
+    private static func parseCard(string: String) -> Card {
         let match = string.firstMatch(of: cardRegex)!
         let cardID = Int(match.1)!
         let numbers: [[Int]] = string[match.0.endIndex...].components(separatedBy: "|").map { side in

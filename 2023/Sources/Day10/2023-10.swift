@@ -1,7 +1,10 @@
 import AdventKit
 import Foundation
 
-public class Day10: Day<Int, Int> {
+public struct Day10: Day {
+
+    // MARK: - Structures
+
     enum Tile: Character {
         case ground = "."
         case northSouth = "|"
@@ -24,8 +27,6 @@ public class Day10: Day<Int, Int> {
             }
         }
 
-
-
         var directions: Set<Direction> {
             switch self {
             case .ground, .start: return []
@@ -44,16 +45,24 @@ public class Day10: Day<Int, Int> {
         var coordinate: Coordinate2D
     }
 
-    public override func part1() throws -> Int {
-        let _ = try checkParseGraph()
-        return loopCoordinates.count / 2
+    struct PipeMaze {
+        var graph: GridGraph<Node>
+        var startingCoordinate: Coordinate2D
+        var loopCoordinates: Set<Coordinate2D>
     }
 
-    public override func part2() throws -> Int {
-        let graph = try checkParseGraph()
+    // MARK: - Solving
 
+    public func run() async throws -> (Int, Int) {
+        let maze = try parseMaze()
+        let part1 = maze.loopCoordinates.count / 2
+        let part2 = try numberOfEnclosedTiles(maze: maze)
+        return (part1, part2)
+    }
+
+    func numberOfEnclosedTiles(maze: PipeMaze) throws -> Int {
         // Find top/left "F" tile in the loop.
-        var currentCoordinate: Coordinate2D! = loopCoordinates.min { a, b in
+        var currentCoordinate: Coordinate2D! = maze.loopCoordinates.min { a, b in
             if a.y < b.y { return true }
             if a.y == b.y { return a.x < b.x }
             return false
@@ -68,17 +77,17 @@ public class Day10: Day<Int, Int> {
         while !visited.contains(currentCoordinate) {
             visited.insert(currentCoordinate)
             currentCoordinate = currentCoordinate.step(inDirection: currentDirection)
-            let currentNode = try graph.node(withID: currentCoordinate)
+            let currentNode = try maze.graph.node(withID: currentCoordinate)
             let exitDirection = currentNode.tile.directions.first { $0 != currentDirection.turnAround() }!
 
             currentDirection = currentDirection.turnRight()
             while currentDirection != exitDirection {
                 if
-                    let neighbor = try? graph.node(withID: currentCoordinate.step(inDirection: currentDirection)),
-                    !loopCoordinates.contains(neighbor.coordinate),
+                    let neighbor = try? maze.graph.node(withID: currentCoordinate.step(inDirection: currentDirection)),
+                    !maze.loopCoordinates.contains(neighbor.coordinate),
                     !innerCoordinates.contains(neighbor.coordinate)
                 {
-                    innerCoordinates.formUnion(try graph.explore(from: neighbor.coordinate).keys)
+                    innerCoordinates.formUnion(try maze.graph.explore(from: neighbor.coordinate).keys)
                 }
                 currentDirection = currentDirection.turnLeft()
             }
@@ -89,21 +98,14 @@ public class Day10: Day<Int, Int> {
 
     // MARK: - Parsing
 
-    var graph: GridGraph<Node>?
-    var startingCoordinate = Coordinate2D.zero
-    var loopCoordinates: Set<Coordinate2D> = []
-
-    func checkParseGraph() throws -> Graph<Node> {
-        if let graph {
-            return graph
-        }
-
+    func parseMaze() throws -> PipeMaze {
         // Create graph
-        let data: [[Tile]] = inputLines.map({ $0.compactMap({ Tile(rawValue: $0) }) })
+        let data: [[Tile]] = inputLines().map({ $0.compactMap({ Tile(rawValue: $0) }) })
         let graph = try GridGraph(data: data, addConnections: false, createNode: Node.init)
-        self.graph = graph
 
         // Find starting coordinate
+        var startingCoordinate = Coordinate2D.zero
+        var loopCoordinates: Set<Coordinate2D> = []
         for (node, coordinate) in graph {
             if node.tile == .start {
                 startingCoordinate = coordinate
@@ -165,6 +167,6 @@ public class Day10: Day<Int, Int> {
             }
         }
 
-        return graph
+        return PipeMaze(graph: graph, startingCoordinate: startingCoordinate, loopCoordinates: loopCoordinates)
     }
 }

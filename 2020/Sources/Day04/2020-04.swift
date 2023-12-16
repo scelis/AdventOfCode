@@ -1,7 +1,7 @@
 import AdventKit
 import Foundation
 
-public class Day04: Day<Int, Int> {
+public struct Day04: Day {
     enum Field: String, CaseIterable {
         case birthYear = "byr"
         case issueYear = "iyr"
@@ -49,7 +49,7 @@ public class Day04: Day<Int, Int> {
     func numberOfValidPassports(strict: Bool) -> Int {
         var numValid = 0
         var current: [Field: String] = [:]
-        for line in inputLines {
+        for line in inputLines() {
             if line.isEmpty {
                 if isValid(passport: current, strict: strict) {
                     numValid += 1
@@ -77,11 +77,11 @@ public class Day04: Day<Int, Int> {
         return true
     }
 
-    public override func part1() throws -> Int {
+    public func part1() async throws -> Int {
         return numberOfValidPassports(strict: false)
     }
 
-    public override func part2() throws -> Int {
+    public func part2() async throws -> Int {
         return numberOfValidPassports(strict: true)
     }
 }

@@ -1,7 +1,7 @@
 import AdventKit
 import Foundation
 
-public class Day07: Day<Int, Int> {
+public struct Day07: Day {
     private enum Command {
         case cd(String)
         case ls
@@ -34,14 +34,14 @@ public class Day07: Day<Int, Int> {
         }
     }
 
-    private lazy var graph = {
+    private static var graph: Graph<Item> = {
         let graph = Graph<Item>()
         graph.add(node: Item(itemType: .directory, path: "/"))
 
         var currentCommand: Command?
         var currentPath: [String] = []
 
-        inputLines
+        Self.inputLines()
             .map { $0.components(separatedBy: .whitespaces) }
             .forEach { components in
                 if let command = Command(components) {
@@ -75,7 +75,7 @@ public class Day07: Day<Int, Int> {
         return graph
     }()
 
-    private lazy var directorySizes: [String: Int] = {
+    private static var directorySizes: [String: Int] = {
         var sizes: [String: Int] = [:]
 
         func calculateAndCacheSize(nodeID: String) -> Int {
@@ -98,17 +98,17 @@ public class Day07: Day<Int, Int> {
         return sizes
     }()
 
-    public override func part1() throws -> Int {
-        return directorySizes
+    public func part1() async throws -> Int {
+        return Self.directorySizes
             .values
             .filter { $0 <= 100000 }
             .sorted(by: >)
             .reduce(0, +)
     }
 
-    public override func part2() throws -> Int {
-        let spaceAvailable = 70000000 - directorySizes["/"]!
-        return directorySizes
+    public func part2() async throws -> Int {
+        let spaceAvailable = 70000000 - Self.directorySizes["/"]!
+        return Self.directorySizes
             .values
             .filter { spaceAvailable + $0 >= 30000000 }
             .sorted(by: <)

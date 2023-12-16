@@ -2,9 +2,9 @@ import AdventKit
 import Algorithms
 import Foundation
 
-public class Day07: Day<Int, Int> {
+public struct Day07: Day {
     func solve(distanceFunction: ([Int], Int) -> Int) -> Int {
-        let crabs = input.components(separatedBy: ",").map({ Int($0)! })
+        let crabs = input().components(separatedBy: ",").map({ Int($0)! })
         let average: Int = crabs.reduce(0, +) / crabs.count
         let base = distanceFunction(crabs, average)
         let increasing = distanceFunction(crabs, average + 1)
@@ -34,7 +34,7 @@ public class Day07: Day<Int, Int> {
         }
     }
 
-    public override func part1() throws -> Int {
+    public func part1() async throws -> Int {
         return solve { crabs, location in
             return crabs
                 .map { abs($0 - location) }
@@ -42,7 +42,7 @@ public class Day07: Day<Int, Int> {
         }
     }
 
-    public override func part2() throws -> Int {
+    public func part2() async throws -> Int {
         return solve { crabs, location in
             return crabs
                 .map { crabLocation in

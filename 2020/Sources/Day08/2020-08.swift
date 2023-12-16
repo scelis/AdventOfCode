@@ -1,7 +1,7 @@
 import AdventKit
 import Foundation
 
-public class Day08: Day<Int, Int> {
+public struct Day08: Day {
     enum Instruction {
         case nop(Int)
         case acc(Int)
@@ -19,9 +19,11 @@ public class Day08: Day<Int, Int> {
         }
     }
 
-    lazy var instructions: [Instruction] = inputLines.map { Instruction(line: $0) }
+    var instructions: [Instruction] {
+        inputLines().map { Instruction(line: $0) }
+    }
 
-    public override func part1() throws -> Int {
+    public func part1() async throws -> Int {
         return execute(instructions: instructions).accumulatorValue
     }
 
@@ -47,7 +49,7 @@ public class Day08: Day<Int, Int> {
         return (i == instructions.count, accumulator)
     }
 
-    public override func part2() throws -> Int {
+    public func part2() async throws -> Int {
         var i = 0
         while true {
             var modified = instructions

@@ -1,23 +1,21 @@
 import AdventKit
 import Foundation
 
-public class Day01: Day<Int, Int> {
-    lazy var sortedElves: [Int] = {
-        return input
-            .components(separatedBy: "\n\n")
-            .map {
-                $0.components(separatedBy: "\n")
-                    .map { Int($0)! }
-                    .reduce(0, +)
-            }
-            .sorted(by: >)
-    }()
+public struct Day01: Day {
+    var sortedElves: [Int]
 
-    public override func part1() throws -> Int {
+    init() {
+        self.sortedElves = Self.input()
+            .components(separatedBy: "\n\n")
+            .map { $0.components(separatedBy: "\n").map({ Int($0)! }).reduce(0, +) }
+            .sorted(by: >)
+    }
+
+    public func part1() async throws -> Int {
         return sortedElves.first!
     }
 
-    public override func part2() throws -> Int {
+    public func part2() async throws -> Int {
         return sortedElves
             .prefix(3)
             .reduce(0, +)

@@ -1,11 +1,11 @@
 import AdventKit
 import Foundation
 
-public class Day10: Day<Int, Int> {
-    lazy var asteroids: Set<Coordinate2D> = {
+public struct Day10: Day {
+    var asteroids: Set<Coordinate2D> {
         var asteroids: Set<Coordinate2D> = []
 
-        let array = inputLines.map { Array($0) }
+        let array = input().components(separatedBy: .newlines).map { Array($0) }
         for y in 0..<array.count {
             for x in 0..<array[y].count {
                 switch array[y][x] {
@@ -20,11 +20,12 @@ public class Day10: Day<Int, Int> {
         }
 
         return asteroids
-    }()
+    }
 
-    public override func part1() throws -> Int {
+    public func part1() async throws -> Int {
         var mostDetected = 0
 
+        let asteroids = self.asteroids
         for candidateStation in asteroids {
             var visibleAsteroids = asteroids
             visibleAsteroids.remove(candidateStation)
@@ -54,7 +55,7 @@ public class Day10: Day<Int, Int> {
         return mostDetected
     }
 
-    public override func part2() throws -> Int {
+    public func part2() async throws -> Int {
         let station = Coordinate2D(x: 22, y: 28)
         let numAsteroids: Int = 200
 

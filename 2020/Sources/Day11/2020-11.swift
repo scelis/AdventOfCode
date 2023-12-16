@@ -2,22 +2,22 @@ import AdventKit
 import Algorithms
 import Foundation
 
-public class Day11: Day<Int, Int> {
+public struct Day11: Day {
     enum Tile: Character {
         case floor = "."
         case emptySeat = "L"
         case occupiedSeat = "#"
     }
 
-    lazy var tiles: [Coordinate2D: Tile] = {
+    var tiles: [Coordinate2D: Tile] {
         var dict = [Coordinate2D: Tile]()
-        for (y, line) in inputLines.enumerated() {
+        for (y, line) in inputLines().enumerated() {
             for (x, character) in line.enumerated() {
                 dict[Coordinate2D(x: x, y: y)] = Tile(rawValue: character)
             }
         }
         return dict
-    }()
+    }
 
     func solve(part: Int) -> Int {
         var current = tiles
@@ -73,11 +73,11 @@ public class Day11: Day<Int, Int> {
         }
     }
 
-    public override func part1() throws -> Int {
+    public func part1() async throws -> Int {
         return solve(part: 1)
     }
 
-    public override func part2() throws -> Int {
+    public func part2() async throws -> Int {
         return solve(part: 2)
     }
 }

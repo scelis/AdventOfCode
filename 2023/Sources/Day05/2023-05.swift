@@ -2,8 +2,8 @@ import AdventKit
 import Algorithms
 import Foundation
 
-public class Day05: Day<Int, Int> {
-    public override func part1() throws -> Int {
+public struct Day05: Day {
+    public func part1() async throws -> Int {
         var current = Set(seeds)
         var next: Set<Int> = []
 
@@ -23,7 +23,7 @@ public class Day05: Day<Int, Int> {
         return current.min()!
     }
 
-    public override func part2() throws -> Int {
+    public func part2() async throws -> Int {
         var current = IndexSet()
         var next = IndexSet()
 
@@ -49,12 +49,18 @@ public class Day05: Day<Int, Int> {
 
     // MARK: - Parsing
 
-    lazy var sections = input.components(separatedBy: "\n\n")
-    lazy var seeds: [Int] = sections[0].components(separatedBy: " ").compactMap(Int.init)
-    lazy var maps: [[[Int]]] = {
-        input.components(separatedBy: "\n\n").dropFirst().map { section in
+    var sections: [String] {
+        input().components(separatedBy: "\n\n")
+    }
+
+    var seeds: [Int] {
+        sections[0].components(separatedBy: " ").compactMap(Int.init)
+    }
+
+    var maps: [[[Int]]] {
+        input().components(separatedBy: "\n\n").dropFirst().map { section in
             let lines = section.components(separatedBy: "\n").dropFirst()
             return lines.map { $0.components(separatedBy: " ").compactMap(Int.init) }
         }
-    }()
+    }
 }

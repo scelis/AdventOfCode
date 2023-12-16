@@ -1,9 +1,11 @@
 import AdventKit
 import Foundation
 
-public class Day04: Day<Int, Int> {
-    lazy var pairs: [(ClosedRange<Int>, ClosedRange<Int>)] = {
-        return inputLines.map { line in
+public struct Day04: Day {
+    var pairs: [(ClosedRange<Int>, ClosedRange<Int>)]
+
+    init() {
+        self.pairs = Self.inputLines().map { line in
             let rangeStrings = line.components(separatedBy: ",")
             let ranges = rangeStrings.map { rangeString in
                 let components = rangeString.components(separatedBy: "-")
@@ -11,16 +13,16 @@ public class Day04: Day<Int, Int> {
             }
             return (ranges[0], ranges[1])
         }
-    }()
+    }
 
-    public override func part1() throws -> Int {
+    public func part1() async throws -> Int {
         return pairs.filter { pair in
             return pair.0.contains(pair.1) || pair.1.contains(pair.0)
         }
         .count
     }
 
-    public override func part2() throws -> Int {
+    public func part2() async throws -> Int {
         return pairs.filter { pair in
             return pair.0.overlaps(pair.1)
         }

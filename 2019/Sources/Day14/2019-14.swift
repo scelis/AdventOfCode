@@ -1,7 +1,7 @@
 import AdventKit
 import Foundation
 
-public class Day14: Day<Int, Int> {
+public struct Day14: Day {
     struct Chemical: Hashable {
         var name: String
         var amount: Int
@@ -73,13 +73,13 @@ public class Day14: Day<Int, Int> {
         return requirements["ORE"]!
     }
 
-    public override func part1() throws -> Int {
-        let reactions = parse(input: input)
+    public func part1() async throws -> Int {
+        let reactions = parse(input: input())
         return requirements(for: ["FUEL": 1], reactions: reactions)
     }
 
-    public override func part2() throws -> Int {
-        let reactions = parse(input: input)
+    public func part2() async throws -> Int {
+        let reactions = parse(input: input())
         var mostFuel = 0
         var increment = 1000000000000
         while increment > 0 {

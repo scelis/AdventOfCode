@@ -1,11 +1,11 @@
 import AdventKit
 import Foundation
 
-public class Day12: Day<Int, Int> {
-    public override func part1() throws -> Int {
+public struct Day12: Day {
+    public func part1() async throws -> Int {
         var location = Coordinate2D(x: 0, y: 0)
         var direction = Direction.east
-        inputLines.forEach { line in
+        inputLines().forEach { line in
             let number = Int(line.dropFirst())!
             switch line.first! {
             case "N": location = location.step(inDirection: .north, distance: number)
@@ -22,14 +22,14 @@ public class Day12: Day<Int, Int> {
         return location.manhattanDistance(from: .init(x: 0, y: 0))
     }
 
-    public override func part2() throws -> Int {
+    public func part2() async throws -> Int {
         let origin = Coordinate2D(x: 0, y: 0)
         var ship = origin
         var waypoint = origin
             .step(inDirection: .east, distance: 10)
             .step(inDirection: .north, distance: 1)
 
-        inputLines.forEach { line in
+        inputLines().forEach { line in
             let number = Int(line.dropFirst())!
             switch line.first! {
             case "N": waypoint = waypoint.step(inDirection: .north, distance: number)

@@ -1,7 +1,7 @@
 import AdventKit
 import Foundation
 
-public class Day05: Day<Int, Int> {
+public struct Day05: Day {
     func seatID(for pass: String) -> Int {
         var low = 0
         var high = 128
@@ -26,14 +26,14 @@ public class Day05: Day<Int, Int> {
         return low * 8 + left
     }
 
-    public override func part1() throws -> Int {
-        return inputLines
+    public func part1() async throws -> Int {
+        return inputLines()
             .map({ seatID(for: $0) })
             .reduce(0, max)
     }
 
-    public override func part2() throws -> Int {
-        let ids = inputLines.map({ seatID(for: $0) })
+    public func part2() async throws -> Int {
+        let ids = inputLines().map({ seatID(for: $0) })
         let set = Set<Int>(ids)
         for i in (set.min()! + 1)..<set.max()! {
             if !set.contains(i) {

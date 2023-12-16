@@ -2,7 +2,7 @@ import AdventKit
 import Algorithms
 import Foundation
 
-public class Day12: Day<Int, Int> {
+public struct Day12: Day {
 
     // MARK: - Structures
 
@@ -17,29 +17,37 @@ public class Day12: Day<Int, Int> {
         var targetCounts: [Int]
     }
 
-    // MARK: - Problems
+    // MARK: - Solving
 
-    private var cache: [String: Int] = [:]
-
-    public override func part1() throws -> Int {
-        records
-            .map { record in
-                var cache: [String: Int] = [:]
-                return numberOfPossibleArrangements(record: record.trimmed(), cache: &cache)
-            }
-            .reduce(0, +)
+    public func part1() async throws -> Int {
+        return await countPossibleArrangements()
     }
 
-    public override func part2() throws -> Int {
-        records
-            .map {
-                var cache: [String: Int] = [:]
-                return numberOfPossibleArrangements(record: $0.unfolded(times: 5).trimmed(), cache: &cache)
-            }
-            .reduce(0, +)
+    public func part2() async throws -> Int {
+        return await countPossibleArrangements(unfolded: 5)
     }
 
-    func numberOfPossibleArrangements(record: Record, cache: inout [String: Int]) -> Int {
+    func countPossibleArrangements(unfolded: Int = 1) async -> Int {
+        let records = self.records
+
+        var count = 0
+        await withTaskGroup(of: Int.self) { group in
+            for record in records {
+                group.addTask {
+                    var cache: [String: Int] = [:]
+                    let record = record.unfolded(times: unfolded).trimmed()
+                    return await self.numberOfPossibleArrangements(record: record, cache: &cache)
+                }
+            }
+            for await number in group {
+                count += number
+            }
+        }
+
+        return count
+    }
+
+    func numberOfPossibleArrangements(record: Record, cache: inout [String: Int]) async -> Int {
         let cacheKey = record.cacheKey
         if let cachedValue = cache[record.cacheKey] {
             return cachedValue
@@ -77,7 +85,7 @@ public class Day12: Day<Int, Int> {
 
             if record.springs[firstPossibleIndex] == .damaged {
                 // First space in the first possible segment is damaged, so this is the only place it can go.
-                let number = numberOfPossibleArrangements(record: matchingRecord, cache: &cache)
+                let number = await numberOfPossibleArrangements(record: matchingRecord, cache: &cache)
                 cache[cacheKey] = number
                 return number
             } else {
@@ -85,8 +93,8 @@ public class Day12: Day<Int, Int> {
                 var otherRecord = record
                 otherRecord.springs.removeFirst(firstPossibleIndex + 1)
                 otherRecord = otherRecord.trimmed()
-                let matchingCount = numberOfPossibleArrangements(record: matchingRecord, cache: &cache)
-                let otherCount = numberOfPossibleArrangements(record: otherRecord, cache: &cache)
+                let matchingCount = await numberOfPossibleArrangements(record: matchingRecord, cache: &cache)
+                let otherCount = await numberOfPossibleArrangements(record: otherRecord, cache: &cache)
                 cache[matchingRecord.cacheKey] = matchingCount
                 cache[otherRecord.cacheKey] = otherCount
                 cache[cacheKey] = matchingCount + otherCount
@@ -100,14 +108,14 @@ public class Day12: Day<Int, Int> {
 
     // MARK: - Parsing
 
-    lazy var records: [Record] = {
-        inputLines.map { line in
+    var records: [Record] {
+        input().components(separatedBy: .newlines).map { line in
             let components = line.components(separatedBy: .whitespaces)
             let springs = components[0].compactMap(Spring.init)
             let counts = components[1].components(separatedBy: ",").compactMap(Int.init)
             return Record(springs: springs, targetCounts: counts)
         }
-    }()
+    }
 }
 
 extension Day12.Record {
@@ -179,6 +187,8 @@ extension Day12.Record {
     }
 
     func unfolded(times: Int) -> Day12.Record {
+        guard times > 1 else { return self }
+
         var unfoldedSprings = springs
         var unfoldedTargetCounts = targetCounts
         for _ in (2...times) {

@@ -1,10 +1,11 @@
 import AdventKit
 import Foundation
 
-public class Day13: Day<Int, Int> {
-    public override func part1() throws -> Int {
-        let timestamp = Int(inputLines[0])!
-        let buses = inputLines[1]
+public struct Day13: Day {
+    public func part1() async throws -> Int {
+        let lines = inputLines()
+        let timestamp = Int(lines[0])!
+        let buses = lines[1]
             .components(separatedBy: ",")
             .compactMap({ Int($0) })
 
@@ -22,7 +23,7 @@ public class Day13: Day<Int, Int> {
     }
 
     func printFunctions() {
-        inputLines[1]
+        inputLines()[1]
             .components(separatedBy: ",")
             .enumerated()
             .forEach { index, element in
@@ -32,7 +33,7 @@ public class Day13: Day<Int, Int> {
             }
     }
 
-    public override func part2() throws -> Int {
+    public func part2() async throws -> Int {
         // (T + 0) % 13   == 0 == (T + 13) % 13
         // (T + 3) % 41   == 0 == (T + 44) % 41
         // (T + 13) % 997 == 0 == (T + 13) % 997

@@ -2,7 +2,7 @@ import AdventKit
 import Algorithms
 import Foundation
 
-public class Day13: Day<Int, Int> {
+public struct Day13: Day {
     enum Tile: Int {
         case empty = 0
         case wall = 1
@@ -11,8 +11,8 @@ public class Day13: Day<Int, Int> {
         case ball = 4
     }
 
-    public override func part1() throws -> Int {
-        let computer = IntcodeComputer(input: input)
+    public func part1() async throws -> Int {
+        let computer = IntcodeComputer(input: input())
         computer.run()
 
         var output: [Coordinate2D: Tile] = [:]
@@ -27,8 +27,8 @@ public class Day13: Day<Int, Int> {
         }
     }
 
-    public override func part2() throws -> Int {
-        let computer = IntcodeComputer(input: input)
+    public func part2() async throws -> Int {
+        let computer = IntcodeComputer(input: input())
         computer[0] = 2
         computer.run()
 

@@ -2,8 +2,8 @@ import AdventKit
 import Algorithms
 import Foundation
 
-public class Day05: Day<Int, Int> {
-    public override func part1() throws -> Int {
+public struct Day05: Day {
+    public func part1() async throws -> Int {
         let naughtySegments: Set<String> = ["ab", "cd", "pq", "xy"]
         let vowels: Set<Character> = Set("aeiou")
 
@@ -33,12 +33,12 @@ public class Day05: Day<Int, Int> {
             return numVowels >= 3 && hasDoubleLetter
         }
 
-        return inputLines
+        return inputLines()
             .filter { isNice($0) }
             .count
     }
 
-    public override func part2() throws -> Int {
+    public func part2() async throws -> Int {
         func isNice(_ string: String) -> Bool {
             let characters = Array(string)
             var pairs: Set<String> = []
@@ -68,7 +68,7 @@ public class Day05: Day<Int, Int> {
             return hasTwoPair && hasSandwich
         }
 
-        return inputLines
+        return inputLines()
             .filter { isNice($0) }
             .count
     }

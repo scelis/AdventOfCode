@@ -1,7 +1,7 @@
 import AdventKit
 import Foundation
 
-public class Day02: Day<Int, Int> {
+public struct Day02: Day {
     private enum Color: String {
         case red, green, blue
     }
@@ -11,15 +11,15 @@ public class Day02: Day<Int, Int> {
         var reveals: [[Color: Int]]
     }
 
-    public override func part1() throws -> Int {
-        games
+    public func part1() async throws -> Int {
+        Self.games
             .filter { isPossible(game: $0, maximumCubes: [.red: 12, .green: 13, .blue: 14]) }
             .map { $0.id }
             .reduce(0, +)
     }
 
-    public override func part2() throws -> Int {
-        games
+    public func part2() async throws -> Int {
+        Self.games
             .map { power(of: $0) }
             .reduce(0, +)
     }
@@ -44,11 +44,13 @@ public class Day02: Day<Int, Int> {
 
     // MARK: - Parsing
 
-    private lazy var games: [Game] = inputLines.map { parseGame(string: $0) }
+    private static var games: [Game] = {
+        input().components(separatedBy: .newlines).map { parseGame(string: $0) }
+    }()
 
-    private let gameRegex = #/^Game (\d+): /#
+    private static let gameRegex = #/^Game (\d+): /#
 
-    private func parseGame(string: String) -> Game {
+    private static func parseGame(string: String) -> Game {
         let match = string.firstMatch(of: gameRegex)!
         let gameID = Int(match.1)!
         let reveals: [[Color: Int]] = string[match.0.endIndex...].components(separatedBy: "; ").map { reveal in

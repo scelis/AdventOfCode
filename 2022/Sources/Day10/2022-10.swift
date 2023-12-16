@@ -1,7 +1,7 @@
 import AdventKit
 import Foundation
 
-public class Day10: Day<Int, String> {
+public struct Day10: Day {
     enum Command {
         case noop
         case addx(Int)
@@ -23,16 +23,16 @@ public class Day10: Day<Int, String> {
         }
     }
 
-    private lazy var commands: [Command] = {
-        return inputLines.map { Command(string: $0) }
+    private static var commands: [Command] = {
+        return inputLines().map { Command(string: $0) }
     }()
 
-    public override func part1() throws -> Int {
+    public func part1() async throws -> Int {
         var x = 1
         var cycle = 0
         var sum = 0
 
-        for command in commands {
+        for command in Self.commands {
             for _ in 0..<command.cyclesToComplete {
                 cycle += 1
 
@@ -49,12 +49,12 @@ public class Day10: Day<Int, String> {
         return sum
     }
 
-    public override func part2() throws -> String {
+    public func part2() async throws -> String {
         var x = 1
         var cycle = 0
         var output = ""
 
-        for command in commands {
+        for command in Self.commands {
             for _ in 0..<command.cyclesToComplete {
                 if cycle % 40 == 0 {
                     output += "\n"

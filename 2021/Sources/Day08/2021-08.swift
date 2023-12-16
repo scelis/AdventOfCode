@@ -1,9 +1,9 @@
 import AdventKit
 import Foundation
 
-public class Day08: Day<Int, Int> {
-    public override func part1() throws -> Int {
-        inputLines
+public struct Day08: Day {
+    public func part1() async throws -> Int {
+        inputLines()
             .map { $0.components(separatedBy: " | ")[1] }
             .map { str -> Int in
                 str.components(separatedBy: " ")
@@ -13,7 +13,7 @@ public class Day08: Day<Int, Int> {
             .reduce(0, +)
     }
 
-    public override func part2() throws -> Int {
+    public func part2() async throws -> Int {
         let countToDigit: [Int: Int] = [
             2: 1,
             3: 7,
@@ -22,7 +22,7 @@ public class Day08: Day<Int, Int> {
         ]
 
         var sum = 0
-        for line in inputLines {
+        for line in inputLines() {
             let components = line.components(separatedBy: " | ")
             let signalPatterns = components[0].components(separatedBy: " ").map(Set.init)
             let outputStrings = components[1].components(separatedBy: " ").map(Set.init)

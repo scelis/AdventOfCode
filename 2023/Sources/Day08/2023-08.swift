@@ -1,18 +1,21 @@
 import AdventKit
 import Foundation
 
-public class Day08: Day<Int, Int> {
+public struct Day08: Day {
     struct Node {
         var id: String
         var left: String
         var right: String
     }
 
-    public override func part1() throws -> Int {
+    let nodes: [String: Node]
+    let directions: [Character]
+
+    public func part1() async throws -> Int {
         return numberOfSteps(from: "AAA", to: { $0 == "ZZZ" })
     }
 
-    public override func part2() throws -> Int {
+    public func part2() async throws -> Int {
         // Apparently each starting node has a singular ending node that it can reach and the
         // number of steps from start to end is the same as looping from end back to end. That
         // makes this problem significantly easier.
@@ -39,19 +42,19 @@ public class Day08: Day<Int, Int> {
 
     // MARK: - Parsing
 
-    let nodeRegex = #/^([A-Z]+) = \(([A-Z]+), ([A-Z]+)\)$/#
+    private static let nodeRegex = #/^([A-Z]+) = \(([A-Z]+), ([A-Z]+)\)$/#
 
-    lazy var nodes: [String: Node] = {
-        inputLines.dropFirst(2)
+    init() {
+        let lines = Self.inputLines()
+        self.directions = Array(lines[0])
+        self.nodes = Self.inputLines().dropFirst(2)
             .reduce(into: [:]) { partialResult, line in
-                let match = line.wholeMatch(of: nodeRegex)!
+                let match = line.wholeMatch(of: Self.nodeRegex)!
                 partialResult[String(match.1)] = Node(
                     id: String(match.1),
                     left: String(match.2),
                     right: String(match.3)
                 )
             }
-    }()
-
-    lazy var directions: [Character] = Array(inputLines[0])
+    }
 }

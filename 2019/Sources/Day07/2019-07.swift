@@ -1,8 +1,9 @@
 import AdventKit
 import Foundation
 
-public class Day07: Day<Int, Int> {
-    public override func part1() throws -> Int {
+public struct Day07: Day {
+    public func part1() async throws -> Int {
+        let input = input()
         var maxSignal = Int.min
         for a in 0...4 {
             for b in 0...4 {
@@ -32,7 +33,7 @@ public class Day07: Day<Int, Int> {
         return maxSignal
     }
 
-    public override func part2() throws -> Int {
+    public func part2() async throws -> Int {
         var maxSignal = Int.min
         for a in 5...9 {
             for b in 5...9 {
@@ -43,7 +44,7 @@ public class Day07: Day<Int, Int> {
                             if set.count == 5 {
                                 var computers: [IntcodeComputer] = []
                                 for _ in 0...4 {
-                                    computers.append(IntcodeComputer(input: input))
+                                    computers.append(IntcodeComputer(input: input()))
                                 }
 
                                 computers[0].run(input: [a, 0])

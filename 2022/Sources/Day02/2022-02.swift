@@ -1,7 +1,7 @@
 import AdventKit
 import Foundation
 
-public class Day02: Day<Int, Int> {
+public struct Day02: Day {
     enum Choice: Int {
         case rock = 1
         case paper = 2
@@ -66,9 +66,8 @@ public class Day02: Day<Int, Int> {
         }
     }
 
-    public override func part1() throws -> Int {
-        return input
-            .split(separator: "\n")
+    public func part1() async throws -> Int {
+        return inputLines()
             .map { line in
                 let array = line.split(separator: " ")
                 let theirs = Choice(string: String(array[0]))
@@ -78,9 +77,8 @@ public class Day02: Day<Int, Int> {
             .reduce(0, +)
     }
 
-    public override func part2() throws -> Int {
-        return input
-            .split(separator: "\n")
+    public func part2() async throws -> Int {
+        return inputLines()
             .map { line in
                 let array = line.split(separator: " ")
                 let theirs = Choice(string: String(array[0]))

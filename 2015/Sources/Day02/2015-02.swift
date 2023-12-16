@@ -1,20 +1,25 @@
 import AdventKit
 import Foundation
 
-public class Day02: Day<Int, Int> {
+public struct Day02: Day {
+
+    // MARK: - Structures
+
     private struct Present {
         var length: Int
         var width: Int
         var height: Int
     }
 
-    public override func part1() throws -> Int {
+    // MARK: - Solving
+
+    public func part1() async throws -> Int {
         presents
             .map { requiredWrappingPaper(for: $0) }
             .reduce(0, +)
     }
 
-    public override func part2() throws -> Int {
+    public func part2() async throws -> Int {
         presents
             .map { requiredRibbon(for: $0) }
             .reduce(0, +)
@@ -36,7 +41,9 @@ public class Day02: Day<Int, Int> {
 
     // MARK: - Parsing
 
-    private lazy var presents: [Present] = inputLines.map { parsePresent(string: $0) }
+    private var presents: [Present] {
+        inputLines().map { parsePresent(string: $0) }
+    }
 
     private func parsePresent(string: String) -> Present {
         let components = string.components(separatedBy: "x")

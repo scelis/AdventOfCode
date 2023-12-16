@@ -1,14 +1,15 @@
 import AdventKit
 import Foundation
 
-public class Day10: Day<Int, Int> {
+public struct Day10: Day {
     private let pairs: [Character: Character] = ["(": ")", "[": "]", "{": "}", "<": ">"]
     private let reversePairs: [Character: Character] = [")": "(", "]": "[", "}": "{", ">": "<"]
 
-    public override func part1() throws -> Int {
+    public func part1() async throws -> Int {
         let values: [Character: Int] = [")": 3, "]": 57, "}": 1197, ">": 25137]
 
-        return inputLines
+        return input()
+            .components(separatedBy: .newlines)
             .compactMap { line -> Int? in
                 var stack: [Character] = []
                 for character in line {
@@ -30,10 +31,11 @@ public class Day10: Day<Int, Int> {
             .reduce(0, +)
     }
 
-    public override func part2() throws -> Int {
+    public func part2() async throws -> Int {
         let values: [Character: Int] = [")": 1, "]": 2, "}": 3, ">": 4]
 
-        let elements = inputLines
+        let elements = input()
+            .components(separatedBy: .newlines)
             .compactMap { line -> Int? in
                 var stack: [Character] = []
 

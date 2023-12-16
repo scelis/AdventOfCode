@@ -1,7 +1,7 @@
 import AdventKit
 import Foundation
 
-public class Day01: Day<Int, Int> {
+public struct Day01: Day {
     let digits: [String: Int] = [
         "0": 0,
         "1": 1,
@@ -50,15 +50,15 @@ public class Day01: Day<Int, Int> {
         return left * 10 + right
     }
 
-    public override func part1() throws -> Int {
-        return inputLines
+    public func part1() async throws -> Int {
+        return inputLines()
             .compactMap { calibrationValue(for: $0, using: digits) }
             .reduce(0, +)
     }
 
-    public override func part2() throws -> Int {
+    public func part2() async throws -> Int {
         let map: [String: Int] = digits.merging(words, uniquingKeysWith: { a, _ in a })
-        return inputLines
+        return inputLines()
             .compactMap { calibrationValue(for: $0, using: map) }
             .reduce(0, +)
     }

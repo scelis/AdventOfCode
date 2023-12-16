@@ -3,52 +3,60 @@ import XCTest
 @testable import AOC2019
 
 class AOC2019Tests: XCTestCase {
-    func testDay01() throws {
+    func testDay01() async throws {
         let day = Day01()
-        XCTAssertEqual(try day.part1(), 3295206)
-        XCTAssertEqual(try day.part2(), 4939939)
+        let parts = try await day.run()
+        XCTAssertEqual(parts.0, 3295206)
+        XCTAssertEqual(parts.1, 4939939)
     }
 
-    func testDay02() throws {
+    func testDay02() async throws {
         let day = Day02()
-        XCTAssertEqual(try day.part1(), 9706670)
-        XCTAssertEqual(try day.part2(), 2552)
+        let parts = try await day.run()
+        XCTAssertEqual(parts.0, 9706670)
+        XCTAssertEqual(parts.1, 2552)
     }
 
-    func testDay03() throws {
+    func testDay03() async throws {
         let day = Day03()
-        XCTAssertEqual(try day.part1(), 489)
-        XCTAssertEqual(try day.part2(), 93654)
+        let parts = try await day.run()
+        XCTAssertEqual(parts.0, 489)
+        XCTAssertEqual(parts.1, 93654)
     }
 
-    func testDay04() throws {
+    func testDay04() async throws {
         let day = Day04()
-        XCTAssertEqual(try day.part1(), 1748)
-        XCTAssertEqual(try day.part2(), 1180)
+        let parts = try await day.run()
+        XCTAssertEqual(parts.0, 1748)
+        XCTAssertEqual(parts.1, 1180)
     }
 
-    func testDay05() throws {
+    func testDay05() async throws {
         let day = Day05()
-        XCTAssertEqual(try day.part1(), 7988899)
-        XCTAssertEqual(try day.part2(), 13758663)
+        let parts = try await day.run()
+        XCTAssertEqual(parts.0, 7988899)
+        XCTAssertEqual(parts.1, 13758663)
     }
 
-    func testDay06() throws {
+    func testDay06() async throws {
         let day = Day06()
-        XCTAssertEqual(try day.part1(), 162439)
-        XCTAssertEqual(try day.part2(), 367)
+        let parts = try await day.run()
+        XCTAssertEqual(parts.0, 162439)
+        XCTAssertEqual(parts.1, 367)
     }
 
-    func testDay07() throws {
+    func testDay07() async throws {
         let day = Day07()
-        XCTAssertEqual(try day.part1(), 46248)
-        XCTAssertEqual(try day.part2(), 54163586)
+        let parts = try await day.run()
+        XCTAssertEqual(parts.0, 46248)
+        XCTAssertEqual(parts.1, 54163586)
     }
 
-    func testDay08() throws {
+    func testDay08() async throws {
         let day = Day08()
-        XCTAssertEqual(try day.part1(), 1703)
-        XCTAssertTrue(try day.part2().contains("""
+        let parts = try await day.run()
+        XCTAssertEqual(parts.0, 1703)
+        XCTAssertTrue(parts.1.contains("""
 1001001100011001111011110
 1001010010100101000010000
 1111010000100001110011100
@@ -58,22 +66,25 @@ class AOC2019Tests: XCTestCase {
 """))
     }
 
-    func testDay09() throws {
+    func testDay09() async throws {
         let day = Day09()
-        XCTAssertEqual(try day.part1(), 2204990589)
-        XCTAssertEqual(try day.part2(), 50008)
+        let parts = try await day.run()
+        XCTAssertEqual(parts.0, 2204990589)
+        XCTAssertEqual(parts.1, 50008)
     }
 
-    func testDay10() throws {
+    func testDay10() async throws {
         let day = Day10()
-        XCTAssertEqual(try day.part1(), 326)
-        XCTAssertEqual(try day.part2(), 1623)
+        let parts = try await day.run()
+        XCTAssertEqual(parts.0, 326)
+        XCTAssertEqual(parts.1, 1623)
     }
 
-    func testDay11() throws {
+    func testDay11() async throws {
         let day = Day11()
-        XCTAssertEqual(try day.part1(), 2184)
-        XCTAssertTrue(try day.part2().contains("""
+        let parts = try await day.run()
+        XCTAssertEqual(parts.0, 2184)
+        XCTAssertTrue(parts.1.contains("""
 ⬛️⬛️⬜️⬜️⬛️⬛️⬜️⬛️⬛️⬜️⬛️⬛️⬜️⬜️⬛️⬛️⬜️⬛️⬛️⬜️⬛️⬜️⬜️⬜️⬜️⬛️⬜️⬜️⬜️⬜️⬛️⬜️⬜️⬜️⬛️⬛️⬜️⬛️⬛️⬜️⬛️⬛️⬛️
 ⬛️⬜️⬛️⬛️⬜️⬛️⬜️⬛️⬛️⬜️⬛️⬜️⬛️⬛️⬜️⬛️⬜️⬛️⬛️⬜️⬛️⬛️⬛️⬛️⬜️⬛️⬜️⬛️⬛️⬛️⬛️⬜️⬛️⬛️⬜️⬛️⬜️⬛️⬜️⬛️⬛️⬛️⬛️
 ⬛️⬜️⬛️⬛️⬜️⬛️⬜️⬜️⬜️⬜️⬛️⬜️⬛️⬛️⬛️⬛️⬜️⬜️⬜️⬜️⬛️⬛️⬛️⬜️⬛️⬛️⬜️⬜️⬜️⬛️⬛️⬜️⬛️⬛️⬜️⬛️⬜️⬜️⬛️⬛️⬛️⬛️⬛️
@@ -83,39 +94,45 @@ class AOC2019Tests: XCTestCase {
 """))
     }
 
-    func testDay12() throws {
+    func testDay12() async throws {
         let day = Day12()
-        XCTAssertEqual(try day.part1(), 10055)
-        XCTAssertEqual(try day.part2(), 374307970285176)
+        let parts = try await day.run()
+        XCTAssertEqual(parts.0, 10055)
+        XCTAssertEqual(parts.1, 374307970285176)
     }
 
-    func testDay13() throws {
+    func testDay13() async throws {
         let day = Day13()
-        XCTAssertEqual(try day.part1(), 398)
-        XCTAssertEqual(try day.part2(), 19447)
+        let parts = try await day.run()
+        XCTAssertEqual(parts.0, 398)
+        XCTAssertEqual(parts.1, 19447)
     }
 
-    func testDay14() throws {
+    func testDay14() async throws {
         let day = Day14()
-        XCTAssertEqual(try day.part1(), 485720)
-        XCTAssertEqual(try day.part2(), 3848998)
+        let parts = try await day.run()
+        XCTAssertEqual(parts.0, 485720)
+        XCTAssertEqual(parts.1, 3848998)
     }
 
-    func testDay15() throws {
+    func testDay15() async throws {
         let day = Day15()
-        XCTAssertEqual(try day.part1(), 262)
-        XCTAssertEqual(try day.part2(), 314)
+        let parts = try await day.run()
+        XCTAssertEqual(parts.0, 262)
+        XCTAssertEqual(parts.1, 314)
     }
 
-    func testDay16() throws {
+    func testDay16() async throws {
         let day = Day16()
-        XCTAssertEqual(try day.part1(), 52611030)
-        XCTAssertEqual(try day.part2(), 52541026)
+        let parts = try await day.run()
+        XCTAssertEqual(parts.0, 52611030)
+        XCTAssertEqual(parts.1, 52541026)
     }
 
-    func testDay17() throws {
+    func testDay17() async throws {
         let day = Day17()
-        XCTAssertEqual(try day.part1(), 4800)
-        XCTAssertEqual(try day.part2(), 982279)
+        let parts = try await day.run()
+        XCTAssertEqual(parts.0, 4800)
+        XCTAssertEqual(parts.1, 982279)
     }
 }

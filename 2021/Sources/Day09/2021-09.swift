@@ -1,12 +1,19 @@
 import AdventKit
 import Foundation
 
-public class Day09: Day<Int, Int> {
-    public override func part1() throws -> Int {
+public struct Day09: Day {
+
+    private var integers: [[Int]]
+
+    init() {
+        self.integers = Self.input().components(separatedBy: .newlines).map { $0.map { Int(String($0))! } }
+    }
+
+    public func part1() async throws -> Int {
         lowPoints.values.reduce(0) { $0 + $1 + 1 }
     }
 
-    public override func part2() throws -> Int {
+    public func part2() async throws -> Int {
         var basinSizes: [Coordinate2D: Int] = [:]
         var coordinatesToBasins: [Coordinate2D: Coordinate2D] = [:]
         var coordinatesToCheck: Set<Coordinate2D> = []
@@ -54,11 +61,7 @@ public class Day09: Day<Int, Int> {
         return basinSizes.values.sorted(by: >).prefix(3).reduce(1, *)
     }
 
-    private lazy var integers: [[Int]] = {
-        return inputLines.map { $0.map { Int(String($0))! } }
-    }()
-
-    private lazy var lowPoints: [Coordinate2D: Int] = {
+    private var lowPoints: [Coordinate2D: Int] {
         var lowPoints: [Coordinate2D: Int] = [:]
         for i in 0..<integers.count {
             for j in 0..<integers[i].count {
@@ -83,5 +86,5 @@ public class Day09: Day<Int, Int> {
         }
 
         return lowPoints
-    }()
+    }
 }

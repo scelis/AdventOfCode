@@ -1,7 +1,7 @@
 import AdventKit
 import Foundation
 
-public class Day11: Day<Int, String> {
+public struct Day11: Day {
     enum Color: Int {
         case black = 0
         case white = 1
@@ -16,7 +16,7 @@ public class Day11: Day<Int, String> {
             coordinatesPainted[coordinate] = .white
         }
 
-        let computer = IntcodeComputer(input: input)
+        let computer = IntcodeComputer(input: input())
         computer.run()
 
         while computer.state != .halted {
@@ -41,12 +41,12 @@ public class Day11: Day<Int, String> {
         return coordinatesPainted
     }
 
-    public override func part1() throws -> Int {
+    public func part1() async throws -> Int {
         let coordinatesPainted = runComputer()
         return coordinatesPainted.count
     }
 
-    public override func part2() throws -> String {
+    public func part2() async throws -> String {
         let coordinatesPainted = runComputer(startOnWhite: true)
 
         var output = "\n"

@@ -2,7 +2,7 @@ import AdventKit
 import Algorithms
 import Foundation
 
-public class Day14: Day<Int, Int> {
+public struct Day14: Day {
     private enum Tile {
         case rock
         case sand
@@ -73,11 +73,11 @@ public class Day14: Day<Int, Int> {
         }
     }
 
-    public override func part1() throws -> Int {
-        return try Cave(string: input, addFloor: false).run()
+    public func part1() async throws -> Int {
+        return try Cave(string: input(), addFloor: false).run()
     }
 
-    public override func part2() throws -> Int {
-        return try Cave(string: input, addFloor: true).run()
+    public func part2() async throws -> Int {
+        return try Cave(string: input(), addFloor: true).run()
     }
 }

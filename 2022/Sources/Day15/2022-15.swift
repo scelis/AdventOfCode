@@ -1,16 +1,16 @@
 import AdventKit
 import Foundation
 
-public class Day15: Day<Int, Int> {
+public struct Day15: Day {
     private struct Sensor {
         var location: Coordinate2D
         var closestBeacon: Coordinate2D
     }
 
-    private lazy var sensors: [Coordinate2D: Sensor] = {
+    private static var sensors: [Coordinate2D: Sensor] = {
         var sensors: [Coordinate2D: Sensor] = [:]
 
-        try! input.enumerateMatches(withPattern: "Sensor at x=(-?[0-9]+), y=(-?[0-9]+): closest beacon is at x=(-?[0-9]+), y=(-?[0-9]+)") { match in
+        try! input().enumerateMatches(withPattern: "Sensor at x=(-?[0-9]+), y=(-?[0-9]+): closest beacon is at x=(-?[0-9]+), y=(-?[0-9]+)") { match in
             let sensor = Sensor(
                 location: Coordinate2D(x: Int(match[1])!, y: Int(match[2])!),
                 closestBeacon: Coordinate2D(x: Int(match[3])!, y: Int(match[4])!)
@@ -21,11 +21,11 @@ public class Day15: Day<Int, Int> {
         return sensors
     }()
 
-    public override func part1() throws -> Int {
+    public func part1() async throws -> Int {
         let yPosition = 2000000
 
         var xPositions: Set<Int> = []
-        for sensor in sensors.values {
+        for sensor in Self.sensors.values {
             let distance = sensor.closestBeacon.manhattanDistance(from: sensor.location)
 
             let dy = abs(yPosition - sensor.location.y)
@@ -42,8 +42,9 @@ public class Day15: Day<Int, Int> {
         return xPositions.count
     }
 
-    public override func part2() throws -> Int {
+    public func part2() async throws -> Int {
         let validRange = 0...4000000
+        let sensors = Self.sensors
 
         func beaconValue(at location: Coordinate2D) -> Int? {
             guard validRange.contains(location.x), validRange.contains(location.y) else { return nil }

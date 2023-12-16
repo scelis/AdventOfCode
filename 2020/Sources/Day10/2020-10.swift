@@ -2,12 +2,12 @@ import AdventKit
 import Algorithms
 import Foundation
 
-public class Day10: Day<Int, Int> {
-    lazy var inputIntegers: [Int] = {
-        return inputLines.map { Int($0)! }.sorted()
-    }()
+public struct Day10: Day {
+    var inputIntegers: [Int] {
+        return inputLines().map { Int($0)! }.sorted()
+    }
 
-    public override func part1() throws -> Int {
+    public func part1() async throws -> Int {
         var differences: [Int: Int] = [:]
         inputIntegers
             .enumerated()
@@ -20,7 +20,7 @@ public class Day10: Day<Int, Int> {
         return differences[1]! * (differences[3]! + 1)
     }
 
-    public override func part2() throws -> Int {
+    public func part2() async throws -> Int {
         var memoize: [Int: Int] = [0: 1]
         for int in inputIntegers {
             memoize[int] = (1...3).map({ memoize[int - $0] ?? 0 }).reduce(0, +)
