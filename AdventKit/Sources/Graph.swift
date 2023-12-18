@@ -23,6 +23,10 @@ public class Graph<Node: GraphNode> {
 
     // MARK: Nodes & Connections
 
+    public var allNodes: Dictionary<Node.ID, Node>.Values {
+        nodes.values
+    }
+
     public func add(node: Node) {
         nodes[node.id] = node
     }
