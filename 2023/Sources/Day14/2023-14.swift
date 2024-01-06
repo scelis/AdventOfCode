@@ -14,7 +14,6 @@ public struct Day14: Day {
     // MARK: - Solving
 
     public func part1() async throws -> Int {
-        let tiles = tilt(tiles: self.tiles, inDirection: .north)
         return calculateLoad(tiles: tilt(tiles: self.tiles, inDirection: .north))
     }
 
