@@ -1,12 +1,18 @@
-import AdventKit
+import AdventKit2
 import Foundation
 
-public struct Day04: Day {
+struct Day04: Day {
+    func run() async throws -> (Int, Int) {
+        async let p1 = part1()
+        async let p2 = part2()
+        return try await (p1, p2)
+    }
+
     public func part1() async throws -> Int {
         findHash(prefix: "00000")
     }
 
-    public func part2() async throws -> Int {
+    func part2() async throws -> Int {
         findHash(prefix: "000000")
     }
 

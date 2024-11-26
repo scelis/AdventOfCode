@@ -1,7 +1,7 @@
-import AdventKit
+import AdventKit2
 import Foundation
 
-public struct Day02: Day {
+struct Day02: Day {
 
     // MARK: - Structures
 
@@ -13,13 +13,19 @@ public struct Day02: Day {
 
     // MARK: - Solving
 
-    public func part1() async throws -> Int {
+    func run() async throws -> (Int, Int) {
+        async let p1 = part1()
+        async let p2 = part2()
+        return try await (p1, p2)
+    }
+
+    func part1() async throws -> Int {
         presents
             .map { requiredWrappingPaper(for: $0) }
             .reduce(0, +)
     }
 
-    public func part2() async throws -> Int {
+    func part2() async throws -> Int {
         presents
             .map { requiredRibbon(for: $0) }
             .reduce(0, +)

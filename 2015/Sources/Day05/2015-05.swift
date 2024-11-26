@@ -1,9 +1,15 @@
-import AdventKit
+import AdventKit2
 import Algorithms
 import Foundation
 
-public struct Day05: Day {
-    public func part1() async throws -> Int {
+struct Day05: Day {
+    func run() async throws -> (Int, Int) {
+        async let p1 = part1()
+        async let p2 = part2()
+        return try await (p1, p2)
+    }
+
+    func part1() async throws -> Int {
         let naughtySegments: Set<String> = ["ab", "cd", "pq", "xy"]
         let vowels: Set<Character> = Set("aeiou")
 
@@ -38,7 +44,7 @@ public struct Day05: Day {
             .count
     }
 
-    public func part2() async throws -> Int {
+    func part2() async throws -> Int {
         func isNice(_ string: String) -> Bool {
             let characters = Array(string)
             var pairs: Set<String> = []

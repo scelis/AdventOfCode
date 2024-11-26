@@ -1,12 +1,18 @@
-import AdventKit
+import AdventKit2
 import Algorithms
 import Foundation
 
-public struct Day03: Day {
+struct Day03: Day {
 
     // MARK: - Solving
 
-    public func part1() async throws -> Int {
+    func run() async throws -> (Int, Int) {
+        async let p1 = part1()
+        async let p2 = part2()
+        return try await (p1, p2)
+    }
+
+    func part1() async throws -> Int {
         var current = Coordinate2D.zero
         return directions.reduce(into: Set<Coordinate2D>([current])) { partialResult, direction in
             current = current.step(inDirection: direction)
@@ -14,7 +20,7 @@ public struct Day03: Day {
         }.count
     }
 
-    public func part2() async throws -> Int {
+    func part2() async throws -> Int {
         var locations = [Coordinate2D.zero, Coordinate2D.zero]
         return directions
             .chunks(ofCount: 2)
