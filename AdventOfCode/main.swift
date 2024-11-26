@@ -1,7 +1,7 @@
-@testable import AOC2023
+@testable import AOC2024
 import Foundation
 
-let day = AOC2023.Day19()
+let day = AOC2024.Day01()
 let clock = ContinuousClock()
 let time = try await clock.measure {
     async let parts = day.run()
