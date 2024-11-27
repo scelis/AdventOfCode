@@ -1,11 +1,9 @@
-import AdventKit
+import AdventKit2
 import Foundation
 
-public struct Day04: Day {
-    var pairs: [(ClosedRange<Int>, ClosedRange<Int>)]
-
-    init() {
-        self.pairs = Self.inputLines().map { line in
+struct Day04: Day {
+    func run() async throws -> (Int, Int) {
+        let pairs = inputLines().map { line in
             let rangeStrings = line.components(separatedBy: ",")
             let ranges = rangeStrings.map { rangeString in
                 let components = rangeString.components(separatedBy: "-")
@@ -13,16 +11,20 @@ public struct Day04: Day {
             }
             return (ranges[0], ranges[1])
         }
+
+        async let p1 = part1(pairs: pairs)
+        async let p2 = part2(pairs: pairs)
+        return try await (p1, p2)
     }
 
-    public func part1() async throws -> Int {
+    func part1(pairs: [(ClosedRange<Int>, ClosedRange<Int>)]) async throws -> Int {
         return pairs.filter { pair in
             return pair.0.contains(pair.1) || pair.1.contains(pair.0)
         }
         .count
     }
 
-    public func part2() async throws -> Int {
+    func part2(pairs: [(ClosedRange<Int>, ClosedRange<Int>)]) async throws -> Int {
         return pairs.filter { pair in
             return pair.0.overlaps(pair.1)
         }

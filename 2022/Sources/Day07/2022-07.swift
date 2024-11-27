@@ -1,8 +1,8 @@
-import AdventKit
+import AdventKit2
 import Foundation
 
-public struct Day07: Day {
-    private enum Command {
+struct Day07: Day {
+    enum Command {
         case cd(String)
         case ls
 
@@ -16,7 +16,7 @@ public struct Day07: Day {
         }
     }
 
-    private struct Item: GraphNode {
+    struct Item: GraphNode {
         enum ItemType: Equatable {
             case file(Int)
             case directory
@@ -34,14 +34,14 @@ public struct Day07: Day {
         }
     }
 
-    private static var graph: Graph<Item> = {
-        let graph = Graph<Item>()
+    func generateGraph() -> Graph<Item> {
+        var graph = Graph<Item>()
         graph.add(node: Item(itemType: .directory, path: "/"))
 
         var currentCommand: Command?
         var currentPath: [String] = []
 
-        Self.inputLines()
+        inputLines()
             .map { $0.components(separatedBy: .whitespaces) }
             .forEach { components in
                 if let command = Command(components) {
@@ -73,15 +73,15 @@ public struct Day07: Day {
             }
 
         return graph
-    }()
+    }
 
-    private static var directorySizes: [String: Int] = {
+    func calculateDirectorySizes(graph: Graph<Item>) -> [String: Int] {
         var sizes: [String: Int] = [:]
 
         func calculateAndCacheSize(nodeID: String) -> Int {
             var size = 0
             for childID in try! graph.connections(from: nodeID).keys {
-                let childNode = try! graph.node(withID: childID)
+                let childNode = graph.node(withID: childID)!
                 switch childNode.itemType {
                 case .directory:
                     size += calculateAndCacheSize(nodeID: childNode.id)
@@ -96,19 +96,27 @@ public struct Day07: Day {
         _ = calculateAndCacheSize(nodeID: "/")
 
         return sizes
-    }()
+    }
 
-    public func part1() async throws -> Int {
-        return Self.directorySizes
+    func run() async throws -> (Int, Int) {
+        let graph = generateGraph()
+        let directorySizes = calculateDirectorySizes(graph: graph)
+        async let p1 = part1(directorySizes: directorySizes)
+        async let p2 = part2(directorySizes: directorySizes)
+        return try await (p1, p2)
+    }
+
+    func part1(directorySizes: [String: Int]) async throws -> Int {
+        return directorySizes
             .values
             .filter { $0 <= 100000 }
             .sorted(by: >)
             .reduce(0, +)
     }
 
-    public func part2() async throws -> Int {
-        let spaceAvailable = 70000000 - Self.directorySizes["/"]!
-        return Self.directorySizes
+    func part2(directorySizes: [String: Int]) async throws -> Int {
+        let spaceAvailable = 70000000 - directorySizes["/"]!
+        return directorySizes
             .values
             .filter { spaceAvailable + $0 >= 30000000 }
             .sorted(by: <)

@@ -1,4 +1,4 @@
-import AdventKit
+import AdventKit2
 import Foundation
 
 private extension Coordinate2D {
@@ -14,18 +14,18 @@ private extension Coordinate2D {
     }
 }
 
-public struct Day09: Day {
-    private static var commands: [(Direction, Int)] = {
+struct Day09: Day {
+    func parseCommands() -> [(Direction, Int)] {
         return input().components(separatedBy: .newlines).map { line -> (Direction, Int) in
             let components = line.components(separatedBy: .whitespaces)
             return (Direction(rawValue: components[0])!, Int(components[1])!)
         }
-    }()
+    }
 
-    private func simulate(numKnots: Int) -> Int {
+    func simulate(numKnots: Int, commands: [(Direction, Int)]) -> Int {
         var rope: [Coordinate2D] = .init(repeating: .zero, count: numKnots)
         var visited: Set<Coordinate2D> = [.zero]
-        Self.commands.forEach { (direction, steps) in
+        commands.forEach { (direction, steps) in
             for _ in 0..<steps {
                 rope[0] = rope[0].step(inDirection: direction)
                 for i in 1..<rope.count {
@@ -38,11 +38,18 @@ public struct Day09: Day {
         return visited.count
     }
 
-    public func part1() async throws -> Int {
-        simulate(numKnots: 2)
+    func run() async throws -> (Int, Int) {
+        let commands = parseCommands()
+        async let p1 = part1(commands: commands)
+        async let p2 = part2(commands: commands)
+        return try await (p1, p2)
     }
 
-    public func part2() async throws -> Int {
-        simulate(numKnots: 10)
+    func part1(commands: [(Direction, Int)]) async throws -> Int {
+        simulate(numKnots: 2, commands: commands)
+    }
+
+    func part2(commands: [(Direction, Int)]) async throws -> Int {
+        simulate(numKnots: 10, commands: commands)
     }
 }

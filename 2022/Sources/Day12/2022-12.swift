@@ -1,18 +1,18 @@
-import AdventKit
+import AdventKit2
 import Foundation
 
-public struct Day12: Day {
-    private struct Node: GridGraphNode {
+struct Day12: Day {
+    struct Node: GridGraphNode {
         var height: Int
         var coordinate: Coordinate2D
     }
 
-    private func parseInput() throws -> (GridGraph<Node>, Coordinate2D, Coordinate2D) {
+    func parseInput() throws -> (GridGraph<Node>, Coordinate2D, Coordinate2D) {
         let characters = input().components(separatedBy: .newlines).map { Array($0) }
         var start: Coordinate2D?
         var destination: Coordinate2D?
 
-        let graph = try GridGraph(data: characters, addConnections: false) { character, coordinate in
+        var graph = try GridGraph(data: characters, addConnections: false) { character, coordinate in
             var character = character
             if character == "S" {
                 start = coordinate
@@ -31,7 +31,7 @@ public struct Day12: Day {
             for direction in graph.validDirections {
                 let otherCoordinate = coordinate.step(inDirection: direction)
                 if
-                    let otherNode = try? graph.node(withID: otherCoordinate),
+                    let otherNode = graph.node(withID: otherCoordinate),
                     otherNode.height <= node.height + 1
                 {
                     try graph.addConnection(
@@ -46,17 +46,23 @@ public struct Day12: Day {
         return (graph, start!, destination!)
     }
 
-    public func part1() async throws -> Int {
+    func run() async throws -> (Int, Int) {
+        async let p1 = part1()
+        async let p2 = part2()
+        return try await (p1, p2)
+    }
+
+    func part1() async throws -> Int {
         let (graph, start, destination) = try parseInput()
         return try graph.findPath(from: start, to: destination).count - 1
     }
 
-    public func part2() async throws -> Int {
-        let (graph, _, destination) = try parseInput()
+    func part2() async throws -> Int {
+        var (graph, _, destination) = try parseInput()
         try graph.reverse()
         return try graph.findPath(
             from: destination,
-            toEndCondition: { try graph.node(withID: $0).height == 0 }
+            toEndCondition: { graph.node(withID: $0)!.height == 0 }
         ).count - 1
     }
 }

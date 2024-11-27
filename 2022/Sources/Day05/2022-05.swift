@@ -1,13 +1,19 @@
-import AdventKit
+import AdventKit2
 import Algorithms
 import Foundation
 
-public struct Day05: Day {
-    public func part1() async throws -> String {
+struct Day05: Day {
+    func run() async throws -> (String, String) {
+        async let p1 = part1()
+        async let p2 = part2()
+        return try await (p1, p2)
+    }
+
+    func part1() async throws -> String {
         return try solve(isPartOne: true)
     }
 
-    public func part2() async throws -> String {
+    func part2() async throws -> String {
         return try solve(isPartOne: false)
     }
 

@@ -1,8 +1,8 @@
-import AdventKit
+import AdventKit2
 import Foundation
 
-public struct Day11: Day {
-    private enum Value {
+struct Day11: Day {
+    enum Value {
         case int(Int)
         case old
 
@@ -17,12 +17,12 @@ public struct Day11: Day {
         }
     }
 
-    private enum Operation: String, CaseIterable {
+    enum Operation: String, CaseIterable {
         case add = "+"
         case multiply = "*"
     }
 
-    private class Monkey {
+    class Monkey {
         let id: Int
         let operation: Operation
         let value: Value
@@ -68,7 +68,7 @@ public struct Day11: Day {
         }
     }
 
-    private func parseMonkeys() throws -> [Monkey] {
+    func parseMonkeys() throws -> [Monkey] {
         var monkeys: [Monkey] = []
 
         try input().enumerateMatches(withPattern: "Monkey ([0-9]+):\n  Starting items: ([0-9, ]+)\n  Operation: new = old ([*+]) ([0-9]+|old)\n  Test: divisible by ([0-9]+)\n    If true: throw to monkey ([0-9]+)\n    If false: throw to monkey ([0-9]+)") { match in
@@ -88,7 +88,7 @@ public struct Day11: Day {
         return monkeys
     }
 
-    private func solve(monkeys: [Monkey], numRounds: Int, worryDecay: (Int) -> Int) throws -> Int {
+    func solve(monkeys: [Monkey], numRounds: Int, worryDecay: (Int) -> Int) throws -> Int {
         for _ in 0..<numRounds {
             for monkey in monkeys {
                 while let (item, target) = monkey.throwFirst(worryDecay: worryDecay) {
@@ -104,12 +104,18 @@ public struct Day11: Day {
             .reduce(1, *)
     }
 
-    public func part1() async throws -> Int {
+    func run() async throws -> (Int, Int) {
+        async let p1 = part1()
+        async let p2 = part2()
+        return try await (p1, p2)
+    }
+
+    func part1() async throws -> Int {
         let monkeys = try parseMonkeys()
         return try solve(monkeys: monkeys, numRounds: 20, worryDecay: { $0 / 3 })
     }
 
-    public func part2() async throws -> Int {
+    func part2() async throws -> Int {
         let monkeys = try parseMonkeys()
         let leastCommonMultiple = monkeys.map { $0.divisibleByTest }.leastCommonMultiple
         return try solve(monkeys: monkeys, numRounds: 10000, worryDecay: { $0 % leastCommonMultiple })

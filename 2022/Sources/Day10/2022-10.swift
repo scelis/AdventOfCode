@@ -1,7 +1,7 @@
-import AdventKit
+import AdventKit2
 import Foundation
 
-public struct Day10: Day {
+struct Day10: Day {
     enum Command {
         case noop
         case addx(Int)
@@ -23,16 +23,23 @@ public struct Day10: Day {
         }
     }
 
-    private static var commands: [Command] = {
+    func parseCommands() -> [Command] {
         return inputLines().map { Command(string: $0) }
-    }()
+    }
 
-    public func part1() async throws -> Int {
+    func run() async throws -> (Int, String) {
+        let commands = parseCommands()
+        async let p1 = part1(commands: commands)
+        async let p2 = part2(commands: commands)
+        return try await (p1, p2)
+    }
+
+    func part1(commands: [Command]) async throws -> Int {
         var x = 1
         var cycle = 0
         var sum = 0
 
-        for command in Self.commands {
+        for command in commands {
             for _ in 0..<command.cyclesToComplete {
                 cycle += 1
 
@@ -49,12 +56,12 @@ public struct Day10: Day {
         return sum
     }
 
-    public func part2() async throws -> String {
+    func part2(commands: [Command]) async throws -> String {
         var x = 1
         var cycle = 0
         var output = ""
 
-        for command in Self.commands {
+        for command in commands {
             for _ in 0..<command.cyclesToComplete {
                 if cycle % 40 == 0 {
                     output += "\n"

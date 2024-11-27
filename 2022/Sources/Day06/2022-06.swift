@@ -1,13 +1,19 @@
-import AdventKit
+import AdventKit2
 import Algorithms
 import Foundation
 
-public struct Day06: Day {
-    public func part1() async throws -> Int {
+struct Day06: Day {
+    func run() async throws -> (Int, Int) {
+        async let p1 = part1()
+        async let p2 = part2()
+        return try await (p1, p2)
+    }
+
+    func part1() async throws -> Int {
         return endIndexOfUniqueSequence(ofSize: 4, inString: input())
     }
 
-    public func part2() async throws -> Int {
+    func part2() async throws -> Int {
         return endIndexOfUniqueSequence(ofSize: 14, inString: input())
     }
 

@@ -1,14 +1,14 @@
-import AdventKit
+import AdventKit2
 import Algorithms
 import Foundation
 
-public struct Day14: Day {
-    private enum Tile {
+struct Day14: Day {
+    enum Tile {
         case rock
         case sand
     }
 
-    private class Cave {
+    class Cave {
         var tiles: [Coordinate2D: Tile]
         var floorY: Int?
 
@@ -73,11 +73,17 @@ public struct Day14: Day {
         }
     }
 
-    public func part1() async throws -> Int {
+    func run() async throws -> (Int, Int) {
+        async let p1 = part1()
+        async let p2 = part2()
+        return try await (p1, p2)
+    }
+
+    func part1() async throws -> Int {
         return try Cave(string: input(), addFloor: false).run()
     }
 
-    public func part2() async throws -> Int {
+    func part2() async throws -> Int {
         return try Cave(string: input(), addFloor: true).run()
     }
 }
