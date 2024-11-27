@@ -2,38 +2,27 @@ import Foundation
 
 public protocol GraphNode: Equatable, Identifiable, Sendable where ID: Hashable, ID: Sendable {}
 
-public struct Graph<Node: GraphNode>: Sendable {
+enum GraphError: Error {
+    case nodeNotFound
+    case pathNotFound
+}
 
-    // MARK: Associated Types
+public protocol Graphable {
+    associatedtype Node: GraphNode
+    var nodes: [Node.ID: Node] { get set }
+    var connections: [Node.ID: [Node.ID: Int]] { get set }
+}
 
-    public enum Error: Swift.Error {
-        case nodeNotFound
-        case pathNotFound
-    }
-
-    // MARK: Storage
-
-    internal var nodes: [Node.ID: Node] = [:]
-    internal var connections: [Node.ID: [Node.ID: Int]] = [:]
-
-    // MARK: Lifecycle
-
-    public init() {
-    }
+extension Graphable {
 
     // MARK: Nodes & Connections
-
-    public var allNodes: Dictionary<Node.ID, Node>.Values {
-        nodes.values
-    }
 
     public mutating func add(node: Node) {
         nodes[node.id] = node
     }
 
-    public func node(withID id: Node.ID) throws -> Node {
-        guard let node = nodes[id] else { throw Error.nodeNotFound }
-        return node
+    public func node(withID id: Node.ID) -> Node? {
+        nodes[id]
     }
 
     public mutating func addConnection(
@@ -42,8 +31,12 @@ public struct Graph<Node: GraphNode>: Sendable {
         cost: Int = 1,
         bidirectional: Bool
     ) throws {
-        let _ = try node(withID: from)
-        let _ = try node(withID: to)
+        guard
+            node(withID: from) != nil,
+            node(withID: to) != nil
+        else {
+            throw GraphError.nodeNotFound
+        }
 
         var connectionsFromNode = self.connections[from, default: [:]]
         connectionsFromNode[to] = cost
@@ -57,7 +50,10 @@ public struct Graph<Node: GraphNode>: Sendable {
     }
 
     public func connections(from: Node.ID) throws -> [Node.ID: Int] {
-        let _ = try node(withID: from)
+        guard node(withID: from) != nil else {
+            throw GraphError.nodeNotFound
+        }
+
         return connections[from] ?? [:]
     }
 
@@ -124,7 +120,7 @@ public struct Graph<Node: GraphNode>: Sendable {
         if let bestSolution {
             return bestSolution.1
         } else {
-            throw Error.pathNotFound
+            throw GraphError.pathNotFound
         }
     }
 
