@@ -1,8 +1,8 @@
-import AdventKit
+import AdventKit2
 import Algorithms
 import Foundation
 
-public struct Day04: Day {
+struct Day04: Day {
     class Square {
         var value: Int
         var marked: Bool = false
@@ -96,7 +96,13 @@ public struct Day04: Day {
         return (numbers, boards)
     }
 
-    public func part1() async throws -> Int {
+    func run() async throws -> (Int, Int) {
+        async let p1 = part1()
+        async let p2 = part2()
+        return try await (p1, p2)
+    }
+
+    func part1() async throws -> Int {
         let (numbers, boards) = numbersAndBoards()
 
         for number in numbers {
@@ -117,7 +123,7 @@ public struct Day04: Day {
         fatalError()
     }
 
-    public func part2() async throws -> Int {
+    func part2() async throws -> Int {
         var (numbers, boards) = numbersAndBoards()
 
         for number in numbers {

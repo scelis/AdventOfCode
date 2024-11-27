@@ -1,13 +1,19 @@
-import AdventKit
+import AdventKit2
 import Algorithms
 import Foundation
 
-public struct Day06: Day {
+struct Day06: Day {
     var lanternFish: [Int] {
         return input().components(separatedBy: ",").map({ Int($0)! })
     }
 
-    public func part1() async throws -> Int {
+    func run() async throws -> (Int, Int) {
+        async let p1 = part1()
+        async let p2 = part2()
+        return try await (p1, p2)
+    }
+
+    func part1() async throws -> Int {
         var state = lanternFish
 
         for _ in 0..<80 {
@@ -27,7 +33,7 @@ public struct Day06: Day {
             .count
     }
 
-    public func part2() async throws -> Int {
+    func part2() async throws -> Int {
         var counts: [Int: Int] = [:]
         for fish in lanternFish {
             counts[fish] = (counts[fish] ?? 0) + 1

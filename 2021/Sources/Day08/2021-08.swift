@@ -1,8 +1,14 @@
-import AdventKit
+import AdventKit2
 import Foundation
 
-public struct Day08: Day {
-    public func part1() async throws -> Int {
+struct Day08: Day {
+    func run() async throws -> (Int, Int) {
+        async let p1 = part1()
+        async let p2 = part2()
+        return try await (p1, p2)
+    }
+
+    func part1() async throws -> Int {
         inputLines()
             .map { $0.components(separatedBy: " | ")[1] }
             .map { str -> Int in
@@ -13,7 +19,7 @@ public struct Day08: Day {
             .reduce(0, +)
     }
 
-    public func part2() async throws -> Int {
+    func part2() async throws -> Int {
         let countToDigit: [Int: Int] = [
             2: 1,
             3: 7,

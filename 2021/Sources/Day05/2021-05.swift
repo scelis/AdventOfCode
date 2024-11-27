@@ -1,8 +1,8 @@
-import AdventKit
+import AdventKit2
 import Algorithms
 import Foundation
 
-public struct Day05: Day {
+struct Day05: Day {
     struct Line {
         var first: Coordinate2D
         var second: Coordinate2D
@@ -70,11 +70,17 @@ public struct Day05: Day {
             .count
     }
 
-    public func part1() async throws -> Int {
+    func run() async throws -> (Int, Int) {
+        async let p1 = part1()
+        async let p2 = part2()
+        return try await (p1, p2)
+    }
+
+    func part1() async throws -> Int {
         return calculateOverlaps(allowDiagonals: false)
     }
 
-    public func part2() async throws -> Int {
+    func part2() async throws -> Int {
         return calculateOverlaps(allowDiagonals: true)
     }
 }

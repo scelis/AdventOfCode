@@ -1,19 +1,21 @@
-import AdventKit
+import AdventKit2
 import Foundation
 
-public struct Day09: Day {
+struct Day09: Day {
+    func run() async throws -> (Int, Int) {
+        let integers = input().components(separatedBy: .newlines).map { $0.map { Int(String($0))! } }
+        let lowPoints = calculateLowPoints(integers: integers)
 
-    private var integers: [[Int]]
-
-    init() {
-        self.integers = Self.input().components(separatedBy: .newlines).map { $0.map { Int(String($0))! } }
+        async let p1 = part1(lowPoints: lowPoints)
+        async let p2 = part2(integers: integers, lowPoints: lowPoints)
+        return try await (p1, p2)
     }
 
-    public func part1() async throws -> Int {
+    func part1(lowPoints: [Coordinate2D: Int]) async throws -> Int {
         lowPoints.values.reduce(0) { $0 + $1 + 1 }
     }
 
-    public func part2() async throws -> Int {
+    func part2(integers: [[Int]], lowPoints: [Coordinate2D: Int]) async throws -> Int {
         var basinSizes: [Coordinate2D: Int] = [:]
         var coordinatesToBasins: [Coordinate2D: Coordinate2D] = [:]
         var coordinatesToCheck: Set<Coordinate2D> = []
@@ -24,7 +26,7 @@ public struct Day09: Day {
                 .forEach { nearby in
                     if
                         coordinatesToBasins[nearby] == nil,
-                        let height = self.integers[safe: nearby.y]?[safe: nearby.x],
+                        let height = integers[safe: nearby.y]?[safe: nearby.x],
                         height != 9
                     {
                         coordinatesToCheck.insert(nearby)
@@ -61,7 +63,7 @@ public struct Day09: Day {
         return basinSizes.values.sorted(by: >).prefix(3).reduce(1, *)
     }
 
-    private var lowPoints: [Coordinate2D: Int] {
+    func calculateLowPoints(integers: [[Int]]) -> [Coordinate2D: Int] {
         var lowPoints: [Coordinate2D: Int] = [:]
         for i in 0..<integers.count {
             for j in 0..<integers[i].count {

@@ -1,11 +1,17 @@
-import AdventKit
+import AdventKit2
 import Foundation
 
-public struct Day10: Day {
+struct Day10: Day {
     private let pairs: [Character: Character] = ["(": ")", "[": "]", "{": "}", "<": ">"]
     private let reversePairs: [Character: Character] = [")": "(", "]": "[", "}": "{", ">": "<"]
 
-    public func part1() async throws -> Int {
+    func run() async throws -> (Int, Int) {
+        async let p1 = part1()
+        async let p2 = part2()
+        return try await (p1, p2)
+    }
+
+    func part1() async throws -> Int {
         let values: [Character: Int] = [")": 3, "]": 57, "}": 1197, ">": 25137]
 
         return input()
@@ -31,7 +37,7 @@ public struct Day10: Day {
             .reduce(0, +)
     }
 
-    public func part2() async throws -> Int {
+    func part2() async throws -> Int {
         let values: [Character: Int] = [")": 1, "]": 2, "}": 3, ">": 4]
 
         let elements = input()

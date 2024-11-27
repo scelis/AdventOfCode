@@ -1,9 +1,15 @@
-import AdventKit
+import AdventKit2
 import Algorithms
 import Foundation
 
-public struct Day03: Day {
-    public func part1() async throws -> Int {
+struct Day03: Day {
+    func run() async throws -> (Int, Int) {
+        async let p1 = part1()
+        async let p2 = part2()
+        return try await (p1, p2)
+    }
+
+    func part1() async throws -> Int {
         let inputLines = input().components(separatedBy: .newlines)
         let length = inputLines[0].count
         var ones: [Int] = .init(repeating: 0, count: length)
@@ -77,7 +83,7 @@ public struct Day03: Day {
         return items[0]
     }
 
-    public func part2() async throws -> Int {
+    func part2() async throws -> Int {
         let inputLines = input().components(separatedBy: .newlines)
         let oxygen = Int(whittleDown(items: inputLines, rating: .oxygenGenerator), radix: 2)!
         let co2 = Int(whittleDown(items: inputLines, rating: .co2Scrubber), radix: 2)!

@@ -1,8 +1,8 @@
-import AdventKit
+import AdventKit2
 import Algorithms
 import Foundation
 
-public struct Day07: Day {
+struct Day07: Day {
     func solve(distanceFunction: ([Int], Int) -> Int) -> Int {
         let crabs = input().components(separatedBy: ",").map({ Int($0)! })
         let average: Int = crabs.reduce(0, +) / crabs.count
@@ -34,7 +34,13 @@ public struct Day07: Day {
         }
     }
 
-    public func part1() async throws -> Int {
+    func run() async throws -> (Int, Int) {
+        async let p1 = part1()
+        async let p2 = part2()
+        return try await (p1, p2)
+    }
+
+    func part1() async throws -> Int {
         return solve { crabs, location in
             return crabs
                 .map { abs($0 - location) }
@@ -42,7 +48,7 @@ public struct Day07: Day {
         }
     }
 
-    public func part2() async throws -> Int {
+    func part2() async throws -> Int {
         return solve { crabs, location in
             return crabs
                 .map { crabLocation in

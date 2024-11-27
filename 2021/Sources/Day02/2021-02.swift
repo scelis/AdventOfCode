@@ -1,8 +1,8 @@
-import AdventKit
+import AdventKit2
 import Algorithms
 import Foundation
 
-public struct Day02: Day {
+struct Day02: Day {
     enum Command {
         case forward(Int)
         case up(Int)
@@ -57,7 +57,13 @@ public struct Day02: Day {
         }
     }
 
-    public func part1() async throws -> Int {
+    func run() async throws -> (Int, Int) {
+        async let p1 = part1()
+        async let p2 = part2()
+        return try await (p1, p2)
+    }
+
+    func part1() async throws -> Int {
         let finalPosition = input()
             .components(separatedBy: .newlines)
             .map { Command(string: $0) }
@@ -66,7 +72,7 @@ public struct Day02: Day {
         return finalPosition.depth * finalPosition.horizontal
     }
 
-    public func part2() async throws -> Int {
+    func part2() async throws -> Int {
         let finalPosition = input()
             .components(separatedBy: .newlines)
             .map { Command(string: $0) }
