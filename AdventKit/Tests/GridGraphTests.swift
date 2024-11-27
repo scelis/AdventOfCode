@@ -2,7 +2,6 @@ import Foundation
 import XCTest
 @testable import AdventKit
 
-
 class GridGraphTests: XCTestCase {
     func testInvalidGraphThrows() {
         XCTAssertThrowsError(

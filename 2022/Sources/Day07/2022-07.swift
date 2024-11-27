@@ -1,4 +1,4 @@
-import AdventKit2
+import AdventKit
 import Foundation
 
 struct Day07: Day {

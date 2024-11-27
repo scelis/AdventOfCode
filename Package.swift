@@ -3,8 +3,7 @@
 import Foundation
 import PackageDescription
 
-let swift5Years: [Int] = []
-let swift6Years: [Int] = [2015, 2019, 2020, 2021, 2022, 2023, 2024]
+let years: [Int] = [2015, 2019, 2020, 2021, 2022, 2023, 2024]
 let enableCompilerOptimizations = false
 
 let package = Package(
@@ -12,7 +11,6 @@ let package = Package(
     platforms: [.macOS(.v14)],
     products: [
         .library(name: "AdventKit", targets: ["AdventKit"]),
-        .library(name: "AdventKit2", targets: ["AdventKit2"]),
         .executable(name: "AdventOfCode", targets: ["AdventOfCode"]),
     ],
     dependencies: [
@@ -27,64 +25,41 @@ func targets() -> [Target] {
             name: "AdventKit",
             dependencies: [.product(name: "Algorithms", package: "swift-algorithms")],
             path: "AdventKit/Sources",
-            swiftSettings: swiftSettings(useStrictConcurrency: false)
+            swiftSettings: swiftSettings()
         ),
         .testTarget(
             name: "AdventKitTests",
             dependencies: ["AdventKit"],
             path: "AdventKit/Tests",
-            swiftSettings: swiftSettings(useStrictConcurrency: false)
-        ),
-        .target(
-            name: "AdventKit2",
-            dependencies: [.product(name: "Algorithms", package: "swift-algorithms")],
-            path: "AdventKit2/Sources",
-            swiftSettings: swiftSettings(useStrictConcurrency: true)
-        ),
-        .testTarget(
-            name: "AdventKit2Tests",
-            dependencies: ["AdventKit2"],
-            path: "AdventKit2/Tests",
-            swiftSettings: swiftSettings(useStrictConcurrency: true)
+            swiftSettings: swiftSettings()
         ),
         .executableTarget(
             name: "AdventOfCode",
-            dependencies: (swift5Years + swift6Years).map { .target(name: "AOC\($0)") },
+            dependencies: years.map { .target(name: "AOC\($0)") },
             path: "AdventOfCode",
-            swiftSettings: swiftSettings(useStrictConcurrency: true)
+            swiftSettings: swiftSettings()
         ),
     ]
 
-    for year in swift5Years {
-        targets += yearTargets(for: year, useStrictConcurrency: false)
-    }
-
-    for year in swift6Years {
-        targets += yearTargets(for: year, useStrictConcurrency: true)
+    for year in years {
+        targets += [
+            .target(
+                name: "AOC\(year)",
+                dependencies: ["AdventKit"],
+                path: "\(year)/Sources",
+                exclude: inputFiles(forYear: year),
+                swiftSettings: swiftSettings()
+            ),
+            .testTarget(
+                name: "AOC\(year)Tests",
+                dependencies: [.target(name: "AOC\(year)")],
+                path: "\(year)/Tests",
+                swiftSettings: swiftSettings()
+            )
+        ]
     }
 
     return targets
-}
-
-func yearTargets(
-    for year: Int,
-    useStrictConcurrency: Bool
-) -> [Target] {
-    [
-        .target(
-            name: "AOC\(year)",
-            dependencies: [useStrictConcurrency ? "AdventKit2" : "AdventKit"],
-            path: "\(year)/Sources",
-            exclude: inputFiles(forYear: year),
-            swiftSettings: swiftSettings(useStrictConcurrency: useStrictConcurrency)
-        ),
-        .testTarget(
-            name: "AOC\(year)Tests",
-            dependencies: [.target(name: "AOC\(year)")],
-            path: "\(year)/Tests",
-            swiftSettings: swiftSettings(useStrictConcurrency: useStrictConcurrency)
-        )
-    ]
 }
 
 func inputFiles(forYear year: Int) -> [String] {
@@ -96,11 +71,8 @@ func inputFiles(forYear year: Int) -> [String] {
     }
 }
 
-func swiftSettings(
-    useStrictConcurrency: Bool
-) -> [SwiftSetting] {
+func swiftSettings() -> [SwiftSetting] {
     [
         enableCompilerOptimizations ? .unsafeFlags(["-O"]) : nil,
-        useStrictConcurrency ? nil : .swiftLanguageMode(.v5),
     ].compactMap { $0 }
 }

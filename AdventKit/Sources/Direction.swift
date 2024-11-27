@@ -1,6 +1,6 @@
 import Foundation
 
-public enum Direction: String {
+public enum Direction: String, Sendable {
     case north = "N"
     case south = "S"
     case east = "E"

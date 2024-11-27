@@ -1,4 +1,4 @@
-import AdventKit2
+import AdventKit
 import Foundation
 
 public class IntcodeComputer {

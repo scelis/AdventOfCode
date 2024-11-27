@@ -1,9 +1,11 @@
 import Foundation
 
-public struct Coordinate3D: Equatable, Hashable {
+public struct Coordinate3D: Equatable, Hashable, Sendable {
     public var x: Int
     public var y: Int
     public var z: Int
+
+    public static let zero = Coordinate3D(x: 0, y: 0, z: 0)
 
     public init(x: Int, y: Int, z: Int) {
         self.x = x
