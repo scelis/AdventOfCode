@@ -1,7 +1,7 @@
-import AdventKit
+import AdventKit2
 import Foundation
 
-public struct Day07: Day {
+struct Day07: Day {
 
     // MARK: - Structures
 
@@ -65,8 +65,6 @@ public struct Day07: Day {
 
     // MARK: - Solving
 
-    let hands: [Hand]
-
     func calculateRelativeStrength(_ hand: Hand, usingJokers: Bool) -> Int {
         let counts: [Card: Int] = {
             var counts = hand.cards.reduce(into: [:]) { partialResult, card in
@@ -87,7 +85,7 @@ public struct Day07: Day {
         }
     }
 
-    func calculateTotalWinnings(usingJokers: Bool) -> Int {
+    func calculateTotalWinnings(hands: [Hand], usingJokers: Bool) -> Int {
         let sortedHands: [Hand] = hands
             .map { ($0, calculateRelativeStrength($0, usingJokers: usingJokers)) }
             .sorted { $0.1 < $1.1 }
@@ -100,18 +98,25 @@ public struct Day07: Day {
             }
     }
 
-    public func part1() async throws -> Int {
-        calculateTotalWinnings(usingJokers: false)
+    func run() async throws -> (Int, Int) {
+        let hands = parseHands()
+        async let p1 = part1(hands: hands)
+        async let p2 = part2(hands: hands)
+        return try await (p1, p2)
     }
 
-    public func part2() async throws -> Int {
-        calculateTotalWinnings(usingJokers: true)
+    public func part1(hands: [Hand]) async throws -> Int {
+        calculateTotalWinnings(hands: hands, usingJokers: false)
+    }
+
+    public func part2(hands: [Hand]) async throws -> Int {
+        calculateTotalWinnings(hands: hands, usingJokers: true)
     }
 
     // MARK: - Parsing
 
-    init() {
-        self.hands = Self.inputLines().map { line in
+    func parseHands() -> [Hand] {
+        inputLines().map { line in
             let components = line.components(separatedBy: " ")
             let cards: [Card] = components[0].compactMap(Card.init)
             let bid = Int(components[1])!

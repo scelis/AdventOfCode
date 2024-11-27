@@ -1,7 +1,7 @@
-import AdventKit
+import AdventKit2
 import Foundation
 
-public struct Day14: Day {
+struct Day14: Day {
 
     // MARK: - Structures
 
@@ -13,12 +13,19 @@ public struct Day14: Day {
 
     // MARK: - Solving
 
-    public func part1() async throws -> Int {
-        return calculateLoad(tiles: tilt(tiles: self.tiles, inDirection: .north))
+    func run() async throws -> (Int, Int) {
+        let tiles = parseTiles()
+        async let p1 = part1(tiles: tiles)
+        async let p2 = part2(tiles: tiles)
+        return try await (p1, p2)
     }
 
-    public func part2() async throws -> Int {
-        var tiles = self.tiles
+    func part1(tiles: [[Tile]]) async throws -> Int {
+        return calculateLoad(tiles: tilt(tiles: tiles, inDirection: .north))
+    }
+
+    func part2(tiles: [[Tile]]) async throws -> Int {
+        var tiles = tiles
         var work: [[[Tile]]: Int] = [:]
 
         let runCycle = {
@@ -120,10 +127,8 @@ public struct Day14: Day {
 
     // MARK: - Parsing
 
-    let tiles: [[Tile]]
-
-    init() {
-        self.tiles = Self.inputLines().map { line in
+    func parseTiles() -> [[Tile]] {
+        inputLines().map { line in
             line.compactMap(Tile.init)
         }
     }

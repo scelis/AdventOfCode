@@ -1,8 +1,8 @@
-import AdventKit
+import AdventKit2
 import Algorithms
 import Foundation
 
-public struct Day11: Day {
+struct Day11: Day {
     
     // MARK: - Structures
 
@@ -15,15 +15,22 @@ public struct Day11: Day {
 
     // MARK: - Solving
 
-    public func part1() async throws -> Int {
-        sumOfShortestPaths(expansion: 2)
+    func run() async throws -> (Int, Int) {
+        let universe = parseUniverse()
+        async let p1 = part1(universe: universe)
+        async let p2 = part2(universe: universe)
+        return try await (p1, p2)
     }
 
-    public func part2() async throws -> Int {
-        sumOfShortestPaths(expansion: 1000000)
+    func part1(universe: Universe) async throws -> Int {
+        sumOfShortestPaths(universe: universe, expansion: 2)
     }
 
-    func sumOfShortestPaths(expansion: Int) -> Int {
+    func part2(universe: Universe) async throws -> Int {
+        sumOfShortestPaths(universe: universe, expansion: 1000000)
+    }
+
+    func sumOfShortestPaths(universe: Universe, expansion: Int) -> Int {
         universe.galaxies.combinations(ofCount: 2)
             .map { combo in
                 var distance = 0
@@ -40,10 +47,8 @@ public struct Day11: Day {
 
     // MARK: - Parsing
 
-    let universe: Universe
-
-    init() {
-        let map: [[Character]] = Self.inputLines().map({ Array($0) })
+    func parseUniverse() -> Universe {
+        let map: [[Character]] = inputLines().map({ Array($0) })
         var galaxies: Set<Coordinate2D> = []
         var columnsWithGalaxies: Set<Int> = []
         var rowsWithGalaxies: Set<Int> = []
@@ -59,7 +64,7 @@ public struct Day11: Day {
             }
         }
 
-        self.universe = Universe(
+        return Universe(
             map: map,
             galaxies: galaxies,
             columnsWithGalaxies: columnsWithGalaxies,

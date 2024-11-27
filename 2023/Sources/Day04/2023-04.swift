@@ -1,11 +1,11 @@
-import AdventKit
+import AdventKit2
 import Foundation
 
-public struct Day04: Day {
+struct Day04: Day {
 
     // MARK: - Structures
 
-    private struct Card {
+    struct Card {
         var id: Int
         var winningNumbers: [Int]
         var otherNumbers: [Int]
@@ -17,16 +17,21 @@ public struct Day04: Day {
 
     // MARK: - Solving
 
-    private let cards: [Card]
+    func run() async throws -> (Int, Int) {
+        let cards = parseCards()
+        async let p1 = part1(cards: cards)
+        async let p2 = part2(cards: cards)
+        return try await (p1, p2)
+    }
 
-    public func part1() async throws -> Int {
+    func part1(cards: [Card]) async throws -> Int {
         cards.reduce(0) { partialResult, card in
             let numberOfMatches = card.numberOfMatches
             return (numberOfMatches == 0) ? partialResult : partialResult + pow(2, numberOfMatches - 1)
         }
     }
 
-    public func part2() async throws -> Int {
+    func part2(cards: [Card]) async throws -> Int {
         let lastCardID = cards.last!.id
         var cardCounts: [Int: Int] = [:]
         for card in cards {
@@ -42,18 +47,16 @@ public struct Day04: Day {
 
     // MARK: - Parsing
 
-    private static let cardRegex = #/^Card +(\d+): +/#
+    func parseCards() -> [Card] {
+        let cardRegex = #/^Card +(\d+): +/#
 
-    init() {
-        self.cards = Self.inputLines().map { Self.parseCard(string: $0) }
-    }
-
-    private static func parseCard(string: String) -> Card {
-        let match = string.firstMatch(of: cardRegex)!
-        let cardID = Int(match.1)!
-        let numbers: [[Int]] = string[match.0.endIndex...].components(separatedBy: "|").map { side in
-            side.components(separatedBy: " ").compactMap(Int.init)
+        return inputLines().map { string in
+            let match = string.firstMatch(of: cardRegex)!
+            let cardID = Int(match.1)!
+            let numbers: [[Int]] = string[match.0.endIndex...].components(separatedBy: "|").map { side in
+                side.components(separatedBy: " ").compactMap(Int.init)
+            }
+            return Card(id: cardID, winningNumbers: numbers[0], otherNumbers: numbers[1])
         }
-        return Card(id: cardID, winningNumbers: numbers[0], otherNumbers: numbers[1])
     }
 }

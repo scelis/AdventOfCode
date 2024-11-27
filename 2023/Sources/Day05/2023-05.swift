@@ -1,9 +1,17 @@
-import AdventKit
+import AdventKit2
 import Algorithms
 import Foundation
 
-public struct Day05: Day {
-    public func part1() async throws -> Int {
+struct Day05: Day {
+    func run() async throws -> (Int, Int) {
+        let seeds = parseSeeds()
+        let maps = parseMaps()
+        async let p1 = part1(seeds: seeds, maps: maps)
+        async let p2 = part2(seeds: seeds, maps: maps)
+        return try await (p1, p2)
+    }
+
+    public func part1(seeds: [Int], maps: [[[Int]]]) async throws -> Int {
         var current = Set(seeds)
         var next: Set<Int> = []
 
@@ -23,7 +31,7 @@ public struct Day05: Day {
         return current.min()!
     }
 
-    public func part2() async throws -> Int {
+    public func part2(seeds: [Int], maps: [[[Int]]]) async throws -> Int {
         var current = IndexSet()
         var next = IndexSet()
 
@@ -49,15 +57,12 @@ public struct Day05: Day {
 
     // MARK: - Parsing
 
-    var sections: [String] {
-        input().components(separatedBy: "\n\n")
+    func parseSeeds() -> [Int] {
+        let sections = input().components(separatedBy: "\n\n")
+        return sections[0].components(separatedBy: " ").compactMap(Int.init)
     }
 
-    var seeds: [Int] {
-        sections[0].components(separatedBy: " ").compactMap(Int.init)
-    }
-
-    var maps: [[[Int]]] {
+    func parseMaps() -> [[[Int]]] {
         input().components(separatedBy: "\n\n").dropFirst().map { section in
             let lines = section.components(separatedBy: "\n").dropFirst()
             return lines.map { $0.components(separatedBy: " ").compactMap(Int.init) }

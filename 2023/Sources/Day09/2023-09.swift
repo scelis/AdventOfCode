@@ -1,16 +1,21 @@
-import AdventKit
+import AdventKit2
 import Foundation
 
-public struct Day09: Day {
-    let integers: [[Int]]
+struct Day09: Day {
+    func run() async throws -> (Int, Int) {
+        let integers = inputLines().map({ $0.components(separatedBy: " ").compactMap(Int.init) })
+        async let p1 = part1(integers: integers)
+        async let p2 = part2(integers: integers)
+        return try await (p1, p2)
+    }
 
-    public func part1() async throws -> Int {
+    func part1(integers: [[Int]]) async throws -> Int {
         integers
             .map { calculateNext(in: $0) }
             .reduce(0, +)
     }
 
-    public func part2() async throws -> Int {
+    func part2(integers: [[Int]]) async throws -> Int {
         integers
             .map { calculatePrevious(in: $0) }
             .reduce(0, +)
@@ -32,11 +37,5 @@ public struct Day09: Day {
 
         let differences = sequence.adjacentPairs().map({ $1 - $0 })
         return sequence.first! - calculatePrevious(in: differences)
-    }
-
-    // MARK: - Parsing
-
-    init() {
-        self.integers = Self.inputLines().map({ $0.components(separatedBy: " ").compactMap(Int.init) })
     }
 }

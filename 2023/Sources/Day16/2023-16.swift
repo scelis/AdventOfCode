@@ -1,7 +1,7 @@
-import AdventKit
+import AdventKit2
 import Foundation
 
-public struct Day16: Day {
+struct Day16: Day {
 
     // MARK: - Structures
 
@@ -26,32 +26,34 @@ public struct Day16: Day {
 
     // MARK: - Solving
 
-    public func part1() async throws -> Int {
+    func run() async throws -> (Int, Int) {
         let graph = try parseGraph()
+        async let p1 = part1(graph: graph)
+        async let p2 = part2(graph: graph)
+        return try await (p1, p2)
+    }
+
+    func part1(graph: GridGraph<Node>) async throws -> Int {
         return numberOfTilesEnergized(origin: .zero, direction: .east, graph: graph)
     }
 
-    public func part2() async throws -> Int {
-        let graph = try parseGraph()
+    func part2(graph: GridGraph<Node>) async throws -> Int {
         var largest = 0
         for x in 0..<graph.width {
             let top = numberOfTilesEnergized(origin: Coordinate2D(x: x, y: 0), direction: .south, graph: graph)
-            reset(graph: graph)
             let bottom = numberOfTilesEnergized(origin: Coordinate2D(x: x, y: graph.height - 1), direction: .north, graph: graph)
-            reset(graph: graph)
             largest = max(top, bottom, largest)
         }
         for y in 0..<graph.height {
             let left = numberOfTilesEnergized(origin: Coordinate2D(x: 0, y: y), direction: .east, graph: graph)
-            reset(graph: graph)
             let right = numberOfTilesEnergized(origin: Coordinate2D(x: graph.width - 0, y: y), direction: .west, graph: graph)
-            reset(graph: graph)
             largest = max(left, right, largest)
         }
         return largest
     }
 
     func numberOfTilesEnergized(origin: Coordinate2D, direction: Direction, graph: GridGraph<Node>) -> Int {
+        var graph = graph
         var queue: [(Coordinate2D, Direction)] = [(origin, direction)]
 
         while !queue.isEmpty {
@@ -102,15 +104,7 @@ public struct Day16: Day {
             }
         }
 
-        return graph.allNodes.filter({ !$0.lightDirections.isEmpty }).count
-    }
-
-    func reset(graph: GridGraph<Node>) {
-        for node in graph.allNodes {
-            var node = node
-            node.lightDirections = []
-            graph.add(node: node)
-        }
+        return graph.nodes.values.filter({ !$0.lightDirections.isEmpty }).count
     }
 
     // MARK: - Parsing

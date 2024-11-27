@@ -1,11 +1,11 @@
-import AdventKit
+import AdventKit2
 import Foundation
 
-public struct Day03: Day {
+struct Day03: Day {
 
     // MARK: - Structures
 
-    private struct Node: GridGraphNode {
+    struct Node: GridGraphNode {
         var character: Character
         var coordinate: Coordinate2D
 
@@ -14,15 +14,15 @@ public struct Day03: Day {
         }
     }
 
-    private struct SchematicNumber: Equatable, Hashable {
+    struct SchematicNumber: Equatable, Hashable {
         var number: Int
         var location: [Coordinate2D]
     }
 
     // MARK: - Solving
 
-    public func run() async throws -> (Int, Int) {
-        let schematic = Self.inputLines().map { Array($0) }
+    func run() async throws -> (Int, Int) {
+        let schematic = inputLines().map { Array($0) }
         let graph = try createGraph(schematic: schematic)
         let schematicNumbers = try findSchematicNumbers(graph: graph)
         let part1 = try sumOfPartNumbers(schematicNumbers: schematicNumbers, graph: graph)
@@ -30,14 +30,14 @@ public struct Day03: Day {
         return (part1, part2)
     }
 
-    private func sumOfPartNumbers(schematicNumbers: [SchematicNumber], graph: GridGraph<Node>) throws -> Int {
+    func sumOfPartNumbers(schematicNumbers: [SchematicNumber], graph: GridGraph<Node>) throws -> Int {
         try schematicNumbers
             .filter { try isPartNumber($0, graph: graph) }
             .map { $0.number }
             .reduce(0, +)
     }
 
-    private func sumOfGearRatios(schematicNumbers: [SchematicNumber], graph: GridGraph<Node>) throws -> Int {
+    func sumOfGearRatios(schematicNumbers: [SchematicNumber], graph: GridGraph<Node>) throws -> Int {
         let coordinateToNumberMap: [Coordinate2D: SchematicNumber] = {
             var map: [Coordinate2D: SchematicNumber] = [:]
             for number in schematicNumbers {
@@ -64,10 +64,10 @@ public struct Day03: Day {
         return total
     }
 
-    private func isPartNumber(_ number: SchematicNumber, graph: GridGraph<Node>) throws -> Bool {
+    func isPartNumber(_ number: SchematicNumber, graph: GridGraph<Node>) throws -> Bool {
         for location in number.location {
             for (coordinate, _) in try graph.connections(from: location) {
-                let neighbor = try graph.node(withID: coordinate)
+                let neighbor = graph.node(withID: coordinate)!
                 if neighbor.character != "." && neighbor.digit == nil {
                     return true
                 }
@@ -76,7 +76,7 @@ public struct Day03: Day {
         return false
     }
 
-    private func findSchematicNumbers(graph: GridGraph<Node>) throws -> [SchematicNumber] {
+    func findSchematicNumbers(graph: GridGraph<Node>) throws -> [SchematicNumber] {
         var numbers: [SchematicNumber] = []
         for y in 0..<graph.height {
             var currentNumberDigits: [Int] = []
@@ -108,7 +108,7 @@ public struct Day03: Day {
 
     // MARK: - Parsing
 
-    private func createGraph(schematic: [[Character]]) throws -> GridGraph<Node> {
+    func createGraph(schematic: [[Character]]) throws -> GridGraph<Node> {
         try GridGraph(data: schematic, diagonalsAllowed: true, createNode: Node.init)
     }
 }

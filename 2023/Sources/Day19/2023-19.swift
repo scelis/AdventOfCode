@@ -1,8 +1,8 @@
-import AdventKit
+import AdventKit2
 import Algorithms
 import Foundation
 
-public struct Day19: Day {
+struct Day19: Day {
 
     // MARK: - Structures
 
@@ -50,25 +50,34 @@ public struct Day19: Day {
 
     // MARK: - Solving
 
-    public func part1() async throws -> Int {
-        Self.parts
-            .filter { isPartAccepted($0) }
+    func run() async throws -> (Int, Int) {
+        let parts = parseParts()
+        let workflows = parseWorkflows()
+        async let p1 = part1(parts: parts, workflows: workflows)
+        async let p2 = part2(workflows: workflows)
+        return try await (p1, p2)
+    }
+
+    public func part1(parts: [Part], workflows: [String: Workflow]) async throws -> Int {
+        parseParts()
+            .filter { isPartAccepted($0, workflows: workflows) }
             .map { $0.ratings.values.reduce(0, +) }
             .reduce(0, +)
     }
 
-    func isPartAccepted(_ part: Part) -> Bool {
+    func isPartAccepted(_ part: Part, workflows: [String: Workflow]) -> Bool {
         var currentWorkflow = "in"
         while currentWorkflow != "A" && currentWorkflow != "R" {
-            let workflow = Self.workflows[currentWorkflow]!
+            let workflow = workflows[currentWorkflow]!
             currentWorkflow = workflow.nextWorkflow(for: part)
         }
 
         return currentWorkflow == "A"
     }
 
-    public func part2() async throws -> Int {
+    public func part2(workflows: [String: Workflow]) async throws -> Int {
         acceptedCombinations(
+            workflows: workflows,
             currentWorkflow: "in",
             currentRatings: [
                 "x": IndexSet(integersIn: 1...4000),
@@ -79,38 +88,38 @@ public struct Day19: Day {
         )
     }
 
-    func acceptedCombinations(currentWorkflow: String, currentRatings: [String: IndexSet]) -> Int {
+    func acceptedCombinations(workflows: [String: Workflow], currentWorkflow: String, currentRatings: [String: IndexSet]) -> Int {
         guard currentWorkflow != "A" else { return currentRatings.values.map({ $0.count }).reduce(1, *) }
         guard currentWorkflow != "R" else { return 0 }
 
         var total = 0
         var currentRatings = currentRatings
-        let workflow = Self.workflows[currentWorkflow]!
+        let workflow = workflows[currentWorkflow]!
         for rule in workflow.rules {
             switch rule.operator {
             case .greaterThan:
                 var acceptedRatings = currentRatings
                 acceptedRatings[rule.rating]!.remove(integersIn: 1...rule.value)
-                total += acceptedCombinations(currentWorkflow: rule.destination, currentRatings: acceptedRatings)
+                total += acceptedCombinations(workflows: workflows, currentWorkflow: rule.destination, currentRatings: acceptedRatings)
                 currentRatings[rule.rating]!.remove(integersIn: (rule.value + 1)...4000)
             case .lessThan:
                 var acceptedRatings = currentRatings
                 acceptedRatings[rule.rating]!.remove(integersIn: rule.value...4000)
-                total += acceptedCombinations(currentWorkflow: rule.destination, currentRatings: acceptedRatings)
+                total += acceptedCombinations(workflows: workflows, currentWorkflow: rule.destination, currentRatings: acceptedRatings)
                 currentRatings[rule.rating]!.remove(integersIn: 1..<rule.value)
             }
         }
 
-        return total + acceptedCombinations(currentWorkflow: workflow.fallback, currentRatings: currentRatings)
+        return total + acceptedCombinations(workflows: workflows, currentWorkflow: workflow.fallback, currentRatings: currentRatings)
     }
 
     // MARK: - Parsing
 
-    private static let workflowRegex = #/^([a-z]+)\{(.*),([a-zA-Z]+)\}$/#
-    private static let ruleRegex = #/^([a-z]+)(>|<)([0-9]+)\:([a-zA-Z]+)$/#
+    func parseWorkflows() -> [String: Workflow] {
+        let workflowRegex = #/^([a-z]+)\{(.*),([a-zA-Z]+)\}$/#
+        let ruleRegex = #/^([a-z]+)(>|<)([0-9]+)\:([a-zA-Z]+)$/#
 
-    private static var workflows: [String: Workflow] = {
-        input().components(separatedBy: "\n\n")[0].components(separatedBy: .newlines).map { line in
+        return input().components(separatedBy: "\n\n")[0].components(separatedBy: .newlines).map { line in
             let workflowMatch = line.wholeMatch(of: workflowRegex)!
             let rules = workflowMatch.2.components(separatedBy: ",").map { ruleString in
                 let ruleMatch = ruleString.wholeMatch(of: ruleRegex)!
@@ -124,9 +133,9 @@ public struct Day19: Day {
             return Workflow(name: String(workflowMatch.1), rules: rules, fallback: String(workflowMatch.3))
         }
         .reduce(into: [:]) { $0[$1.name] = $1 }
-    }()
+    }
 
-    private static var parts: [Part] = {
+    func parseParts() -> [Part] {
         input().components(separatedBy: "\n\n")[1].components(separatedBy: .newlines).map { line in
             let ratings: [String: Int] = line.trimmingCharacters(in: CharacterSet(charactersIn: "{}"))
                 .components(separatedBy: ",")
@@ -136,5 +145,5 @@ public struct Day19: Day {
                 }
             return Part(ratings: ratings)
         }
-    }()
+    }
 }

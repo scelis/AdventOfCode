@@ -1,7 +1,7 @@
-import AdventKit
+import AdventKit2
 import Foundation
 
-public struct Day10: Day {
+struct Day10: Day {
 
     // MARK: - Structures
 
@@ -53,7 +53,7 @@ public struct Day10: Day {
 
     // MARK: - Solving
 
-    public func run() async throws -> (Int, Int) {
+    func run() async throws -> (Int, Int) {
         let maze = try parseMaze()
         let part1 = maze.loopCoordinates.count / 2
         let part2 = try numberOfEnclosedTiles(maze: maze)
@@ -77,13 +77,13 @@ public struct Day10: Day {
         while !visited.contains(currentCoordinate) {
             visited.insert(currentCoordinate)
             currentCoordinate = currentCoordinate.step(inDirection: currentDirection)
-            let currentNode = try maze.graph.node(withID: currentCoordinate)
+            let currentNode = maze.graph.node(withID: currentCoordinate)!
             let exitDirection = currentNode.tile.directions.first { $0 != currentDirection.turnAround() }!
 
             currentDirection = currentDirection.turnRight()
             while currentDirection != exitDirection {
                 if
-                    let neighbor = try? maze.graph.node(withID: currentCoordinate.step(inDirection: currentDirection)),
+                    let neighbor = maze.graph.node(withID: currentCoordinate.step(inDirection: currentDirection)),
                     !maze.loopCoordinates.contains(neighbor.coordinate),
                     !innerCoordinates.contains(neighbor.coordinate)
                 {
@@ -101,7 +101,7 @@ public struct Day10: Day {
     func parseMaze() throws -> PipeMaze {
         // Create graph
         let data: [[Tile]] = inputLines().map({ $0.compactMap({ Tile(rawValue: $0) }) })
-        let graph = try GridGraph(data: data, addConnections: false, createNode: Node.init)
+        var graph = try GridGraph(data: data, addConnections: false, createNode: Node.init)
 
         // Find starting coordinate
         var startingCoordinate = Coordinate2D.zero
@@ -119,7 +119,7 @@ public struct Day10: Day {
             .reduce(into: []) { partialResult, direction in
                 let neighborCoordinate = startingCoordinate.step(inDirection: direction)
                 if
-                    let node = try? graph.node(withID: neighborCoordinate),
+                    let node = graph.node(withID: neighborCoordinate),
                     node.tile.directions.contains(direction.turnAround())
                 {
                     partialResult.insert(direction)
@@ -133,7 +133,7 @@ public struct Day10: Day {
         var currentCoordinate = startingCoordinate
         while keepGoing {
             var foundNeightbor = false
-            let node = try graph.node(withID: currentCoordinate)
+            let node = graph.node(withID: currentCoordinate)!
             for direction in node.tile.directions {
                 let neighborCoordinate = currentCoordinate.step(inDirection: direction)
                 if !loopCoordinates.contains(neighborCoordinate) {

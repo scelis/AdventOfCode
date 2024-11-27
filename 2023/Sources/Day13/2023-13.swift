@@ -1,20 +1,27 @@
-import AdventKit
+import AdventKit2
 import Algorithms
 import Foundation
 
-public struct Day13: Day {
+struct Day13: Day {
 
     // MARK: - Solving
 
-    public func part1() async throws -> Int {
-        return solve(withSmudge: false)
+    func run() async throws -> (Int, Int) {
+        let patterns = parsePatterns()
+        async let p1 = part1(patterns: patterns)
+        async let p2 = part2(patterns: patterns)
+        return try await (p1, p2)
     }
 
-    public func part2() async throws -> Int {
-        return solve(withSmudge: true)
+    func part1(patterns: [[[Character]]]) async throws -> Int {
+        return solve(patterns: patterns, withSmudge: false)
     }
 
-    func solve(withSmudge: Bool) -> Int {
+    func part2(patterns: [[[Character]]]) async throws -> Int {
+        return solve(patterns: patterns, withSmudge: true)
+    }
+
+    func solve(patterns: [[[Character]]], withSmudge: Bool) -> Int {
         let leftSum = patterns
             .compactMap { verticalReflectionIndex(pattern: $0, withSmudge: withSmudge) }
             .reduce(0, +)
@@ -62,11 +69,9 @@ public struct Day13: Day {
 
     // MARK: - Parsing
 
-    let patterns: [[[Character]]]
-
-    init() {
-        self.patterns = Self.input().components(separatedBy: "\n\n").map { section in
-            return section.components(separatedBy: "\n").map(Array.init)
+    func parsePatterns() -> [[[Character]]] {
+        input().components(separatedBy: "\n\n").map { section in
+            section.components(separatedBy: "\n").map(Array.init)
         }
     }
 }

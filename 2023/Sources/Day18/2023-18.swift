@@ -1,8 +1,8 @@
-import AdventKit
+import AdventKit2
 import Algorithms
 import Foundation
 
-public struct Day18: Day {
+struct Day18: Day {
 
     // MARK: - Structures
 
@@ -38,20 +38,27 @@ public struct Day18: Day {
 
     // Below the starting corners vary by input.
 
-    public func part1() async throws -> Int {
-        solve(usingHex: false, startingCorner: .southWest)
+    func run() async throws -> (Int, Int) {
+        let commands = parseCommands()
+        async let p1 = part1(commands: commands)
+        async let p2 = part2(commands: commands)
+        return try await (p1, p2)
     }
 
-    public func part2() async throws -> Int {
-        solve(usingHex: true, startingCorner: .southWest)
+    public func part1(commands: [Command]) async throws -> Int {
+        solve(usingHex: false, startingCorner: .southWest, commands: commands)
     }
 
-    func solve(usingHex: Bool, startingCorner: Direction) -> Int {
+    public func part2(commands: [Command]) async throws -> Int {
+        solve(usingHex: true, startingCorner: .southWest, commands: commands)
+    }
+
+    func solve(usingHex: Bool, startingCorner: Direction, commands: [Command]) -> Int {
         var coordinate = Coordinate2D.zero
         var corner = startingCorner
         var vertices: [Coordinate2D] = [coordinate]
 
-        Self.commands.adjacentPairs().forEach { (a, b) in
+        commands.adjacentPairs().forEach { (a, b) in
             let direction = a.actualDirection(usingHex: usingHex)
             let nextDirection = b.actualDirection(usingHex: usingHex)
             let distance = a.actualDistance(usingHex: usingHex)
@@ -85,17 +92,15 @@ public struct Day18: Day {
 
     // MARK: - Parsing
 
-    private static let commandRegex = #/^(L|D|U|R) (\d+) \(\#([0-9a-f]{6})\)$/#
+    func parseCommands() -> [Command] {
+        let commandRegex = #/^(L|D|U|R) (\d+) \(\#([0-9a-f]{6})\)$/#
 
-    private static var commands: [Command] = {
-        input().components(separatedBy: .newlines).map { parseCommand(string: $0) }
-    }()
-
-    private static func parseCommand(string: String) -> Command {
-        let match = string.wholeMatch(of: commandRegex)!
-        let direction = Direction(rawValue: String(match.1))!
-        let distance = Int(match.2)!
-        let color = String(match.3)
-        return Command(direction: direction, distance: distance, color: color)
+        return input().components(separatedBy: .newlines).map { string in
+            let match = string.wholeMatch(of: commandRegex)!
+            let direction = Direction(rawValue: String(match.1))!
+            let distance = Int(match.2)!
+            let color = String(match.3)
+            return Command(direction: direction, distance: distance, color: color)
+        }
     }
 }

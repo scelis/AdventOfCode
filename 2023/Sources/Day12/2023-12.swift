@@ -1,8 +1,8 @@
-import AdventKit
+import AdventKit2
 import Algorithms
 import Foundation
 
-public struct Day12: Day {
+struct Day12: Day {
 
     // MARK: - Structures
 
@@ -19,17 +19,22 @@ public struct Day12: Day {
 
     // MARK: - Solving
 
-    public func part1() async throws -> Int {
-        return await countPossibleArrangements()
+    func run() async throws -> (Int, Int) {
+        let records = parseRecords()
+        async let p1 = part1(records: records)
+        async let p2 = part2(records: records)
+        return try await (p1, p2)
     }
 
-    public func part2() async throws -> Int {
-        return await countPossibleArrangements(unfolded: 5)
+    func part1(records: [Record]) async throws -> Int {
+        return await countPossibleArrangements(records: records)
     }
 
-    func countPossibleArrangements(unfolded: Int = 1) async -> Int {
-        let records = self.records
+    func part2(records: [Record]) async throws -> Int {
+        return await countPossibleArrangements(records: records, unfolded: 5)
+    }
 
+    func countPossibleArrangements(records: [Record], unfolded: Int = 1) async -> Int {
         var count = 0
         await withTaskGroup(of: Int.self) { group in
             for record in records {
@@ -108,7 +113,7 @@ public struct Day12: Day {
 
     // MARK: - Parsing
 
-    var records: [Record] {
+    func parseRecords() -> [Record] {
         input().components(separatedBy: .newlines).map { line in
             let components = line.components(separatedBy: .whitespaces)
             let springs = components[0].compactMap(Spring.init)
