@@ -1,13 +1,13 @@
-import AdventKit
+import AdventKit2
 import Foundation
 
-public struct Day11: Day {
+struct Day11: Day {
     enum Color: Int {
         case black = 0
         case white = 1
     }
 
-    private func runComputer(startOnWhite: Bool = false) -> [Coordinate2D: Color] {
+    func runComputer(startOnWhite: Bool = false) -> [Coordinate2D: Color] {
         var direction = Direction.up
         var coordinate = Coordinate2D(x: 0, y: 0)
         var coordinatesPainted: [Coordinate2D: Color] = [:]
@@ -41,12 +41,18 @@ public struct Day11: Day {
         return coordinatesPainted
     }
 
-    public func part1() async throws -> Int {
+    func run() async throws -> (Int, String) {
+        async let p1 = part1()
+        async let p2 = part2()
+        return try await (p1, p2)
+    }
+
+    func part1() async throws -> Int {
         let coordinatesPainted = runComputer()
         return coordinatesPainted.count
     }
 
-    public func part2() async throws -> String {
+    func part2() async throws -> String {
         let coordinatesPainted = runComputer(startOnWhite: true)
 
         var output = "\n"

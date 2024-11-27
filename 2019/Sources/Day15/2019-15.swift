@@ -1,7 +1,7 @@
-import AdventKit
+import AdventKit2
 import Foundation
 
-public struct Day15: Day {
+struct Day15: Day {
 
     // MARK: - Structures
 
@@ -92,7 +92,7 @@ public struct Day15: Day {
         }
     }
 
-    public func run() async throws -> (Int, Int) {
+    func run() async throws -> (Int, Int) {
         let explorer = Explorer(input: input())
 
         while explorer.oxygenSystem == nil {

@@ -1,8 +1,14 @@
-import AdventKit
+import AdventKit2
 import Foundation
 
-public struct Day02: Day {
-    public func part1() async throws -> Int {
+struct Day02: Day {
+    func run() async throws -> (Int, Int) {
+        async let p1 = part1()
+        async let p2 = part2()
+        return try await (p1, p2)
+    }
+
+    func part1() async throws -> Int {
         let computer = IntcodeComputer(input: input())
         computer[1] = 12
         computer[2] = 2
@@ -10,7 +16,7 @@ public struct Day02: Day {
         return computer[0]
     }
 
-    public func part2() async throws -> Int {
+    func part2() async throws -> Int {
         for noun in 0...99 {
             for verb in 0...99 {
                 let computer = IntcodeComputer(input: input())

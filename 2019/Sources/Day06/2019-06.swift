@@ -1,11 +1,11 @@
-import AdventKit
+import AdventKit2
 import Foundation
 
-public struct Day06: Day {
+ struct Day06: Day {
     var centerToFarDict: [String: [String]] = [:]
     var farToCenterDict: [String: String] = [:]
 
-    public init() {
+    init() {
         for line in inputLines() {
             let components = line.components(separatedBy: ")")
 
@@ -57,11 +57,17 @@ public struct Day06: Day {
         return totalDistance
     }
 
-    public func part1() async throws -> Int {
+     func run() async throws -> (Int, Int) {
+         async let p1 = part1()
+         async let p2 = part2()
+         return try await (p1, p2)
+     }
+
+    func part1() async throws -> Int {
         return countDirectAndIndirectOrbits(from: "COM")
     }
 
-    public func part2() async throws -> Int {
+    func part2() async throws -> Int {
         return distance(from: "YOU", to: "SAN") - 2
     }
 }

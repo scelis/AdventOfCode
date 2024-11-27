@@ -1,7 +1,7 @@
-import AdventKit
+import AdventKit2
 import Foundation
 
-public struct Day10: Day {
+struct Day10: Day {
     var asteroids: Set<Coordinate2D> {
         var asteroids: Set<Coordinate2D> = []
 
@@ -22,7 +22,13 @@ public struct Day10: Day {
         return asteroids
     }
 
-    public func part1() async throws -> Int {
+    func run() async throws -> (Int, Int) {
+        async let p1 = part1()
+        async let p2 = part2()
+        return try await (p1, p2)
+    }
+
+    func part1() async throws -> Int {
         var mostDetected = 0
 
         let asteroids = self.asteroids
@@ -55,7 +61,7 @@ public struct Day10: Day {
         return mostDetected
     }
 
-    public func part2() async throws -> Int {
+    func part2() async throws -> Int {
         let station = Coordinate2D(x: 22, y: 28)
         let numAsteroids: Int = 200
 

@@ -1,28 +1,37 @@
-import AdventKit
+import AdventKit2
 import Foundation
 
-public struct Day12: Day {
+struct Day12: Day {
     class Moon {
         var position: Coordinate3D
         var velocity: Coordinate3D
 
         init(
             position: Coordinate3D,
-            velocity: Coordinate3D = Coordinate3D(x: 0, y: 0, z: 0))
+            velocity: Coordinate3D = .zero)
         {
             self.position = position
             self.velocity = velocity
         }
     }
 
-    public func part1() async throws -> Int {
-        return part1(
+    func run() async throws -> (Int, Int) {
+        async let p1 = part1(
             a: Coordinate3D(x: 16, y: -11, z: 2),
             b: Coordinate3D(x: 0, y: -4, z: 7),
             c: Coordinate3D(x: 6, y: 4, z: -10),
             d: Coordinate3D(x: -3, y: -2, z: -4),
             steps: 1000
         )
+
+        async let p2 = part2(
+            a: Coordinate3D(x: 16, y: -11, z: 2),
+            b: Coordinate3D(x: 0, y: -4, z: 7),
+            c: Coordinate3D(x: 6, y: 4, z: -10),
+            d: Coordinate3D(x: -3, y: -2, z: -4)
+        )
+
+        return try await (p1, p2)
     }
 
     func part1(
@@ -30,9 +39,8 @@ public struct Day12: Day {
         b: Coordinate3D,
         c: Coordinate3D,
         d: Coordinate3D,
-        steps: Int)
-        -> Int
-    {
+        steps: Int
+    ) async throws -> Int {
         var moons: [Moon] = []
         moons.append(Moon(position: a))
         moons.append(Moon(position: b))
@@ -86,22 +94,12 @@ public struct Day12: Day {
         return energy
     }
 
-    public func part2() async throws -> Int {
-        return part2(
-            a: Coordinate3D(x: 16, y: -11, z: 2),
-            b: Coordinate3D(x: 0, y: -4, z: 7),
-            c: Coordinate3D(x: 6, y: 4, z: -10),
-            d: Coordinate3D(x: -3, y: -2, z: -4)
-        )
-    }
-
     func part2(
         a: Coordinate3D,
         b: Coordinate3D,
         c: Coordinate3D,
-        d: Coordinate3D)
-        -> Int
-    {
+        d: Coordinate3D
+    ) async throws -> Int {
         var moons: [Moon] = []
         moons.append(Moon(position: a))
         moons.append(Moon(position: b))

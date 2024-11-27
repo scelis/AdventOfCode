@@ -1,7 +1,7 @@
-import AdventKit
+import AdventKit2
 import Foundation
 
-public struct Day04: Day {
+struct Day04: Day {
     func isValidPassword(number: Int, strict: Bool) -> Bool {
         var previous: Int?
         var foundDouble = false
@@ -57,11 +57,17 @@ public struct Day04: Day {
         return integers[0]...integers[1]
     }
 
-    public func part1() async throws -> Int {
+    func run() async throws -> (Int, Int) {
+        async let p1 = part1()
+        async let p2 = part2()
+        return try await (p1, p2)
+    }
+
+    func part1() async throws -> Int {
         return numberOfPasswords(in: range, strict: false)
     }
 
-    public func part2() async throws -> Int {
+    func part2() async throws -> Int {
         return numberOfPasswords(in: range, strict: true)
     }
 }

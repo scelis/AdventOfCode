@@ -1,8 +1,8 @@
-import AdventKit
+import AdventKit2
 import Algorithms
 import Foundation
 
-public struct Day13: Day {
+struct Day13: Day {
     enum Tile: Int {
         case empty = 0
         case wall = 1
@@ -11,7 +11,13 @@ public struct Day13: Day {
         case ball = 4
     }
 
-    public func part1() async throws -> Int {
+    func run() async throws -> (Int, Int) {
+        async let p1 = part1()
+        async let p2 = part2()
+        return try await (p1, p2)
+    }
+
+    func part1() async throws -> Int {
         let computer = IntcodeComputer(input: input())
         computer.run()
 
@@ -27,7 +33,7 @@ public struct Day13: Day {
         }
     }
 
-    public func part2() async throws -> Int {
+    func part2() async throws -> Int {
         let computer = IntcodeComputer(input: input())
         computer[0] = 2
         computer.run()

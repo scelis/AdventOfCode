@@ -1,8 +1,14 @@
-import AdventKit
+import AdventKit2
 import Foundation
 
-public struct Day07: Day {
-    public func part1() async throws -> Int {
+struct Day07: Day {
+    func run() async throws -> (Int, Int) {
+        async let p1 = part1()
+        async let p2 = part2()
+        return try await (p1, p2)
+    }
+
+    func part1() async throws -> Int {
         let input = input()
         var maxSignal = Int.min
         for a in 0...4 {
@@ -33,7 +39,7 @@ public struct Day07: Day {
         return maxSignal
     }
 
-    public func part2() async throws -> Int {
+    func part2() async throws -> Int {
         var maxSignal = Int.min
         for a in 5...9 {
             for b in 5...9 {

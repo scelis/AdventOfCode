@@ -1,11 +1,17 @@
-import AdventKit
+import AdventKit2
 import Foundation
 
-public struct Day08: Day {
+struct Day08: Day {
     let imageWidth = 25
     let imageHeight = 6
 
-    public func part1() async throws -> Int {
+    func run() async throws -> (Int, String) {
+        async let p1 = part1()
+        async let p2 = part2()
+        return try await (p1, p2)
+    }
+
+    func part1() async throws -> Int {
         var layer = 0
         var x = 0
         var y = 0
@@ -34,7 +40,7 @@ public struct Day08: Day {
         return result
     }
 
-    public func part2() async throws -> String {
+    func part2() async throws -> String {
         var x = 0
         var y = 0
         var result: [[String]] = .init(repeating: .init(repeating: "2", count: imageWidth), count: imageHeight)

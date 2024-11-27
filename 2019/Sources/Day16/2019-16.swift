@@ -1,8 +1,14 @@
-import AdventKit
+import AdventKit2
 import Foundation
 
-public struct Day16: Day {
-    public func part1() async throws -> Int {
+struct Day16: Day {
+    func run() async throws -> (Int, Int) {
+        async let p1 = part1()
+        async let p2 = part2()
+        return try await (p1, p2)
+    }
+
+    func part1() async throws -> Int {
         var numbers: [Int] = input().map( { Int(String($0))! })
         let pattern = [0, 1, 0, -1]
 
@@ -22,7 +28,7 @@ public struct Day16: Day {
         return Int(numbers[0..<8].map({ "\($0)" }).joined())!
     }
 
-    public func part2() async throws -> Int {
+    func part2() async throws -> Int {
         let numbers: [Int] = input().map( { Int(String($0))! })
         var input = Array<[Int]>.init(repeating: numbers, count: 10000).flatMap({ $0 })
         let startIndex = Int(Array(input.prefix(7)).map({ "\($0)" }).joined())!
