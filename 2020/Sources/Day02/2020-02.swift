@@ -1,10 +1,16 @@
-import AdventKit
+import AdventKit2
 import Foundation
 
-public struct Day02: Day {
+struct Day02: Day {
     let pattern = #"(\d+)-(\d+) (\w): (\w+)"#
 
-    public func part1() async throws -> Int {
+    func run() async throws -> (Int, Int) {
+        async let p1 = part1()
+        async let p2 = part2()
+        return try await (p1, p2)
+    }
+
+    func part1() async throws -> Int {
         var numValid = 0
         try! input().enumerateMatches(withPattern: pattern) { match in
             let min = Int(match[1])!
@@ -21,7 +27,7 @@ public struct Day02: Day {
         return numValid
     }
 
-    public func part2() async throws -> Int {
+    func part2() async throws -> Int {
         var numValid = 0
         try! input().enumerateMatches(withPattern: pattern) { match in
             let i = Int(match[1])! - 1

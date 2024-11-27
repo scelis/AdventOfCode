@@ -1,8 +1,14 @@
-import AdventKit
+import AdventKit2
 import Foundation
 
-public struct Day13: Day {
-    public func part1() async throws -> Int {
+struct Day13: Day {
+    func run() async throws -> (Int, Int) {
+        async let p1 = part1()
+        async let p2 = part2()
+        return try await (p1, p2)
+    }
+
+    func part1() async throws -> Int {
         let lines = inputLines()
         let timestamp = Int(lines[0])!
         let buses = lines[1]
@@ -33,7 +39,7 @@ public struct Day13: Day {
             }
     }
 
-    public func part2() async throws -> Int {
+    func part2() async throws -> Int {
         // (T + 0) % 13   == 0 == (T + 13) % 13
         // (T + 3) % 41   == 0 == (T + 44) % 41
         // (T + 13) % 997 == 0 == (T + 13) % 997

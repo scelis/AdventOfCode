@@ -1,10 +1,10 @@
-import AdventKit
+import AdventKit2
 import Algorithms
 import Foundation
 
-public struct Day09: Day {
+struct Day09: Day {
 
-    public func part1() async throws -> Int {
+    func part1() async throws -> Int {
         let inputIntegers = inputIntegers()
 
         return inputIntegers
@@ -18,7 +18,7 @@ public struct Day09: Day {
             }!.element
     }
 
-    public func part2(part1Result: Int) async throws -> Int {
+    func part2(part1Result: Int) async throws -> Int {
         let inputIntegers = inputIntegers()
 
         var i = 0
@@ -42,7 +42,7 @@ public struct Day09: Day {
         fatalError()
     }
 
-    public func run() async throws -> (Int, Int) {
+    func run() async throws -> (Int, Int) {
         let part1 = try await part1()
         let part2 = try await part2(part1Result: part1)
         return (part1, part2)

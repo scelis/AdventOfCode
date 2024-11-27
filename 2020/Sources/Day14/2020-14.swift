@@ -1,11 +1,17 @@
-import AdventKit
+import AdventKit2
 import Foundation
 
-public struct Day14: Day {
+struct Day14: Day {
     let maskRegex = try! NSRegularExpression(pattern: #"mask = ([1X0]+)"#, options: [])
     let writeRegex = try! NSRegularExpression(pattern: #"mem\[([0-9]+)\] = ([0-9]+)"#, options: [])
 
-    public func part1() async throws -> Int64 {
+    func run() async throws -> (Int64, Int64) {
+        async let p1 = part1()
+        async let p2 = part2()
+        return try await (p1, p2)
+    }
+
+    func part1() async throws -> Int64 {
         var ones: Int64 = 0
         var zeroes: Int64 = 0
         var memory: [Int64: Int64] = [:]
@@ -35,7 +41,7 @@ public struct Day14: Day {
             .reduce(0, +)
     }
 
-    public func part2() async throws -> Int64 {
+    func part2() async throws -> Int64 {
         var mask = ""
         var memory: [Int64: Int64] = [:]
         for line in inputLines() {

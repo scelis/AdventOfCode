@@ -1,7 +1,7 @@
-import AdventKit
+import AdventKit2
 import Foundation
 
-public struct Day08: Day {
+struct Day08: Day {
     enum Instruction {
         case nop(Int)
         case acc(Int)
@@ -23,7 +23,13 @@ public struct Day08: Day {
         inputLines().map { Instruction(line: $0) }
     }
 
-    public func part1() async throws -> Int {
+    func run() async throws -> (Int, Int) {
+        async let p1 = part1()
+        async let p2 = part2()
+        return try await (p1, p2)
+    }
+
+    func part1() async throws -> Int {
         return execute(instructions: instructions).accumulatorValue
     }
 
@@ -49,7 +55,7 @@ public struct Day08: Day {
         return (i == instructions.count, accumulator)
     }
 
-    public func part2() async throws -> Int {
+    func part2() async throws -> Int {
         var i = 0
         while true {
             var modified = instructions

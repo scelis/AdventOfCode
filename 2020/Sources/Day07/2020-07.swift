@@ -1,7 +1,7 @@
-import AdventKit
+import AdventKit2
 import Foundation
 
-public struct Day07: Day {
+struct Day07: Day {
     let lineRegex = try! NSRegularExpression(pattern: #"^(.+) bags contain (.+)\.$"#, options: [.anchorsMatchLines])
     let contentsRegex = try! NSRegularExpression(pattern: #"(\d)+ (\D+) bags?"#, options: [])
 
@@ -27,7 +27,13 @@ public struct Day07: Day {
         }
     }
 
-    public func part1() throws -> Int {
+    func run() async throws -> (Int, Int) {
+        async let p1 = part1()
+        async let p2 = part2()
+        return try await (p1, p2)
+    }
+
+    func part1() throws -> Int {
         var colors: Set<String> = []
         addColorsThatEventuallyContain(color: "shiny gold", toSet: &colors)
         return colors.count
@@ -43,7 +49,7 @@ public struct Day07: Day {
         }
     }
 
-    public func part2() throws -> Int {
+    func part2() throws -> Int {
         var work: [String: Int] = [:]
         let result = numberOfBagsInside(color: "shiny gold", work: &work)
         return result

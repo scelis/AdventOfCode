@@ -1,18 +1,24 @@
-import AdventKit
+import AdventKit2
 import Foundation
 
-public struct Day03: Day {
+struct Day03: Day {
     var lines: [String] = []
 
     init() {
         lines = inputLines()
     }
 
-    public func part1() async throws -> Int {
+    func run() async throws -> (Int, Int) {
+        async let p1 = part1()
+        async let p2 = part2()
+        return try await (p1, p2)
+    }
+
+    func part1() async throws -> Int {
         return numTrees(onSlope: Coordinate2D(x: 3, y: 1))
     }
 
-    public func part2() async throws -> Int {
+    func part2() async throws -> Int {
         let slopes = [
             Coordinate2D(x: 1, y: 1),
             Coordinate2D(x: 3, y: 1),
