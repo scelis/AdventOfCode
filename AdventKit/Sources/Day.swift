@@ -1,6 +1,6 @@
 import Foundation
 
-public protocol Day {
+public protocol Day: Sendable {
     associatedtype Part1: CustomStringConvertible
     associatedtype Part2: CustomStringConvertible
 
