@@ -32,3 +32,4 @@ struct Day02: Day {
         levels.indices.anySatisfy { isSafe(levels: levels.removing(at: $0)) }
     }
 }
+
