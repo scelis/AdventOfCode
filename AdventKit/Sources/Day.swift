@@ -33,4 +33,10 @@ extension Day {
             line.components(separatedBy: .whitespaces).compactMap(Int.init)
         }
     }
+
+    public func inputCharacterArrays(file: StaticString = #filePath) -> [[Character]] {
+        inputLines(file: file).map { line in
+            Array(line)
+        }
+    }
 }
