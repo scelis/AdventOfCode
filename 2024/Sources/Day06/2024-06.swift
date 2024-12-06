@@ -10,6 +10,16 @@ struct Day06: Day {
         case stuckInLoop
     }
 
+    struct TileHistory {
+        var allDirections: Set<Direction>
+        let firstDirection: Direction
+
+        init(direction: Direction) {
+            self.allDirections = [direction]
+            self.firstDirection = direction
+        }
+    }
+
     // MARK: Solving
 
     func run() async throws -> (Int, Int) {
@@ -45,20 +55,20 @@ struct Day06: Day {
         graph: [[Character]],
         location: Coordinate2D,
         direction: Direction
-    ) throws -> [Coordinate2D: Set<Direction>] {
+    ) throws -> [Coordinate2D: TileHistory] {
         var location = location
         var direction = direction
-        var visited: [Coordinate2D: Set<Direction>] = [location: [direction]]
+        var visited: [Coordinate2D: TileHistory] = [location: TileHistory(direction: direction)]
 
         while graph[safe: location] != nil {
             let nextLocation = location.step(inDirection: direction)
             if graph[safe: nextLocation] == "#" {
                 direction = direction.turnRight()
-            } else if visited[nextLocation, default: []].contains(direction) {
+            } else if visited[nextLocation]?.allDirections.contains(direction) == true {
                 throw Error.stuckInLoop
             } else {
                 location = nextLocation
-                visited[nextLocation, default: []].insert(direction)
+                visited[nextLocation, default: TileHistory(direction: direction)].allDirections.insert(direction)
             }
         }
 
@@ -71,7 +81,7 @@ struct Day06: Day {
         graph: [[Character]],
         location: Coordinate2D,
         direction: Direction,
-        visitedLocations: [Coordinate2D: Set<Direction>]
+        visitedLocations: [Coordinate2D: TileHistory]
     ) -> Int {
         var numPositions = 0
 
@@ -79,7 +89,8 @@ struct Day06: Day {
             for x in graph[y].indices {
                 guard
                     graph[y][x] == ".",
-                    visitedLocations[Coordinate2D(x: x, y: y)] != nil
+                    case let coordinate = Coordinate2D(x: x, y: y),
+                    let tileHistory = visitedLocations[coordinate]
                 else {
                     continue
                 }
@@ -87,6 +98,8 @@ struct Day06: Day {
                 do {
                     var updatedGraph = graph
                     updatedGraph[y][x] = "#"
+                    let direction = tileHistory.firstDirection
+                    let location = coordinate.step(inDirection: direction.turnAround())
                     _ = try patrol(graph: updatedGraph, location: location, direction: direction)
                 } catch {
                     numPositions += 1
