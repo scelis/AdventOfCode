@@ -24,26 +24,18 @@ struct Day06: Day {
 
     func run() async throws -> (Int, Int) {
         let graph = inputCharacterArrays()
-        let (location, direction) = try findGuard(graph: graph)
-
-        let visitedLocations = try patrol(graph: graph, location: location, direction: direction)
+        let location = try findGuard(graph: graph)
+        let visitedLocations = try patrol(graph: graph, location: location, direction: .up)
         let part1Answer = visitedLocations.count
-
-        let part2Answer = part2(
-            graph: graph,
-            location: location,
-            direction: direction,
-            visitedLocations: visitedLocations
-        )
-
+        let part2Answer = await part2(graph: graph, visitedLocations: visitedLocations)
         return (part1Answer, part2Answer)
     }
 
-    func findGuard(graph: [[Character]]) throws -> (Coordinate2D, Direction) {
+    func findGuard(graph: [[Character]]) throws -> Coordinate2D {
         for y in graph.indices {
             for x in graph[y].indices {
                 if graph[y][x] == "^" {
-                    return (Coordinate2D(x: x, y: y), .up)
+                    return Coordinate2D(x: x, y: y)
                 }
             }
         }
@@ -73,37 +65,30 @@ struct Day06: Day {
         }
 
         visited[location] = nil
-
         return visited
     }
 
-    func part2(
-        graph: [[Character]],
-        location: Coordinate2D,
-        direction: Direction,
-        visitedLocations: [Coordinate2D: TileHistory]
-    ) -> Int {
+    func part2(graph: [[Character]], visitedLocations: [Coordinate2D: TileHistory]) async -> Int {
         var numPositions = 0
 
-        for y in graph.indices {
-            for x in graph[y].indices {
-                guard
-                    graph[y][x] == ".",
-                    case let coordinate = Coordinate2D(x: x, y: y),
-                    let tileHistory = visitedLocations[coordinate]
-                else {
-                    continue
+        await withTaskGroup(of: Int.self) { group in
+            for (coordinate, tileHistory) in visitedLocations where graph[coordinate] == "." {
+                group.addTask {
+                    do {
+                        var updatedGraph = graph
+                        updatedGraph[coordinate.y][coordinate.x] = "#"
+                        let direction = tileHistory.firstDirection
+                        let location = coordinate.step(inDirection: direction.turnAround())
+                        _ = try patrol(graph: updatedGraph, location: location, direction: direction)
+                        return 0
+                    } catch {
+                        return 1
+                    }
                 }
+            }
 
-                do {
-                    var updatedGraph = graph
-                    updatedGraph[y][x] = "#"
-                    let direction = tileHistory.firstDirection
-                    let location = coordinate.step(inDirection: direction.turnAround())
-                    _ = try patrol(graph: updatedGraph, location: location, direction: direction)
-                } catch {
-                    numPositions += 1
-                }
+            for await number in group {
+                numPositions += number
             }
         }
 
