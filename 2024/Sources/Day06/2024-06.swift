@@ -6,44 +6,46 @@ struct Day06: Day {
     // MARK: Types
 
     enum Error: Swift.Error {
+        case guardNotFound
         case stuckInLoop
     }
 
     // MARK: Solving
 
     func run() async throws -> (Int, Int) {
-        async let p1 = part1()
-        async let p2 = part2()
-        return try await (p1, p2)
+        let graph = inputCharacterArrays()
+        let (location, direction) = try findGuard(graph: graph)
+
+        let visitedLocations = try patrol(graph: graph, location: location, direction: direction)
+        let part1Answer = visitedLocations.count
+
+        let part2Answer = part2(
+            graph: graph,
+            location: location,
+            direction: direction,
+            visitedLocations: visitedLocations
+        )
+
+        return (part1Answer, part2Answer)
     }
 
-    func part1() async throws -> Int {
-        let graph = inputCharacterArrays()
-        let (location, direction) = findGuard(graph: graph)
-        return try patrol(graph: graph, location: location, direction: direction)
-    }
-
-    func part2() async throws -> Int {
-        let graph = inputCharacterArrays()
-        let (location, direction) = findGuard(graph: graph)
-        var numPositions = 0
-
+    func findGuard(graph: [[Character]]) throws -> (Coordinate2D, Direction) {
         for y in graph.indices {
-            for x in graph[y].indices where graph[y][x] == "." {
-                do {
-                    var updatedGraph = graph
-                    updatedGraph[y][x] = "#"
-                    _ = try patrol(graph: updatedGraph, location: location, direction: direction)
-                } catch {
-                    numPositions += 1
+            for x in graph[y].indices {
+                if graph[y][x] == "^" {
+                    return (Coordinate2D(x: x, y: y), .up)
                 }
             }
         }
 
-        return numPositions
+        throw Error.guardNotFound
     }
 
-    func patrol(graph: [[Character]], location: Coordinate2D, direction: Direction) throws -> Int {
+    func patrol(
+        graph: [[Character]],
+        location: Coordinate2D,
+        direction: Direction
+    ) throws -> [Coordinate2D: Set<Direction>] {
         var location = location
         var direction = direction
         var visited: [Coordinate2D: Set<Direction>] = [location: [direction]]
@@ -60,21 +62,38 @@ struct Day06: Day {
             }
         }
 
-        return visited.count - 1
+        visited[location] = nil
+
+        return visited
     }
 
-    func findGuard(graph: [[Character]]) -> (Coordinate2D, Direction) {
+    func part2(
+        graph: [[Character]],
+        location: Coordinate2D,
+        direction: Direction,
+        visitedLocations: [Coordinate2D: Set<Direction>]
+    ) -> Int {
+        var numPositions = 0
+
         for y in graph.indices {
             for x in graph[y].indices {
-                switch graph[y][x] {
-                case "^": return (Coordinate2D(x: x, y: y), .up)
-                case "v": return (Coordinate2D(x: x, y: y), .down)
-                case "<": return (Coordinate2D(x: x, y: y), .left)
-                case ">": return (Coordinate2D(x: x, y: y), .right)
-                default: break
+                guard
+                    graph[y][x] == ".",
+                    visitedLocations[Coordinate2D(x: x, y: y)] != nil
+                else {
+                    continue
+                }
+
+                do {
+                    var updatedGraph = graph
+                    updatedGraph[y][x] = "#"
+                    _ = try patrol(graph: updatedGraph, location: location, direction: direction)
+                } catch {
+                    numPositions += 1
                 }
             }
         }
-        fatalError("Could not find guard")
+
+        return numPositions
     }
 }
