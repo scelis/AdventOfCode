@@ -51,31 +51,27 @@ struct Day07: Day {
     }
 
     func isPossiblyTrue(equation: Equation, operators: [Operator]) -> Bool {
-        func isPossiblyTrueRecursive(numbers: [Int], runningTotals: Set<Int>) -> Bool {
-            guard !runningTotals.isEmpty && !numbers.isEmpty else {
-                return runningTotals.contains(equation.testValue)
-            }
+        var runningTotals: Set<Int> = [equation.numbers[0]]
 
-            var nextRunningTotals: Set<Int> = []
+        for i in 1..<equation.numbers.count {
+            var nextTotals: Set<Int> = []
             for total in runningTotals {
                 for op in operators {
-                    let value = op.evaluate(a: total, b: numbers[0])
+                    let value = op.evaluate(a: total, b: equation.numbers[i])
                     if value <= equation.testValue {
-                        nextRunningTotals.insert(value)
+                        nextTotals.insert(value)
                     }
                 }
             }
 
-            return isPossiblyTrueRecursive(
-                numbers: numbers.removing(at: 0),
-                runningTotals: nextRunningTotals
-            )
+            if nextTotals.isEmpty {
+                return false
+            } else {
+                runningTotals = nextTotals
+            }
         }
 
-        return isPossiblyTrueRecursive(
-            numbers: equation.numbers.removing(at: 0),
-            runningTotals: [equation.numbers[0]]
-        )
+        return runningTotals.contains(equation.testValue)
     }
 
     // MARK: Parsing
