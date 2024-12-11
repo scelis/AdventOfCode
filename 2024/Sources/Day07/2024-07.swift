@@ -17,13 +17,9 @@ struct Day07: Day {
 
         func evaluate(a: Int, b: Int) -> Int {
             switch self {
-            case .add:
-                return a + b
-            case .multiply:
-                return a * b
-            case .concatenate:
-                let numberOfDigitsInB = Int(log10(Double(b))) + 1
-                return a * Int(pow(10, Double(numberOfDigitsInB))) + b
+            case .add: a + b
+            case .multiply: a * b
+            case .concatenate: a * Int(pow(10, Double(b.numberOfDigits))) + b
             }
         }
     }

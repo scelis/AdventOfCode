@@ -34,6 +34,10 @@ extension Int {
 
         return factors
     }
+
+    public var numberOfDigits: Int {
+        Int(log10(Double(self))) + 1
+    }
 }
 
 extension Array where Element == Int {
