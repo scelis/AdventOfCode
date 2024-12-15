@@ -73,17 +73,6 @@ struct Day14: Day {
         }.count >= 10
     }
 
-    func prettyPrint(robots: [Robot], width: Int, height: Int) {
-        var grid = Array(repeating: Array(repeating: ".", count: width), count: height)
-        for robot in robots {
-            grid[robot.position.y][robot.position.x] = "#"
-        }
-        for row in grid {
-            print(row.joined())
-        }
-        print("")
-    }
-
     func parseInput() -> [Robot] {
         let regex = #/p=(-?\d+),(-?\d+) v=(-?\d+),(-?\d+)/#
         return input().matches(of: regex).map { match in
