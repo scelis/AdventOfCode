@@ -142,4 +142,11 @@ class AOC2024Tests: XCTestCase {
         XCTAssertEqual(parts.0, 1521)
         XCTAssertEqual(parts.1, 1013106)
     }
+
+    func testDay21() async throws {
+        let day = Day21()
+        let parts = try await day.run()
+        XCTAssertEqual(parts.0, 224326)
+        XCTAssertEqual(parts.1, 279638326609472)
+    }
 }
