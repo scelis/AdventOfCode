@@ -13,6 +13,7 @@ struct Day24: Day {
         var left: String
         var right: String
         var output: String
+        var inputs: Set<String> { [left, right] }
     }
 
     func run() async throws -> (Int, String) {
@@ -49,12 +50,25 @@ struct Day24: Day {
     }
 
     func part2() async throws -> String {
-        // Used the code below to find places where gates didn't match up as expected. Then it was
-        // relatively simple to manually inspect and find the two outputs that needed to be swapped.
-        ["z06", "jmq", "z13", "gmh", "cbd", "z38", "qrh", "rqf"].sorted().joined(separator: ",")
+        var (_, gates) = parseInput()
+        var outputs: [String] = []
+        while outputs.count < 8 {
+            let outputsToSwap = findOutputsToSwap(gates: gates)
+            gates = gates.map { gate in
+                var gate = gate
+                if gate.output == outputsToSwap[0] {
+                    gate.output = outputsToSwap[1]
+                } else if gate.output == outputsToSwap[1] {
+                    gate.output = outputsToSwap[0]
+                }
+                return gate
+            }
+            outputs += outputsToSwap
+        }
+        return outputs.sorted().joined(separator: ",")
     }
 
-    func findOutputsToSwap(gates: [Gate]) {
+    func findOutputsToSwap(gates: [Gate]) -> [String] {
         var previousZXOR: Gate?
         var previousNumber = "00"
         for i in 1...45 {
@@ -72,11 +86,17 @@ struct Day24: Day {
                 let xANDy = findGate(inputA: "x\(previousNumber)", inputB: "y\(previousNumber)", type: .and, gates: gates)
                 let andGate = findGate(inputA: previousZXOR!.left, inputB: previousZXOR!.right, type: .and, gates: gates)
                 let orGate = findGate(inputA: xANDy!.output, inputB: andGate!.output, type: .or, gates: gates)
-                let zXOR = findGate(inputA: orGate!.output, inputB: xXORy!.output, type: .xor, gates: gates)
-                if zXOR?.output != "z\(thisNumber)" {
-                    fatalError("Something is not right")
+                if let zXOR = findGate(inputA: orGate!.output, inputB: xXORy!.output, type: .xor, gates: gates) {
+                    if zXOR.output != "z\(thisNumber)" {
+                        return [zXOR.output, "z\(thisNumber)"]
+                    }
+                    previousZXOR = zXOR
+                } else {
+                    let zXOR = findGate(output: "z\(thisNumber)", type: .xor, gates: gates)!
+                    var inputs = zXOR.inputs
+                    inputs.remove(orGate!.output)
+                    return [xXORy!.output, inputs.first!]
                 }
-                previousZXOR = zXOR
             }
 
             previousNumber = thisNumber
@@ -88,6 +108,12 @@ struct Day24: Day {
     func findGate(inputA: String, inputB: String, type: Gate.GateType, gates: [Gate]) -> Gate? {
         gates.first { gate in
             gate.gateType == type && ((gate.left == inputA && gate.right == inputB) || (gate.left == inputB && gate.right == inputA))
+        }
+    }
+
+    func findGate(output: String, type: Gate.GateType, gates: [Gate]) -> Gate? {
+        gates.first { gate in
+            gate.gateType == type && gate.output == output
         }
     }
 
