@@ -1,138 +1,145 @@
 import Foundation
-import XCTest
+import Testing
 @testable import AOC2023
 
-class AOC2023Tests: XCTestCase {
-    func testDay01() async throws {
+@Suite struct AOC2024Tests {
+    @Test func day01() async throws {
         let day = Day01()
         let parts = try await day.run()
-        XCTAssertEqual(parts.0, 54951)
-        XCTAssertEqual(parts.1, 55218)
+        #expect(parts.0 == 54951)
+        #expect(parts.1 == 55218)
     }
 
-    func testDay02() async throws {
+    @Test func day02() async throws {
         let day = Day02()
         let parts = try await day.run()
-        XCTAssertEqual(parts.0, 1931)
-        XCTAssertEqual(parts.1, 83105)
+        #expect(parts.0 == 1931)
+        #expect(parts.1 == 83105)
     }
 
-    func testDay03() async throws {
+    @Test func day03() async throws {
         let day = Day03()
         let parts = try await day.run()
-        XCTAssertEqual(parts.0, 531561)
-        XCTAssertEqual(parts.1, 83279367)
+        #expect(parts.0 == 531561)
+        #expect(parts.1 == 83279367)
     }
 
-    func testDay04() async throws {
+    @Test func day04() async throws {
         let day = Day04()
         let parts = try await day.run()
-        XCTAssertEqual(parts.0, 24175)
-        XCTAssertEqual(parts.1, 18846301)
+        #expect(parts.0 == 24175)
+        #expect(parts.1 == 18846301)
     }
 
-    func testDay05() async throws {
+    @Test func day05() async throws {
         let day = Day05()
         let parts = try await day.run()
-        XCTAssertEqual(parts.0, 282277027)
-        XCTAssertEqual(parts.1, 11554135)
+        #expect(parts.0 == 282277027)
+        #expect(parts.1 == 11554135)
     }
 
-    func testDay06() async throws {
+    @Test func day06() async throws {
         let day = Day06()
         let parts = try await day.run()
-        XCTAssertEqual(parts.0, 2612736)
-        XCTAssertEqual(parts.1, 29891250)
+        #expect(parts.0 == 2612736)
+        #expect(parts.1 == 29891250)
     }
 
-    func testDay07() async throws {
+    @Test func day07() async throws {
         let day = Day07()
         let parts = try await day.run()
-        XCTAssertEqual(parts.0, 250602641)
-        XCTAssertEqual(parts.1, 251037509)
+        #expect(parts.0 == 250602641)
+        #expect(parts.1 == 251037509)
     }
 
-    func testDay08() async throws {
+    @Test func day08() async throws {
         let day = Day08()
         let parts = try await day.run()
-        XCTAssertEqual(parts.0, 16897)
-        XCTAssertEqual(parts.1, 16563603485021)
+        #expect(parts.0 == 16897)
+        #expect(parts.1 == 16563603485021)
     }
 
-    func testDay09() async throws {
+    @Test func day09() async throws {
         let day = Day09()
         let parts = try await day.run()
-        XCTAssertEqual(parts.0, 1992273652)
-        XCTAssertEqual(parts.1, 1012)
+        #expect(parts.0 == 1992273652)
+        #expect(parts.1 == 1012)
     }
 
-    func testDay10() async throws {
+    @Test func day10() async throws {
         let day = Day10()
         let parts = try await day.run()
-        XCTAssertEqual(parts.0, 6717)
-        XCTAssertEqual(parts.1, 381)
+        #expect(parts.0 == 6717)
+        #expect(parts.1 == 381)
     }
 
-    func testDay11() async throws {
+    @Test func day11() async throws {
         let day = Day11()
         let parts = try await day.run()
-        XCTAssertEqual(parts.0, 9974721)
-        XCTAssertEqual(parts.1, 702770569197)
+        #expect(parts.0 == 9974721)
+        #expect(parts.1 == 702770569197)
     }
 
-    func testDay12() async throws {
+    @Test func day12() async throws {
         let day = Day12()
         let parts = try await day.run()
-        XCTAssertEqual(parts.0, 7260)
-        XCTAssertEqual(parts.1, 1909291258644)
+        #expect(parts.0 == 7260)
+        #expect(parts.1 == 1909291258644)
     }
 
-    func testDay13() async throws {
+    @Test func day13() async throws {
         let day = Day13()
         let parts = try await day.run()
-        XCTAssertEqual(parts.0, 36015)
-        XCTAssertEqual(parts.1, 35335)
+        #expect(parts.0 == 36015)
+        #expect(parts.1 == 35335)
     }
 
-    func testDay14() async throws {
+    @Test func day14() async throws {
         let day = Day14()
         let parts = try await day.run()
-        XCTAssertEqual(parts.0, 106997)
-        XCTAssertEqual(parts.1, 99641)
+        #expect(parts.0 == 106997)
+        #expect(parts.1 == 99641)
     }
 
-    func testDay15() async throws {
+    @Test func day15() async throws {
         let day = Day15()
         let parts = try await day.run()
-        XCTAssertEqual(parts.0, 508498)
-        XCTAssertEqual(parts.1, 279116)
+        #expect(parts.0 == 508498)
+        #expect(parts.1 == 279116)
     }
 
-    func testDay16() async throws {
+    @Test func day16() async throws {
         let day = Day16()
         let parts = try await day.run()
-        XCTAssertEqual(parts.0, 7632)
-        XCTAssertEqual(parts.1, 8023)
+        #expect(parts.0 == 7632)
+        #expect(parts.1 == 8023)
     }
 
-    func testDay17() async throws {
+    @Test func day17() async throws {
         let day = Day17()
         let parts = try await day.run()
-        XCTAssertEqual(parts.0, 1044)
-        XCTAssertEqual(parts.1, 1227)
+        #expect(parts.0 == 1044)
+        #expect(parts.1 == 1227)
     }
 
-    func testDay18() async throws {
+    @Test func day18() async throws {
         let day = Day18()
         let parts = try await day.run()
-        XCTAssertEqual(parts.0, 48652)
-        XCTAssertEqual(parts.1, 45757884535661)
+        #expect(parts.0 == 48652)
+        #expect(parts.1 == 45757884535661)
     }
 
-    func testDay19() async throws {
+    @Test func day19() async throws {
         let day = Day19()
         let parts = try await day.run()
-        XCTAssertEqual(parts.0, 409898)
-        XCTAssertEqual(parts.1, 113057405770956)
+        #expect(parts.0 == 409898)
+        #expect(parts.1 == 113057405770956)
+    }
+
+    @Test func day20() async throws {
+        let day = Day20()
+        let parts = try await day.run()
+        #expect(parts.0 == 944750144)
+        #expect(parts.1 == 222718819437131)
     }
 }
