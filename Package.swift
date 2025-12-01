@@ -3,7 +3,7 @@
 import Foundation
 import PackageDescription
 
-let years: [Int] = [2015, 2019, 2020, 2021, 2022, 2023, 2024]
+let years: [Int] = [2015, 2019, 2020, 2021, 2022, 2023, 2024, 2025]
 let enableCompilerOptimizations = false
 
 let package = Package(

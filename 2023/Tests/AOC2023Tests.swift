@@ -144,7 +144,7 @@ import Testing
     }
 
     @Test func day21() async throws {
-        let day = Day20()
+        let day = Day21()
         let parts = try await day.run()
         #expect(parts.0 == 3729)
     }

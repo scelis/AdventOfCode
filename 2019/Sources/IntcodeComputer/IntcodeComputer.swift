@@ -83,7 +83,7 @@ public class IntcodeComputer {
             case .add, .multiply:
                 let a = readParameter(i, offset: 1)
                 let b = readParameter(i, offset: 2)
-                let f: (Int, Int) -> Int = (opcode == .add) ? (+) : (*)
+                let f: (Int, Int) -> Int = (opcode == .add) ? { $0 + $1 } : { $0 * $1 }
                 writeParameter(i, offset: 3, value: f(a, b))
             case .input:
                 if inputBuffer.count > 0 {
