@@ -16,4 +16,11 @@ import Testing
         #expect(parts.0 == 15873079081)
         #expect(parts.1 == 22617871034)
     }
+
+    @Test func day03() async throws {
+        let day = Day03()
+        let parts = try await day.run()
+        #expect(parts.0 == 17332)
+        #expect(parts.1 == 172516781546707)
+    }
 }
