@@ -5,153 +5,152 @@ import Testing
 @Suite struct AOC2023Tests {
     @Test func day01() async throws {
         let day = Day01()
-        let parts = try await day.run(input: loadInput(fileName: "2023-01.txt"))
+        let parts = try await day.run(input: loadInput(forResource: "2023-01"))
         #expect(parts.0 == 54951)
         #expect(parts.1 == 55218)
     }
 
     @Test func day02() async throws {
         let day = Day02()
-        let parts = try await day.run(input: loadInput(fileName: "2023-02.txt"))
+        let parts = try await day.run(input: loadInput(forResource: "2023-02"))
         #expect(parts.0 == 1931)
         #expect(parts.1 == 83105)
     }
 
     @Test func day03() async throws {
         let day = Day03()
-        let parts = try await day.run(input: loadInput(fileName: "2023-03.txt"))
+        let parts = try await day.run(input: loadInput(forResource: "2023-03"))
         #expect(parts.0 == 531561)
         #expect(parts.1 == 83279367)
     }
 
     @Test func day04() async throws {
         let day = Day04()
-        let parts = try await day.run(input: loadInput(fileName: "2023-04.txt"))
+        let parts = try await day.run(input: loadInput(forResource: "2023-04"))
         #expect(parts.0 == 24175)
         #expect(parts.1 == 18846301)
     }
 
     @Test func day05() async throws {
         let day = Day05()
-        let parts = try await day.run(input: loadInput(fileName: "2023-05.txt"))
+        let parts = try await day.run(input: loadInput(forResource: "2023-05"))
         #expect(parts.0 == 282277027)
         #expect(parts.1 == 11554135)
     }
 
     @Test func day06() async throws {
         let day = Day06()
-        let parts = try await day.run(input: loadInput(fileName: "2023-06.txt"))
+        let parts = try await day.run(input: loadInput(forResource: "2023-06"))
         #expect(parts.0 == 2612736)
         #expect(parts.1 == 29891250)
     }
 
     @Test func day07() async throws {
         let day = Day07()
-        let parts = try await day.run(input: loadInput(fileName: "2023-07.txt"))
+        let parts = try await day.run(input: loadInput(forResource: "2023-07"))
         #expect(parts.0 == 250602641)
         #expect(parts.1 == 251037509)
     }
 
     @Test func day08() async throws {
         let day = Day08()
-        let parts = try await day.run(input: loadInput(fileName: "2023-08.txt"))
+        let parts = try await day.run(input: loadInput(forResource: "2023-08"))
         #expect(parts.0 == 16897)
         #expect(parts.1 == 16563603485021)
     }
 
     @Test func day09() async throws {
         let day = Day09()
-        let parts = try await day.run(input: loadInput(fileName: "2023-09.txt"))
+        let parts = try await day.run(input: loadInput(forResource: "2023-09"))
         #expect(parts.0 == 1992273652)
         #expect(parts.1 == 1012)
     }
 
     @Test func day10() async throws {
         let day = Day10()
-        let parts = try await day.run(input: loadInput(fileName: "2023-10.txt"))
+        let parts = try await day.run(input: loadInput(forResource: "2023-10"))
         #expect(parts.0 == 6717)
         #expect(parts.1 == 381)
     }
 
     @Test func day11() async throws {
         let day = Day11()
-        let parts = try await day.run(input: loadInput(fileName: "2023-11.txt"))
+        let parts = try await day.run(input: loadInput(forResource: "2023-11"))
         #expect(parts.0 == 9974721)
         #expect(parts.1 == 702770569197)
     }
 
     @Test func day12() async throws {
         let day = Day12()
-        let parts = try await day.run(input: loadInput(fileName: "2023-12.txt"))
+        let parts = try await day.run(input: loadInput(forResource: "2023-12"))
         #expect(parts.0 == 7260)
         #expect(parts.1 == 1909291258644)
     }
 
     @Test func day13() async throws {
         let day = Day13()
-        let parts = try await day.run(input: loadInput(fileName: "2023-13.txt"))
+        let parts = try await day.run(input: loadInput(forResource: "2023-13"))
         #expect(parts.0 == 36015)
         #expect(parts.1 == 35335)
     }
 
     @Test func day14() async throws {
         let day = Day14()
-        let parts = try await day.run(input: loadInput(fileName: "2023-14.txt"))
+        let parts = try await day.run(input: loadInput(forResource: "2023-14"))
         #expect(parts.0 == 106997)
         #expect(parts.1 == 99641)
     }
 
     @Test func day15() async throws {
         let day = Day15()
-        let parts = try await day.run(input: loadInput(fileName: "2023-15.txt"))
+        let parts = try await day.run(input: loadInput(forResource: "2023-15"))
         #expect(parts.0 == 508498)
         #expect(parts.1 == 279116)
     }
 
     @Test func day16() async throws {
         let day = Day16()
-        let parts = try await day.run(input: loadInput(fileName: "2023-16.txt"))
+        let parts = try await day.run(input: loadInput(forResource: "2023-16"))
         #expect(parts.0 == 7632)
         #expect(parts.1 == 8023)
     }
 
     @Test func day17() async throws {
         let day = Day17()
-        let parts = try await day.run(input: loadInput(fileName: "2023-17.txt"))
+        let parts = try await day.run(input: loadInput(forResource: "2023-17"))
         #expect(parts.0 == 1044)
         #expect(parts.1 == 1227)
     }
 
     @Test func day18() async throws {
         let day = Day18()
-        let parts = try await day.run(input: loadInput(fileName: "2023-18.txt"))
+        let parts = try await day.run(input: loadInput(forResource: "2023-18"))
         #expect(parts.0 == 48652)
         #expect(parts.1 == 45757884535661)
     }
 
     @Test func day19() async throws {
         let day = Day19()
-        let parts = try await day.run(input: loadInput(fileName: "2023-19.txt"))
+        let parts = try await day.run(input: loadInput(forResource: "2023-19"))
         #expect(parts.0 == 409898)
         #expect(parts.1 == 113057405770956)
     }
 
     @Test func day20() async throws {
         let day = Day20()
-        let parts = try await day.run(input: loadInput(fileName: "2023-20.txt"))
+        let parts = try await day.run(input: loadInput(forResource: "2023-20"))
         #expect(parts.0 == 944750144)
         #expect(parts.1 == 222718819437131)
     }
 
     @Test func day21() async throws {
         let day = Day21()
-        let parts = try await day.run(input: loadInput(fileName: "2023-21.txt"))
+        let parts = try await day.run(input: loadInput(forResource: "2023-21"))
         #expect(parts.0 == 3729)
     }
 
-    private func loadInput(fileName: String) -> String {
-        let parts = fileName.components(separatedBy: ".")
-        let url = Bundle.module.url(forResource: parts[0], withExtension: parts[1], subdirectory: "Resources")
+    private func loadInput(forResource: String, withExtension: String = "txt") -> String {
+        let url = Bundle.module.url(forResource: forResource, withExtension: withExtension, subdirectory: "Resources")
         let data = try! Data(contentsOf: url!)
         let str = String(data: data, encoding: .utf8)!
         return str.trimmingCharacters(in: .newlines)
