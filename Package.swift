@@ -10,7 +10,7 @@ let package = Package(
     name: "AdventOfCode",
     platforms: [.macOS(.v14)],
     dependencies: [
-        .package(url: "https://github.com/apple/swift-algorithms.git", from: "1.2.0"),
+        .package(url: "https://github.com/apple/swift-algorithms.git", from: "1.2.1"),
     ],
     targets: targets()
 )
