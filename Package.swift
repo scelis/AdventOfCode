@@ -8,7 +8,7 @@ let enableCompilerOptimizations = false
 
 let package = Package(
     name: "AdventOfCode",
-    platforms: [.macOS(.v14)],
+    platforms: [.macOS(.v26)],
     dependencies: [
         .package(url: "https://github.com/apple/swift-algorithms.git", from: "1.2.1"),
     ],
