@@ -1,6 +1,24 @@
 import Foundation
 
 extension String {
+    public var lines: [String] {
+        components(separatedBy: .newlines)
+    }
+
+    public var integers: [Int] {
+        components(separatedBy: .whitespacesAndNewlines).compactMap(Int.init)
+    }
+
+    public var integerArrays: [[Int]] {
+        lines.map { line in
+            line.components(separatedBy: .whitespaces).compactMap(Int.init)
+        }
+    }
+
+    public var characterArrays: [[Character]] {
+        lines.map { Array($0) }
+    }
+
     public subscript (i: Int) -> String {
         return self[i ..< i + 1]
     }
